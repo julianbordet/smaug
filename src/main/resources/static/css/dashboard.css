@@ -10,3 +10,8 @@ li {
 ul {
     padding: 0px;
 }
+
+.mycards {
+    height: 300px;
+    margin-top: 20px;
+}
