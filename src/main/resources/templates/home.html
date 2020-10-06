@@ -25,6 +25,24 @@
             <div class="col-6">
                 <h1 class="mb-0">smaug</h1>
                 <h2 class="mt-0">bug tracker</h2>
+
+
+                    <div th:if="${param.error}">
+                        Invalid username and password.
+                    </div>
+                    <div th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
+
+                    <form th:action="@{/authenticateTheUser}" method="post">
+                        <div class="form-group">
+                            <div><label> User Name : <input class="form-control" type="text" name="username"/> </label></div>
+                            <div><label> Password: <input class="form-control" type="password" name="password"/> </label></div>
+                            <button class="btn btn-primary" type="submit">Sign In</button>
+                        </div>
+                    </form>
+
+
             </div>
         </div>
     </div>
@@ -40,21 +58,11 @@ Welcome to the Home page for Smaug!
 
 <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
 
-
-
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/authenticateTheUser}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-
 -->
+
+
+
+
 
 </body>
 
