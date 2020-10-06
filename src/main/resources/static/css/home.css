@@ -17,3 +17,13 @@ h2 {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 3rem;
 }
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
