@@ -4,8 +4,11 @@
 }
 
 li {
-    padding: 30px;
+    padding-bottom: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
+
 
 ul {
     padding: 0px;
@@ -14,4 +17,8 @@ ul {
 .mycards {
     height: 300px;
     margin-top: 20px;
+}
+
+#vertnav{
+    height: 92vh;
 }
