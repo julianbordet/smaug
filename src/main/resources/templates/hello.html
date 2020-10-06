@@ -7,10 +7,14 @@
 <body>
 <h1>Hello world! (from hello.html page)</h1>
 
+
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
+
+<a th:href="@{/anotherPage}">Go to another page</a>
 
 
 
