@@ -1,3 +1,11 @@
 #verticalbar {
-    padding-top: 80px;
+    padding-top: 50px;
+}
+
+li {
+    padding: 30px;
+}
+
+ul {
+    padding: 0px;
 }
