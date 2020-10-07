@@ -1,5 +1,5 @@
 #mynav{
-    background-color: #5D6D7E;
+    background-color: #212F3D;
     color: white;
 }
 
@@ -21,4 +21,9 @@ ul {
 
 #vertnav{
     height: 92vh;
+    background-color: #212F3D;
+}
+
+#background-for-working-zone {
+    background-color: #F2F4F4;
 }

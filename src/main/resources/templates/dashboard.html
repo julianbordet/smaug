@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+
 
 </head>
 <body>
@@ -15,7 +18,7 @@
     <!--navbar-->
     <div class="row" id="mynav">
         <div class="col-12 py-3">
-        <div class="ml-3">Smaug</div>
+        <div class="ml-3" style="font-size: 1.3rem">Smaug</div>
         </div>
     </div>
 
@@ -24,35 +27,53 @@
     <!--left-vertical navbar-->
         <div class="col-1 pl-0" id="vertnav">
             <ul style="list-style: none;">
+
+                <button class="btn btn-outline-light w-100" type="button">
                 <li class="text-center mt-3">
-                    Dashboard
+                    <i class="fas fa-2x fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
                 </li>
-                <li class="text-center">
-                    My bugs
-                </li>
-                <li class="text-center">
-                    My Projects
-                </li>
-                <li class="text-center">
-                    Manage Roles
-                </li>
-                <li class="text-center">
-                    Manage Projects
-                </li>
+                </button>
+
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-bug"></i>
+                        <p>My Bugs</p>
+                    </li>
+                </button>
+
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-tasks"></i>
+                        <p>My Projects</p>
+                    </li>
+                </button>
+
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-user-tag"></i>
+                        <p>Manage Roles</p>
+                    </li>
+                </button>
+
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-cogs"></i>
+                        <p>Manage Projects</p>
+                    </li>
+                </button>
             </ul>
         </div>
 
         <!--Main area-->
+        <div class="col-11" id="background-for-working-zone">
 
-
-        <div class="col-11">
-
-                <div class="row w-100 justify-content-around">
+                <div class="row w-100 justify-content-around mt-4">
 
                         <!--Card 1-->
                         <div class="col-3">
                             <div class="card mycards">
-                                <div class="card-header">
+                                <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
                                     Open Bugs
                                 </div>
                                 <div class="card-body">
@@ -64,7 +85,7 @@
                         <!--Card 2-->
                         <div class="col-3">
                             <div class="card mycards">
-                                <div class="card-header">
+                                <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
                                     Bugs Severity
                                 </div>
                                 <div class="card-body">
@@ -74,12 +95,12 @@
                         </div>
                     </div>
 
-                <div class="row w-100 justify-content-around">
+                <div class="row w-100 justify-content-around mt-4">
 
                     <!--Card 3-->
                     <div class="col-3">
                         <div class="card mycards">
-                            <div class="card-header">
+                            <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
                                 Bugs Due
                             </div>
                             <div class="card-body">
@@ -91,8 +112,8 @@
                     <!--Card 4-->
                     <div class="col-3">
                         <div class="card mycards">
-                            <div class="card-header">
-                                Bugs Crused
+                            <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
+                                Bugs Crushed
                             </div>
                             <div class="card-body">
                                 <p class="card-text">120</p>
