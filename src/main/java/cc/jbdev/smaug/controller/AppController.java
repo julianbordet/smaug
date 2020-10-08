@@ -1,17 +1,20 @@
 package cc.jbdev.smaug.controller;
 
+import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.service.BugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.nio.file.attribute.UserDefinedFileAttributeView;
+import java.util.List;
 
 @Controller
 public class AppController {
 
-    /*@Autowired
-    UserService service = new UserService();*/
+    @Autowired
+    BugService bugService;
 
     @GetMapping("/dashboard")
     public String viewDashboard(Model theModel){
@@ -45,6 +48,12 @@ public class AppController {
         //card4
         int totalBugsCrushed = service.getTotalBugsCrushed(tempUser);
         theModel.addAttribute("userTotalBugsCrushed", totalBugsCrushed);*/
+
+
+        //--------------------------------//
+        //  FOR TESTING PURPOSES ONLY    //
+        //------------------------------//
+        List<Bug> myBugList = bugService.getBugList();
 
         return "dashboardpage";
     }
