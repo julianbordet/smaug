@@ -63,4 +63,24 @@ public class BugDAOImpl implements BugDAO {
 
         return bugList;
     }
+
+    @Override
+    @Transactional
+    public List<Bug> getActiveBugListForUser(String username) {
+        //get current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        //create the query to get the bug list from mysql
+        /////////////////
+        //NOTE TO SELF://
+        /////////////////
+        //Since the query below is done in HQL the "from Bug" should refer to the @Entity class name
+        //not to the table name, which in this case is "bugs".
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = 'crushed'", Bug.class);
+
+        //execute query and get result list
+        List<Bug> bugList = theQuery.getResultList();
+
+        return bugList;
+    }
 }

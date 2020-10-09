@@ -24,4 +24,9 @@ public class BugServiceImpl implements BugService {
     public List<Bug> getBugListForUser(String username) {
         return bugDAO.getBugListForUser(username);
     }
+
+    @Override
+    public List<Bug> getActiveBugListForUser(String username) {
+        return bugDAO.getActiveBugListForUser(username);
+    }
 }

@@ -13,6 +13,6 @@ public interface BugService {
     public List<Bug> getBugListForUser(String username);
 
     //gets list of only active bugs for a certain user
-    
+    public List<Bug> getActiveBugListForUser(String username);
 
 }

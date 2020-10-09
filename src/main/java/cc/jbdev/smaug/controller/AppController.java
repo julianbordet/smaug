@@ -77,6 +77,9 @@ public class AppController {
 
         List<Bug> specificUserBugList = bugService.getBugListForUser(myUserName);
         int specificUserbugCount = specificUserBugList.size();
+
+        List<Bug> specificUserActiveBugList = bugService.getActiveBugListForUser(myUserName);
+        int specificUserActiveBugCount = specificUserActiveBugList.size();
         ///
         ///
         ///
