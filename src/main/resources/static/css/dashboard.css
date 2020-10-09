@@ -1,0 +1,29 @@
+#mynav{
+    background-color: #212F3D;
+    color: white;
+}
+
+li {
+    padding-bottom: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+ul {
+    padding: 0px;
+}
+
+.mycards {
+    height: 400px;
+    margin-top: 20px;
+}
+
+#vertnav{
+    height: 92vh;
+    background-color: #212F3D;
+}
+
+#background-for-working-zone {
+    background-color: #F2F4F4;
+}
