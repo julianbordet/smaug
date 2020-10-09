@@ -41,12 +41,38 @@ public class AppController {
         List<Bug> userActiveBugList = bugService.getActiveBugListForUser(myUserName);
         int userActiveBugCount = userActiveBugList.size();
         theModel.addAttribute("userOpenBugCount", userActiveBugCount);
+        ///
 
-      /*  //card2
-        //get bug severity list
-        List<Bug> bugList = service.getBugList(tempUser);
-        //figure out how to display donut graph
+        ///card2
+        ///get total ACTIVE bugs owned by user, then add to the model the count for
+        ///each type of severity
+        int criticalBugCount = 0;
+        int majorBugCount = 0;
+        int minorBugCount = 0;
+        int lowBugCount = 0;
 
+        for(Bug bug : userActiveBugList) {
+            if (bug.getBugSeverity().equals("CRITICAL")){
+                criticalBugCount++;
+            }
+            if (bug.getBugSeverity().equals("MAJOR")){
+                majorBugCount++;
+            }
+            if (bug.getBugSeverity().equals("MINOR")){
+                minorBugCount++;
+            }
+            if (bug.getBugSeverity().equals("LOW")){
+                lowBugCount++;
+            }
+        }
+
+        theModel.addAttribute("userCriticalBugCount", criticalBugCount);
+        theModel.addAttribute("userMajorBugCount", majorBugCount);
+        theModel.addAttribute("userMinorBugCount", minorBugCount);
+        theModel.addAttribute("userLowBugCount", lowBugCount);
+        ///
+
+ /*
         //card3
         //to know how many are due
         int bugsDue = service.countDueBugs(bugList);
@@ -59,12 +85,13 @@ public class AppController {
         //WITH TAGS ABOUT WHETHER THEY ARE DUE OR NOT
         //figure out how to display donut graph
 */
-        //card4
+        ///card4
+        ///show total number of bugs crushed by the user
         List<Bug> userTotalBugList = bugService.getBugListForUser(myUserName);
         int userTotalBugCount = userTotalBugList.size();
         int userCrushedBugCount = userTotalBugCount - userActiveBugCount;
         theModel.addAttribute("userCrushedBugCount", userCrushedBugCount);
-
+        ///
 
         //--------------------------------//
         //  FOR TESTING PURPOSES ONLY    //
@@ -81,5 +108,6 @@ public class AppController {
         ///
         return "dashboardpage";
     }
+
 
 }

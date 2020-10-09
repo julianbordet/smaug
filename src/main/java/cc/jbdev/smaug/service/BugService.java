@@ -14,5 +14,4 @@ public interface BugService {
 
     //gets list of only active bugs for a certain user
     public List<Bug> getActiveBugListForUser(String username);
-
 }
