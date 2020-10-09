@@ -72,19 +72,30 @@ public class AppController {
         theModel.addAttribute("userLowBugCount", lowBugCount);
         ///
 
- /*
-        //card3
-        //to know how many are due
-        int bugsDue = service.countDueBugs(bugList);
-        //to know how many are not due
-        int bugsNotDue = service.countNotDueBugs(bugList);
 
-        theModel.addAttribute("userDueBugCount", bugsDue);
-        theModel.addAttribute("userNotDueBugCount", bugsNotDue);
-        //COULD USE TWO JOINS WITH UNION IN SQL TO GET THE FULL LIST OF BUGS
-        //WITH TAGS ABOUT WHETHER THEY ARE DUE OR NOT
-        //figure out how to display donut graph
-*/
+        ///card3
+        ///show a chart for bug priority
+        int userHighPriorityBugCount = 0;
+        int userMediumPriorityBugCount = 0;
+        int userLowPriorityBugCount = 0;
+
+        for(Bug bug : userActiveBugList) {
+            if (bug.getBugPriority().equals("HIGH")){
+                userHighPriorityBugCount++;
+            }
+            if (bug.getBugPriority().equals("MEDIUM")){
+                userMediumPriorityBugCount++;
+            }
+            if (bug.getBugPriority().equals("LOW")){
+                userLowPriorityBugCount++;
+            }
+        }
+        theModel.addAttribute("userHighPriority", userHighPriorityBugCount);
+        theModel.addAttribute("userMediumPriority", userMediumPriorityBugCount);
+        theModel.addAttribute("userLowPriority", userLowPriorityBugCount);
+        ///
+
+
         ///card4
         ///show total number of bugs crushed by the user
         List<Bug> userTotalBugList = bugService.getBugListForUser(myUserName);

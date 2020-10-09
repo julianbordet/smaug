@@ -92,7 +92,6 @@
                                     Bugs Severity
                                 </div>
                                 <div class="card-body">
-                                    <!-- <p class="card-text text-center">GRAFICO DONA</p> -->
                                     <canvas id="chDonut1"></canvas>
                                 </div>
                             </div>
@@ -105,10 +104,10 @@
                     <div class="col-3">
                         <div class="card mycards">
                             <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
-                                Bugs Due
+                                Bug Priority
                             </div>
                             <div class="card-body">
-                                <p class="card-text text-center">GRAFICO DONA</p>
+                                <canvas id="chDonut2"></canvas>
                             </div>
                         </div>
                     </div>
@@ -192,5 +191,62 @@ options: donutOptions
 });
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    var highPriority = [[${userHighPriority}]];
+    var mediumPriority = [[${userMediumPriority}]];
+    var lowPriority = [[${userLowPriority}]];
+
+    // chart colors
+    var colors = ['#007bff','#28a745','#333333','#c3e6cb'];
+
+    /* 3 donut charts */
+    var donutOptions2 = {
+        cutoutPercentage: 85,
+        legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
+    };
+
+    // donut 1
+    var chDonutData2 = {
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [
+            {
+                backgroundColor: colors.slice(0,3),
+                borderWidth: 0,
+                data: [highPriority, mediumPriority, lowPriority]
+            }
+        ]
+    };
+
+    var chDonut2 = document.getElementById("chDonut2");
+    if (chDonut2) {
+        new Chart(chDonut2, {
+            type: 'pie',
+            data: chDonutData2,
+            options: donutOptions2
+        });
+    }
+</script>
+
+
+
+
+
 
 </html>

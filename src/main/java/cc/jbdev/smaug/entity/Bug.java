@@ -43,6 +43,9 @@ public class Bug {
     @Column(name="due_date")
     private String bugDueDate;
 
+    @Column(name="priority")
+    private String bugPriority;
+
     public Bug(){
 
     }
@@ -133,6 +136,14 @@ public class Bug {
 
     public void setBugDueDate(String bugDueDate) {
         this.bugDueDate = bugDueDate;
+    }
+
+    public String getBugPriority() {
+        return bugPriority;
+    }
+
+    public void setBugPriority(String bugPriority) {
+        this.bugPriority = bugPriority;
     }
 
     @Override
