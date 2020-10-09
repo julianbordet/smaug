@@ -5,6 +5,8 @@ import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +63,20 @@ public class AppController {
         List<Bug> allBugsList = bugService.getBugList();
         List<Project> allProjectsList = projectService.getProjectsList();
 
+        ///
+        ///Helper code to get the username of the currently logged in user:
+
+        String myUserName;
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            myUserName = ((UserDetails)principal).getUsername();
+        } else {
+            myUserName = principal.toString();
+        }
+
+        List<Bug> specificUserBugList = bugService.getBugListForUser(myUserName);
+        int specificUserbugCount = specificUserBugList.size();
         ///
         ///
         ///

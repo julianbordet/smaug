@@ -8,4 +8,5 @@ public interface BugDAO {
 
     public List<Bug> getBugList();
 
+    List<Bug> getBugListForUser(String username);
 }
