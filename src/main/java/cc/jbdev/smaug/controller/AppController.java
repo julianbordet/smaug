@@ -26,16 +26,23 @@ public class AppController {
     @GetMapping("/dashboard")
     public String viewDashboard(Model theModel){
 
-        /*//get the specific user
-        AppUser tempUser = new AppUser();
-        tempUser = service.getUser();
+        ///Helper code to get the username of the currently logged in user:
+        String myUserName;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            myUserName = ((UserDetails)principal).getUsername();
+        } else {
+            myUserName = principal.toString();
+        }
+        ///
 
-        //card1
-        //get total bugs owned by user
-        int bugTotal = service.getTotalBugs(tempUser);
-        theModel.addAttribute("userOpenBugCount", bugTotal);
+        ///card1
+        ///get total ACTIVE bugs owned by user, add it to the model.
+        List<Bug> userActiveBugList = bugService.getActiveBugListForUser(myUserName);
+        int userActiveBugCount = userActiveBugList.size();
+        theModel.addAttribute("userOpenBugCount", userActiveBugCount);
 
-        //card2
+      /*  //card2
         //get bug severity list
         List<Bug> bugList = service.getBugList(tempUser);
         //figure out how to display donut graph
@@ -51,10 +58,12 @@ public class AppController {
         //COULD USE TWO JOINS WITH UNION IN SQL TO GET THE FULL LIST OF BUGS
         //WITH TAGS ABOUT WHETHER THEY ARE DUE OR NOT
         //figure out how to display donut graph
-
+*/
         //card4
-        int totalBugsCrushed = service.getTotalBugsCrushed(tempUser);
-        theModel.addAttribute("userTotalBugsCrushed", totalBugsCrushed);*/
+        List<Bug> userTotalBugList = bugService.getBugListForUser(myUserName);
+        int userTotalBugCount = userTotalBugList.size();
+        int userCrushedBugCount = userTotalBugCount - userActiveBugCount;
+        theModel.addAttribute("userCrushedBugCount", userCrushedBugCount);
 
 
         //--------------------------------//
@@ -62,22 +71,8 @@ public class AppController {
         //------------------------------//
         List<Bug> allBugsList = bugService.getBugList();
         List<Project> allProjectsList = projectService.getProjectsList();
-
-        ///
-        ///Helper code to get the username of the currently logged in user:
-
-        String myUserName;
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-
         List<Bug> specificUserBugList = bugService.getBugListForUser(myUserName);
         int specificUserbugCount = specificUserBugList.size();
-
         List<Bug> specificUserActiveBugList = bugService.getActiveBugListForUser(myUserName);
         int specificUserActiveBugCount = specificUserActiveBugList.size();
         ///

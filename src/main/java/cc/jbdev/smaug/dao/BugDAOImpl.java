@@ -76,7 +76,7 @@ public class BugDAOImpl implements BugDAO {
         /////////////////
         //Since the query below is done in HQL the "from Bug" should refer to the @Entity class name
         //not to the table name, which in this case is "bugs".
-        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = 'crushed'", Bug.class);
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = 'not crushed'", Bug.class);
 
         //execute query and get result list
         List<Bug> bugList = theQuery.getResultList();
