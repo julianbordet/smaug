@@ -1,7 +1,9 @@
 package cc.jbdev.smaug.controller;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
+import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,9 @@ public class AppController {
 
     @Autowired
     BugService bugService;
+
+    @Autowired
+    ProjectService projectService;
 
     @GetMapping("/dashboard")
     public String viewDashboard(Model theModel){
@@ -53,8 +58,13 @@ public class AppController {
         //--------------------------------//
         //  FOR TESTING PURPOSES ONLY    //
         //------------------------------//
-        List<Bug> myBugList = bugService.getBugList();
+        List<Bug> allBugsList = bugService.getBugList();
+        List<Project> allProjectsList = projectService.getProjectsList();
 
+        ///
+        ///
+        ///
+        ///
         return "dashboardpage";
     }
 
