@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>My Projects</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+
+
+</head>
+<body>
+
+<!--navbar-->
+<div class="row" id="mynav">
+    <div class="col-12 py-3">
+        <div class="ml-3" style="font-size: 1.3rem">Smaug</div>
+    </div>
+</div>
+
+<div class="row">
+
+    <!--left-vertical navbar-->
+    <div class="col-1 pl-0" id="vertnav">
+        <ul style="list-style: none;">
+
+            <a th:href="@{/dashboard}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{/mybugs}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-bug"></i>
+                        <p>My Bugs</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{/myprojects}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-tasks"></i>
+                        <p>My Projects</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{/manageroles}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-user-tag"></i>
+                        <p>Manage Roles</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{/manageprojects}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-cogs"></i>
+                        <p>Manage Projects</p>
+                    </li>
+                </button>
+            </a>
+
+        </ul>
+    </div>
+
+    <!--Main area-->
+    <div class="col-11" id="background-for-working-zone">
+
+        <div class="row w-100 justify-content-around mt-4">
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+
+</html>

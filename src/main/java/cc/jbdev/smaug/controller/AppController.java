@@ -115,52 +115,88 @@ public class AppController {
         ///card4
         ///show total number of bugs by project
 
+        //I needed a helper class that would hold a key-value pair, so I created the ProjectBugCounter class.
+        //Then I create a list of these, which will be helpful down the line
         List<ProjectBugCounter> projectBugCounter = new ArrayList<ProjectBugCounter>();
 
+        //get all active projects for the logged in user
         List<Project> userActiveProjects = projectService.getActiveProjectsListForUser(myUserName);
 
+        //iterate over each active project the user is involved
         for(Project project : userActiveProjects){
 
             if (project.getIsActive() == 1) {
+
+                //get a list of bugs for the specific project, save them on a list
                 List<Bug> bugListForProject = bugService.getProjectActiveBugsByUser(project, myUserName);
+
+                //from the list on the previous step, create an int that holds the amount of bugs in the list
                 int bugCounterForProject = bugListForProject.size();
+
+                //get the project name
                 String projectName = project.getProjectName();
+
+                //create a ProjectBugCounter class using the previous two values, the project name and the
+                //amount of bugs it holds
                 ProjectBugCounter projectCounter = new ProjectBugCounter(projectName, bugCounterForProject);
+
+                //add to the list of ProjectCounters.
                 projectBugCounter.add(projectCounter);
             }
         }
-        //aca lo que tengo es una lista(projectBugCounter) con todos los projectos y su respectiva cantidad de bugs activos.
+
+        //at this point I have a list (projectBugCounter) that holds all projects and their respective bug count
+        //only thing left is iterate over them to add them to the Model.
         int counter = 1;
-
         for(ProjectBugCounter project : projectBugCounter){
-
-
 
             theModel.addAttribute("project" + counter + "Name", project.getProjectName());
             theModel.addAttribute("project" + counter + "Bugs", project.getActiveBugCount());
 
             counter++;
-
         }
 
-
-        ///
-
-        //--------------------------------//
-        //  FOR TESTING PURPOSES ONLY    //
-        //------------------------------//
-        List<Bug> allBugsList = bugService.getBugList();
-        List<Project> allProjectsList = projectService.getProjectsList();
-        List<Bug> specificUserBugList = bugService.getBugListForUser(myUserName);
-        int specificUserbugCount = specificUserBugList.size();
-        List<Bug> specificUserActiveBugList = bugService.getActiveBugListForUser(myUserName);
-        int specificUserActiveBugCount = specificUserActiveBugList.size();
-        ///
-        ///
-        ///
-        ///
         return "dashboardpage";
     }
 
+    @GetMapping("/mybugs")
+    public String showMyBugs(){
+
+        return "mybugspage";
+    }
+
+    @GetMapping("/myprojects")
+    public String showMyProjects(){
+
+        return "myprojectspage";
+    }
+
+    @GetMapping("/manageroles")
+    public String showManageRoles(){
+
+        return "managerolespage";
+    }
+
+    @GetMapping("/manageprojects")
+    public String showManageProjects(){
+
+        return "manageprojectspage";
+    }
+
+
+
+    ///
+
+    //--------------------------------//
+    //  FOR TESTING PURPOSES ONLY    //
+    //------------------------------//
+
+
+    //-------------------------------
+
+    ///
+    ///
+    ///
+    ///
 
 }

@@ -28,40 +28,51 @@
     <div class="col-1 pl-0" id="vertnav">
         <ul style="list-style: none;">
 
+            <a th:href="@{/dashboard}">
             <button class="btn btn-outline-light w-100" type="button">
                 <li class="text-center mt-3">
                     <i class="fas fa-2x fa-tachometer-alt"></i>
                     <p>Dashboard</p>
                 </li>
             </button>
+            </a>
 
+            <a th:href="@{/mybugs}">
             <button class="btn btn-outline-light w-100" type="button">
                 <li class="text-center mt-3">
                     <i class="fas fa-2x fa-bug"></i>
                     <p>My Bugs</p>
                 </li>
             </button>
+            </a>
 
+            <a th:href="@{/myprojects}">
             <button class="btn btn-outline-light w-100" type="button">
                 <li class="text-center mt-3">
                     <i class="fas fa-2x fa-tasks"></i>
                     <p>My Projects</p>
                 </li>
             </button>
+            </a>
 
+            <a th:href="@{/manageroles}">
             <button class="btn btn-outline-light w-100" type="button">
                 <li class="text-center mt-3">
                     <i class="fas fa-2x fa-user-tag"></i>
                     <p>Manage Roles</p>
                 </li>
             </button>
+            </a>
 
+            <a th:href="@{/manageprojects}">
             <button class="btn btn-outline-light w-100" type="button">
                 <li class="text-center mt-3">
                     <i class="fas fa-2x fa-cogs"></i>
                     <p>Manage Projects</p>
                 </li>
             </button>
+            </a>
+
         </ul>
     </div>
 
@@ -132,6 +143,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+
+<!-- WARNING TO FUTURE SELF: the chart labels defined in the chart data variables below is a bit brittle,
+if I want to access a string that was saved in the Model then the way to do it would be
+to go directly to the label listing and add: '[[${labelExampleName}]]'. For some reason
+if I define a variable x = [[${labelExampleName}]] and then pass either x or 'x' it won't work and
+the chart will not be displayed -->
+
+<!--Card 1 Chart-->
+<script>
+    var userBugsDue = [[${userBugsDue}]];
+    var userBugsNotDue = [[${userBugsNotDue}]];
+
+    // chart colors
+    var colors = ['#E74C3C','#2ECC71'];
+
+    /* 3 donut charts */
+    var donutOptions3 = {
+        cutoutPercentage: 55,
+        legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
+    };
+
+    // donut 3
+    var chDonutData3 = {
+        labels: ['Due', 'Not Due'],
+        datasets: [
+            {
+                backgroundColor: colors,
+                borderWidth: 2,
+                data: [userBugsDue, userBugsNotDue]
+            }
+        ]
+    };
+
+    var chDonut3 = document.getElementById("chDonut3");
+    if (chDonut3) {
+        new Chart(chDonut3, {
+            type: 'pie',
+            data: chDonutData3,
+            options: donutOptions3
+        });
+    }
+</script>
 
 
 <!--Card2 Chart-->
@@ -212,41 +267,6 @@
     }
 </script>
 
-<!--Card 1 Chart-->
-<script>
-    var userBugsDue = [[${userBugsDue}]];
-    var userBugsNotDue = [[${userBugsNotDue}]];
-
-    // chart colors
-    var colors = ['#E74C3C','#2ECC71'];
-
-    /* 3 donut charts */
-    var donutOptions3 = {
-        cutoutPercentage: 55,
-        legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
-    };
-
-    // donut 3
-    var chDonutData3 = {
-        labels: ['Due', 'Not Due'],
-        datasets: [
-            {
-                backgroundColor: colors,
-                borderWidth: 2,
-                data: [userBugsDue, userBugsNotDue]
-            }
-        ]
-    };
-
-    var chDonut3 = document.getElementById("chDonut3");
-    if (chDonut3) {
-        new Chart(chDonut3, {
-            type: 'pie',
-            data: chDonutData3,
-            options: donutOptions3
-        });
-    }
-</script>
 
 <!--Card4 Chart-->
 <script>
@@ -281,9 +301,6 @@
             options: donutOptions4
         });
     }
-
-
-
 </script>
 
 
