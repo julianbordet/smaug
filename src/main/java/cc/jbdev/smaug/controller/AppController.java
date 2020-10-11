@@ -2,6 +2,7 @@ package cc.jbdev.smaug.controller;
 
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.Project;
+import cc.jbdev.smaug.entity.ProjectBugCounter;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.nio.file.attribute.UserDefinedFileAttributeView;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -37,10 +39,24 @@ public class AppController {
         ///
 
         ///card1
-        ///get total ACTIVE bugs owned by user, add it to the model.
+        ///get total ACTIVE bugs owned by user, add a counter for bugs due and not due to the model.
         List<Bug> userActiveBugList = bugService.getActiveBugListForUser(myUserName);
-        int userActiveBugCount = userActiveBugList.size();
-        theModel.addAttribute("userOpenBugCount", userActiveBugCount);
+        int bugsDue = 0;
+        int bugsNotDue = 0;
+
+        for(Bug bug : userActiveBugList){
+
+            Date bugDueDate = bug.getBugDueDate();
+            Date today = new Date();
+
+            if (bug.getBugDueDate().after(today)){
+                bugsNotDue++;
+            } else {
+                bugsDue++;
+            }
+        }
+        theModel.addAttribute("userBugsDue", bugsDue);
+        theModel.addAttribute("userBugsNotDue", bugsNotDue);
         ///
 
         ///card2
@@ -97,11 +113,37 @@ public class AppController {
 
 
         ///card4
-        ///show total number of bugs crushed by the user
-        List<Bug> userTotalBugList = bugService.getBugListForUser(myUserName);
-        int userTotalBugCount = userTotalBugList.size();
-        int userCrushedBugCount = userTotalBugCount - userActiveBugCount;
-        theModel.addAttribute("userCrushedBugCount", userCrushedBugCount);
+        ///show total number of bugs by project
+
+        List<ProjectBugCounter> projectBugCounter = new ArrayList<ProjectBugCounter>();
+
+        List<Project> userActiveProjects = projectService.getActiveProjectsListForUser(myUserName);
+
+        for(Project project : userActiveProjects){
+
+            if (project.getIsActive() == 1) {
+                List<Bug> bugListForProject = bugService.getProjectActiveBugsByUser(project, myUserName);
+                int bugCounterForProject = bugListForProject.size();
+                String projectName = project.getProjectName();
+                ProjectBugCounter projectCounter = new ProjectBugCounter(projectName, bugCounterForProject);
+                projectBugCounter.add(projectCounter);
+            }
+        }
+        //aca lo que tengo es una lista(projectBugCounter) con todos los projectos y su respectiva cantidad de bugs activos.
+        int counter = 1;
+
+        for(ProjectBugCounter project : projectBugCounter){
+
+
+
+            theModel.addAttribute("project" + counter + "Name", project.getProjectName());
+            theModel.addAttribute("project" + counter + "Bugs", project.getActiveBugCount());
+
+            counter++;
+
+        }
+
+
         ///
 
         //--------------------------------//

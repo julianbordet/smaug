@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -22,6 +23,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
+    @Transactional
     public List<Project> getProjectsList() {
 
         //get current hibernate session
@@ -40,5 +42,18 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return projectList;
 
+    }
+
+    @Override
+    @Transactional
+    public List<Project> getActiveProjectsListForUser(String username) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Project> theQuery = currentSession.createQuery("from Project where owner = '" + username + "'" + "AND is_active = '1'", Project.class);
+
+        List<Project> projectList = theQuery.getResultList();
+
+        return projectList;
     }
 }

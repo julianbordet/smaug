@@ -41,7 +41,7 @@ public class Bug {
     private String bugResponsibleDev;
 
     @Column(name="due_date")
-    private String bugDueDate;
+    private Date bugDueDate;
 
     @Column(name="priority")
     private String bugPriority;
@@ -130,11 +130,11 @@ public class Bug {
         this.bugResponsibleDev = bugResponsibleDev;
     }
 
-    public String getBugDueDate() {
+    public Date getBugDueDate() {
         return bugDueDate;
     }
 
-    public void setBugDueDate(String bugDueDate) {
+    public void setBugDueDate(Date bugDueDate) {
         this.bugDueDate = bugDueDate;
     }
 
