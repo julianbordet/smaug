@@ -81,6 +81,51 @@
 
         <div class="row w-100 justify-content-around mt-4">
 
+            <!--TEST
+            <br>
+            TEST
+            <br>
+            TEST
+            <br>
+            TEST
+            <br>
+            TEST-->
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th th:text="'Bug Name'" />
+                        <th th:text="'Bug Severity'" />
+                        <th th:text="'Bug Priority'" />
+                        <th th:text="'Bug Status'" />
+                        <th th:text="'Fix Due Date'" />
+
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="bug, iStat : ${bugPage.content}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'">
+                    <td th:text="${ bug.bugTitle }" />
+                    <td th:text="${ bug.bugSeverity}" />
+                    <td th:text="${ bug.bugPriority}" />
+                    <td th:text="${ bug.bugStatus}" />
+                    <td th:text="${ bug.bugDueDate}" />
+
+
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${bugPage.totalPages > 0}" class="pagination"
+                 th:each="pageNumber : ${pageNumbers}">
+                 <a th:href="@{/mybugs(size=${bugPage.size}, page=${pageNumber})}"
+                    th:text="${pageNumber}"
+                    th:class="${pageNumber==bugPage.number + 1} ? active"></a>
+            </div>
+
         </div>
     </div>
 

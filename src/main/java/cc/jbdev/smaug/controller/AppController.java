@@ -6,15 +6,21 @@ import cc.jbdev.smaug.entity.ProjectBugCounter;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class AppController {
@@ -160,7 +166,33 @@ public class AppController {
     }
 
     @GetMapping("/mybugs")
-    public String showMyBugs(){
+    public String showMyBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
+                             @RequestParam("size") Optional<Integer> size){
+
+
+        ///Helper code to get the username of the currently logged in user:
+        String myUserName;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            myUserName = ((UserDetails)principal).getUsername();
+        } else {
+            myUserName = principal.toString();
+        }
+        ///
+
+
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Page<Bug> bugPage = bugService.findPaginated(PageRequest.of(currentPage - 1, pageSize), myUserName);
+
+        theModel.addAttribute("bugPage", bugPage);
+
+        int totalPages = bugPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
 
         return "mybugspage";
     }
