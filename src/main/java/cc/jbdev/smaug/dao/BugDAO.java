@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface BugDAO {
 
+    Bug getBugByBugId(int bugId);
+
     List<Bug> getBugList();
 
     List<Bug> getBugListForUser(String username);

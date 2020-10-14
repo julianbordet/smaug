@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface BugService {
 
+    //get bug by bugId
+    public Bug getBugByBugId(int bugId);
+
     //gets list of all bugs
     public List<Bug> getBugList();
 
@@ -21,6 +24,6 @@ public interface BugService {
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
 
     //add method to paginate results
-    Page<Bug> findPaginated(Pageable pageable, String username);
+    Page<Bug> findPaginatedUserActiveBugs(Pageable pageable, String username);
 
 }

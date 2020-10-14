@@ -182,9 +182,9 @@ public class AppController {
 
 
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(15);
 
-        Page<Bug> bugPage = bugService.findPaginated(PageRequest.of(currentPage - 1, pageSize), myUserName);
+        Page<Bug> bugPage = bugService.findPaginatedUserActiveBugs(PageRequest.of(currentPage - 1, pageSize), myUserName);
 
         theModel.addAttribute("bugPage", bugPage);
 
@@ -196,6 +196,21 @@ public class AppController {
 
         return "mybugspage";
     }
+
+
+
+    @GetMapping("/showBugDetail")
+    public String showBugDetail(@RequestParam("bugId") int theId, Model theModel) {
+
+        Bug elBugClickeadoEs = bugService.getBugByBugId(theId);
+
+        theModel.addAttribute("theBug", elBugClickeadoEs);
+
+        return "showBugDetailPage";
+
+    }
+
+
 
     @GetMapping("/myprojects")
     public String showMyProjects(){

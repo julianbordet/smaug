@@ -44,7 +44,7 @@ public class BugServiceImpl implements BugService {
     }
 
     @Override
-    public Page<Bug> findPaginated(Pageable pageable, String username) {
+    public Page<Bug> findPaginatedUserActiveBugs(Pageable pageable, String username) {
 
         List<Bug> userBugList = getActiveBugListForUser(username);
 
@@ -63,5 +63,10 @@ public class BugServiceImpl implements BugService {
         Page<Bug> bugPage = new PageImpl<Bug>(list, PageRequest.of(currentPage, pageSize), userBugList.size());
 
         return bugPage;
+    }
+
+    @Override
+    public Bug getBugByBugId(int bugId) {
+        return bugDAO.getBugByBugId(bugId);
     }
 }

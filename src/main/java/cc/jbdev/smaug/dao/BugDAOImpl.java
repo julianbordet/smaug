@@ -103,4 +103,17 @@ public class BugDAOImpl implements BugDAO {
 
         return bugListByProject;
     }
+
+    @Override
+    @Transactional
+    public Bug getBugByBugId(int bugId) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where bug_id = '" + bugId + "'", Bug.class);
+
+        Bug theBug = theQuery.getSingleResult();
+
+        return theBug;
+    }
 }
