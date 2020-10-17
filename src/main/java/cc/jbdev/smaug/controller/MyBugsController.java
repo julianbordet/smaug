@@ -73,12 +73,35 @@ public class MyBugsController {
 
     }
 
+
+
     @PostMapping("/updateBug")
     public String updateBug(@ModelAttribute("theBug") Bug theBug){
+
 
         bugService.save(theBug);
 
         return "dashboardpage";
+
+    }
+
+    @PostMapping("/createBug")
+    public String createBug(@ModelAttribute("theBug") Bug theBug){
+
+        theBug.setBugId(0);
+        bugService.save(theBug);
+
+        return "dashboardpage";
+    }
+
+    @GetMapping("/newbug")
+    public String newBug(Model theModel){
+
+        Bug bug = new Bug();
+
+        theModel.addAttribute("theBug", bug);
+
+        return "newBugPage";
     }
 
 
