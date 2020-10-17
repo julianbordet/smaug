@@ -1,52 +1,45 @@
 package cc.jbdev.smaug.entity;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity
-@Table(name="bugs")
-public class Bug {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="bug_id")
+public class BugT {
+
+
     private int bugId;
 
-    @Column(name="project_id")
+
     private int projectId;
 
-    @Column(name="title")
+
     private String bugTitle;
 
-    @Column(name="description")
+
     private String bugDescription;
 
-    @Column(name="steps_to_reproduce")
+
     private String stepsToReproduce;
 
-    @Column(name="severity")
+
     private String bugSeverity;
 
-    @Column(name="date_created")
+
     private String dateCreated;
 
-    @Column(name="status")
+
     private String bugStatus;
 
-    @Column(name="created_by")
+
     private String bugCreatedBy;
 
-    @Column(name="responsible_dev")
     private String bugResponsibleDev;
 
-    @Column(name="due_date")
     private String bugDueDate;
 
-    @Column(name="priority")
     private String bugPriority;
 
-    public Bug(){
+    public BugT(){
 
     }
 

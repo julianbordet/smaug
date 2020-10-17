@@ -26,4 +26,7 @@ public interface BugService {
     //add method to paginate results
     Page<Bug> findPaginatedUserActiveBugs(Pageable pageable, String username);
 
+    //save updates to bug
+    void save(Bug theBug);
+
 }

@@ -82,7 +82,7 @@
     <div class="col-11" id="background-for-working-zone">
 
 
-        <form th:action="@{/updateBug}" method="post">
+        <form th:action="@{/updateBug}" th:object="${theBug}" method="post">
 
             <!--First Row: name, id, project, severity, priority-->
 
@@ -94,12 +94,12 @@
 
                     <div class="form-group">
                         <label for="bugId">Bug Id:</label>
-                        <input class="form-control" type="text" id="bugId" th:field="${theBug.bugId}">
+                        <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
                     </div>
 
                     <div class="form-group">
                         <label for="bugproject">Project:</label>
-                        <input class="form-control" type="text" id="bugproject" th:field="${theBug.projectId}">
+                        <input class="form-control" type="text" id="bugproject" readonly th:field="${theBug.projectId}">
                     </div>
 
                     <div class="form-group">
@@ -117,12 +117,17 @@
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="bugCreatedBy">Created by:</label>
-                    <input class="form-control" type="text" id="bugCreatedBy" th:field="${theBug.bugCreatedBy}">
+                    <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
+                </div>
+
+                <div class="form-group">
+                    <label for="bugStatus">Status:</label>
+                    <input class="form-control" type="text" id="bugStatus" th:field="${theBug.bugStatus}">
                 </div>
 
                 <div class="form-group">
                     <label for="bugResponsibleDev">Assigned to:</label>
-                    <input class="form-control" type="text" id="bugResponsibleDev" th:field="${theBug.bugResponsibleDev}">
+                    <input class="form-control" type="text" id="bugResponsibleDev" readonly th:field="${theBug.bugResponsibleDev}">
                 </div>
 
                 <div class="form-group">
@@ -132,7 +137,7 @@
 
                 <div class="form-group">
                     <label for="bugCreated">Date created:</label>
-                    <input class="form-control" type="text" id="bugCreated" th:field="${theBug.dateCreated}">
+                    <input class="form-control" type="text" id="bugCreated" readonly th:field="${theBug.dateCreated}">
                 </div>
 
             </div>

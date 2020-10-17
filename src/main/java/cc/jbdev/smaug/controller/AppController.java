@@ -13,8 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,10 +55,19 @@ public class AppController {
 
         for(Bug bug : userActiveBugList){
 
-            Date bugDueDate = bug.getBugDueDate();
+            String bugDueDateInString = bug.getBugDueDate();
+
+            Date dueDateInDate = new Date();
+
+            try {
+                dueDateInDate = new SimpleDateFormat("yyyy-MM-dd").parse(bugDueDateInString);
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+
             Date today = new Date();
 
-            if (bug.getBugDueDate().after(today)){
+            if (dueDateInDate.after(today)){
                 bugsNotDue++;
             } else {
                 bugsDue++;
@@ -208,6 +220,14 @@ public class AppController {
 
         return "showBugDetailPage";
 
+    }
+
+    @PostMapping("/updateBug")
+    public String updateBug(@ModelAttribute("theBug") Bug theBug){
+
+        bugService.save(theBug);
+
+        return "dashboardpage";
     }
 
 

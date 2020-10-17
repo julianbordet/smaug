@@ -69,4 +69,9 @@ public class BugServiceImpl implements BugService {
     public Bug getBugByBugId(int bugId) {
         return bugDAO.getBugByBugId(bugId);
     }
+
+    @Override
+    public void save(Bug theBug) {
+        bugDAO.save(theBug);
+    }
 }

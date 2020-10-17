@@ -116,4 +116,15 @@ public class BugDAOImpl implements BugDAO {
 
         return theBug;
     }
+
+    @Override
+    @Transactional
+    public void save(Bug theBug) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.saveOrUpdate(theBug);
+
+
+    }
 }

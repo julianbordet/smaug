@@ -16,4 +16,6 @@ public interface BugDAO {
     List<Bug> getActiveBugListForUser(String username);
 
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
+
+    void save(Bug theBug);
 }
