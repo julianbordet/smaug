@@ -12,10 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +23,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-public class AppController {
+@RequestMapping("/dashboard")
+public class DashboardController {
 
     @Autowired
     BugService bugService;
@@ -34,7 +32,7 @@ public class AppController {
     @Autowired
     ProjectService projectService;
 
-    @GetMapping("/dashboard")
+    @GetMapping("/main")
     public String viewDashboard(Model theModel){
 
         ///Helper code to get the username of the currently logged in user:
@@ -177,38 +175,6 @@ public class AppController {
         return "dashboardpage";
     }
 
-    @GetMapping("/mybugs")
-    public String showMyBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
-                             @RequestParam("size") Optional<Integer> size){
-
-
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
-
-
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(15);
-
-        Page<Bug> bugPage = bugService.findPaginatedUserActiveBugs(PageRequest.of(currentPage - 1, pageSize), myUserName);
-
-        theModel.addAttribute("bugPage", bugPage);
-
-        int totalPages = bugPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            theModel.addAttribute("pageNumbers", pageNumbers);
-        }
-
-        return "mybugspage";
-    }
-
 
 
     @GetMapping("/showBugDetail")
@@ -232,23 +198,9 @@ public class AppController {
 
 
 
-    @GetMapping("/myprojects")
-    public String showMyProjects(){
 
-        return "myprojectspage";
-    }
 
-    @GetMapping("/manageroles")
-    public String showManageRoles(){
 
-        return "managerolespage";
-    }
-
-    @GetMapping("/manageprojects")
-    public String showManageProjects(){
-
-        return "manageprojectspage";
-    }
 
 
 
