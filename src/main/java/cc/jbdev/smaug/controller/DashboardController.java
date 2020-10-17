@@ -177,24 +177,9 @@ public class DashboardController {
 
 
 
-    @GetMapping("/showBugDetail")
-    public String showBugDetail(@RequestParam("bugId") int theId, Model theModel) {
 
-        Bug elBugClickeadoEs = bugService.getBugByBugId(theId);
 
-        theModel.addAttribute("theBug", elBugClickeadoEs);
 
-        return "showBugDetailPage";
-
-    }
-
-    @PostMapping("/updateBug")
-    public String updateBug(@ModelAttribute("theBug") Bug theBug){
-
-        bugService.save(theBug);
-
-        return "dashboardpage";
-    }
 
 
 

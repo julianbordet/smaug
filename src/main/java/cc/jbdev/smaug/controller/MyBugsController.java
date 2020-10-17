@@ -10,9 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +59,26 @@ public class MyBugsController {
         }
 
         return "mybugspage";
+    }
+
+
+    @GetMapping("/showBugDetail")
+    public String showBugDetail(@RequestParam("bugId") int theId, Model theModel) {
+
+        Bug elBugClickeadoEs = bugService.getBugByBugId(theId);
+
+        theModel.addAttribute("theBug", elBugClickeadoEs);
+
+        return "showBugDetailPage";
+
+    }
+
+    @PostMapping("/updateBug")
+    public String updateBug(@ModelAttribute("theBug") Bug theBug){
+
+        bugService.save(theBug);
+
+        return "dashboardpage";
     }
 
 
