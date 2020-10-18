@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Bug details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+<!--navbar-->
+<div class="row" id="mynav">
+    <div class="col-12 py-3">
+        <div class="ml-3" style="font-size: 1.3rem">Smaug</div>
+    </div>
+</div>
+
+<div class="row">
+
+    <!--left-vertical navbar-->
+    <div class="col-1 pl-0" id="vertnav">
+        <ul style="list-style: none;">
+
+            <a th:href="@{~/dashboard/main}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{~/mybugs/main}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-bug"></i>
+                        <p>My Bugs</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{~/myprojects/main}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-tasks"></i>
+                        <p>My Projects</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{~/manageroles/main}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-user-tag"></i>
+                        <p>Manage Roles</p>
+                    </li>
+                </button>
+            </a>
+
+            <a th:href="@{~/manageprojects/main}">
+                <button class="btn btn-outline-light w-100" type="button">
+                    <li class="text-center mt-3">
+                        <i class="fas fa-2x fa-cogs"></i>
+                        <p>Manage Projects</p>
+                    </li>
+                </button>
+            </a>
+
+        </ul>
+    </div>
+
+    <!--Main area-->
+    <div class="col-11" id="background-for-working-zone">
+
+
+        <form th:action="@{~/mybugs/updateBug}" th:object="${theBug}" method="post">
+
+            <!--First Row: name, id, project, severity, priority-->
+
+                <div class="row w-100 justify-content-around mt-3">
+                    <div class="form-group">
+                        <label for="bugtitle">Bug Title:</label>
+                        <input class="form-control" type="text" id="bugtitle" th:field="${theBug.bugTitle}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugId">Bug Id:</label>
+                        <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugproject">Project:</label>
+                        <input class="form-control" type="text" id="bugproject" readonly th:field="${theBug.projectId}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugSeverity">Severity:</label>
+                        <input class="form-control" type="text" id="bugSeverity" th:field="${theBug.bugSeverity}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bugPriority">Priority:</label>
+                        <input class="form-control" type="text" id="bugPriority" th:field="${theBug.bugPriority}">
+                    </div>
+                </div>
+
+            <!--Second Row: createdby, responsible-dev, due date, date created-->
+            <div class="row w-100 justify-content-around mt-3">
+                <div class="form-group">
+                    <label for="bugCreatedBy">Created by:</label>
+                    <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
+                </div>
+
+                <div class="form-group">
+                    <label for="bugStatus">Status:</label>
+                    <input class="form-control" type="text" id="bugStatus" th:field="${theBug.bugStatus}">
+                </div>
+
+                <div class="form-group">
+                    <label for="bugResponsibleDev">Assigned to:</label>
+                    <input class="form-control" type="text" id="bugResponsibleDev" readonly th:field="${theBug.bugResponsibleDev}">
+                </div>
+
+                <div class="form-group">
+                    <label for="bugDueDate">Due date:</label>
+                    <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">
+                </div>
+
+                <div class="form-group">
+                    <label for="bugCreated">Date created:</label>
+                    <input class="form-control" type="text" id="bugCreated" readonly th:field="${theBug.dateCreated}">
+                </div>
+
+            </div>
+            <!--Third Row: description and steps to reproduce-->
+            <div class="row w-100 justify-content-around mt-3">
+
+                <div class="form-group w-25">
+                    <label for="bugDescription">Description:</label>
+                    <textarea class="form-control" id="bugDescription" th:field="${theBug.bugDescription}" th:rows="5"></textarea>
+                </div>
+
+                <div class="form-group w-25">
+                    <label for="bugStepsToReproduce">Steps to Reproduce:</label>
+                    <textarea class="form-control" id="bugStepsToReproduce" th:field="${theBug.stepsToReproduce}" th:rows="5"></textarea>
+                </div>
+            </div>
+            <!--Fourth Row: Submit button-->
+            <div class="row w-100 mt-4 justify-content-around">
+
+                <button class="btn btn-success w-25 mr-4" type="submit">Submit</button>
+
+                <!-------------------->
+                <!-- Delete bug button -->
+                <!-------------------->
+                <br>
+                <a th:href="@{~/mybugs/deletebug(bugId = ${theBug.bugId})}">
+                    <button type="button" class="btn btn-danger">Delete bug</button>
+                </a>
+
+            </div>
+
+
+
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+</html>

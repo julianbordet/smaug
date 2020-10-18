@@ -8,4 +8,7 @@ public interface ProjectDAO {
 
     public List<Project> getProjectsList();
 
+    public List<Project> getActiveProjectsListForUser(String username);
+
 }
+

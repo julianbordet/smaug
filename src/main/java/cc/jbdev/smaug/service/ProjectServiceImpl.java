@@ -17,4 +17,8 @@ public class ProjectServiceImpl implements ProjectService {
         return projectDAO.getProjectsList();
     }
 
+    @Override
+    public List<Project> getActiveProjectsListForUser(String username) {
+        return projectDAO.getActiveProjectsListForUser(username);
+    }
 }

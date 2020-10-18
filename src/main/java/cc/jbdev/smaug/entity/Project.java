@@ -21,6 +21,9 @@ public class Project {
     @Column(name="owner")
     private String projectOwner;
 
+    @Column(name="is_active")
+    private int isActive;
+
     public Project() {
     }
 
@@ -56,6 +59,13 @@ public class Project {
         this.projectOwner = projectOwner;
     }
 
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
 
     @Override
     public String toString() {
