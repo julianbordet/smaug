@@ -74,4 +74,9 @@ public class BugServiceImpl implements BugService {
     public void save(Bug theBug) {
         bugDAO.save(theBug);
     }
+
+    @Override
+    public void delete(int bugId) {
+        bugDAO.delete(bugId);
+    }
 }

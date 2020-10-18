@@ -104,6 +104,14 @@ public class MyBugsController {
         return "newBugPage";
     }
 
+    @GetMapping("/deletebug")
+    public String deleteBug(@RequestParam("bugId") int bugId){
+
+        bugService.delete(bugId);
+
+        return "dashboardpage";
+    }
+
 
 
 }

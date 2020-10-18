@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="UTF-8">
-    <title>TITLE</title>
+    <title>Bug details</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
@@ -155,9 +155,17 @@
                 </div>
             </div>
             <!--Fourth Row: Submit button-->
-            <div class="row w-100 justify-content-around mt-4">
+            <div class="row w-100 mt-4 justify-content-around">
 
-                <button class="btn btn-success w-25" type="submit">Submit</button>
+                <button class="btn btn-success w-25 mr-4" type="submit">Submit</button>
+
+                <!-------------------->
+                <!-- Delete bug button -->
+                <!-------------------->
+                <br>
+                <a th:href="@{~/mybugs/deletebug(bugId = ${theBug.bugId})}">
+                    <button type="button" class="btn btn-danger">Delete bug</button>
+                </a>
 
             </div>
 
