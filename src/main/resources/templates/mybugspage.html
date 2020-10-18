@@ -28,7 +28,7 @@
     <div class="col-1 pl-0" id="vertnav">
         <ul style="list-style: none;">
 
-            <a th:href="@{/dashboard}">
+            <a th:href="@{~/dashboard/main}">
                 <button class="btn btn-outline-light w-100" type="button">
                     <li class="text-center mt-3">
                         <i class="fas fa-2x fa-tachometer-alt"></i>
@@ -37,7 +37,7 @@
                 </button>
             </a>
 
-            <a th:href="@{/mybugs}">
+            <a th:href="@{~/mybugs/main}">
                 <button class="btn btn-outline-light w-100" type="button">
                     <li class="text-center mt-3">
                         <i class="fas fa-2x fa-bug"></i>
@@ -46,7 +46,7 @@
                 </button>
             </a>
 
-            <a th:href="@{/myprojects}">
+            <a th:href="@{~/myprojects/main}">
                 <button class="btn btn-outline-light w-100" type="button">
                     <li class="text-center mt-3">
                         <i class="fas fa-2x fa-tasks"></i>
@@ -55,7 +55,7 @@
                 </button>
             </a>
 
-            <a th:href="@{/manageroles}">
+            <a th:href="@{~/manageroles/main}">
                 <button class="btn btn-outline-light w-100" type="button">
                     <li class="text-center mt-3">
                         <i class="fas fa-2x fa-user-tag"></i>
@@ -64,7 +64,7 @@
                 </button>
             </a>
 
-            <a th:href="@{/manageprojects}">
+            <a th:href="@{~/manageprojects/main}">
                 <button class="btn btn-outline-light w-100" type="button">
                     <li class="text-center mt-3">
                         <i class="fas fa-2x fa-cogs"></i>
@@ -139,6 +139,16 @@
                        th:text="${pageNumber}"
                        th:class="${pageNumber==bugPage.number + 1} ? active"></a>
                 </div>
+
+
+                <!-------------------->
+                <!-- Add bug button -->
+                <!-------------------->
+                <br>
+                <a th:href="@{~/mybugs/newbug}">
+                <button type="button" class="btn btn-primary">Add bug</button>
+                </a>
+
             </div>
         </div>
     </div>
@@ -155,7 +165,7 @@
 <!--  El "value" que recibe rowClicked es el value de th:bugId definido antes-->
 <script>
     function rowClicked(value){
-        location.href = "/showBugDetail?bugId=" + value;
+        location.href = "/mybugs/showBugDetail?bugId=" + value;
     }
 </script>
 

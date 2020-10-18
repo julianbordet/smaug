@@ -29,4 +29,7 @@ public interface BugService {
     //save updates to bug
     void save(Bug theBug);
 
+    //deletes bug
+    void delete(int bugId);
+
 }

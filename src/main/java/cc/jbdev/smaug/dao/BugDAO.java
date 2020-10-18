@@ -18,4 +18,6 @@ public interface BugDAO {
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
 
     void save(Bug theBug);
+
+    void delete(int bugId);
 }
