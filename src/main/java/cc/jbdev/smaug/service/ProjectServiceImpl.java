@@ -49,4 +49,9 @@ public class ProjectServiceImpl implements ProjectService {
 
         return projectPage;
     }
+
+    @Override
+    public void save(Project theProject) {
+        projectDAO.save(theProject);
+    }
 }

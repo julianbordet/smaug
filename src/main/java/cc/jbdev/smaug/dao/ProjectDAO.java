@@ -10,5 +10,7 @@ public interface ProjectDAO {
 
     public List<Project> getActiveProjectsListForUser(String username);
 
+    public void save(Project theProject);
+
 }
 

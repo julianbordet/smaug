@@ -85,15 +85,6 @@ public class MyBugsController {
 
     }
 
-    @PostMapping("/createBug")
-    public String createBug(@ModelAttribute("theBug") Bug theBug){
-
-        theBug.setBugId(0);
-        bugService.save(theBug);
-
-        return "dashboardpage";
-    }
-
     @GetMapping("/newbug")
     public String newBug(Model theModel){
 
@@ -102,6 +93,15 @@ public class MyBugsController {
         theModel.addAttribute("theBug", bug);
 
         return "newBugPage";
+    }
+
+    @PostMapping("/createBug")
+    public String createBug(@ModelAttribute("theBug") Bug theBug){
+
+        theBug.setBugId(0);
+        bugService.save(theBug);
+
+        return "dashboardpage";
     }
 
     @GetMapping("/deletebug")

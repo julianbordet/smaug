@@ -56,4 +56,14 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return projectList;
     }
+
+    @Override
+    @Transactional
+    public void save(Project theProject) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.save(theProject);
+
+    }
 }

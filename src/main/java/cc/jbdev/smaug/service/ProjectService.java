@@ -20,7 +20,8 @@ public interface ProjectService {
     Page<Project> findPaginatedUserActiveProjects(Pageable pageable, String username);
 
 
-
+    //save updates to bug
+    void save(Project theProject);
 
 
 }
