@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.controller;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
@@ -90,6 +91,28 @@ public class MyProjectsController {
 
         theModel.addAttribute("theProject", elProjectClickeadoEs);
 
+        List<Developer> projectDevList = elProjectClickeadoEs.getDevelopers();
+
+        theModel.addAttribute("devList", projectDevList);
+
+
+
+
+
+        int currentPage = 1;
+        int pageSize = 15;
+
+        Page<Developer> developerPage = projectService.findPaginatedProjectActiveDevelopers(PageRequest.of(currentPage - 1, pageSize), theId);
+
+        theModel.addAttribute("developerPage", developerPage);
+
+        int totalPages = developerPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
+        //
+
         return "showProjectDetailPage";
 
     }
@@ -112,5 +135,22 @@ public class MyProjectsController {
         return "dashboardpage";
     }
 
+    @GetMapping("/adddeveloper")
+    public String addDeveloper(@RequestParam("projectId") int projectId, Model theModel){
+
+        Developer newDeveloper = new Developer();
+
+        theModel.addAttribute("newDeveloper", newDeveloper);
+
+        return "addDeveloperPage";
+        //addDeveloperPage HTML PAGE NEEDS TO BE CREATED AND IMPLEMENTED
+    }
+
+    @GetMapping("/removedeveloper")
+    public String removeDeveloper(@RequestParam("projectId") int projectId){
+
+        return "removeDeveloperPage";
+        //removeDeveloperPage HTML PAGE NEEDS TO BE CREATED AND IMPLEMENTED
+    }
 
 }

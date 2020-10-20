@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.dao;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -56,6 +57,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return projectList;
     }
+
+
 
     @Override
     @Transactional

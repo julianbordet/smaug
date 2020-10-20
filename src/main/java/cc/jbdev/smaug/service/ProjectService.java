@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.service;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,8 +19,11 @@ public interface ProjectService {
 
     Project getProjectById(int theId);
 
-    //add method to paginate results
+    //add method to paginate results for User --> Active Projects
     Page<Project> findPaginatedUserActiveProjects(Pageable pageable, String username);
+
+    //add method to paginate results for Project --> Active developers
+    Page<Developer> findPaginatedProjectActiveDevelopers(Pageable pageable, int projectId);
 
     //save updates to bug
     void save(Project theProject);

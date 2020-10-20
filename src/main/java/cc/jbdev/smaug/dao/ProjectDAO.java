@@ -1,5 +1,6 @@
 package cc.jbdev.smaug.dao;
 
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 
 import java.util.List;

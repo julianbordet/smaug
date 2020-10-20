@@ -2,6 +2,7 @@ package cc.jbdev.smaug.service;
 
 import cc.jbdev.smaug.dao.ProjectDAO;
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,6 +49,33 @@ public class ProjectServiceImpl implements ProjectService {
         Page<Project> projectPage = new PageImpl<Project>(list, PageRequest.of(currentPage, pageSize), userProjectList.size());
 
         return projectPage;
+    }
+
+    @Override
+    public Page<Developer> findPaginatedProjectActiveDevelopers(Pageable pageable, int projectId) {
+
+
+        List<Developer> developerProjectList = projectDAO.getProjectById(projectId).getDevelopers();
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Developer> list;
+
+        if (developerProjectList.size() < startItem){
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, developerProjectList.size());
+            list = developerProjectList.subList(startItem, toIndex);
+        }
+
+        Page<Developer> developerPage = new PageImpl<Developer>(list, PageRequest.of(currentPage, pageSize), developerProjectList.size());
+
+        return developerPage;
+
+
+
+
     }
 
     @Override
