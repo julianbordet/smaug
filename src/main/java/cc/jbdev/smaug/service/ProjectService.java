@@ -16,12 +16,15 @@ public interface ProjectService {
 
     List<Project> getActiveProjectsListForUser(String username);
 
+    Project getProjectById(int theId);
+
     //add method to paginate results
     Page<Project> findPaginatedUserActiveProjects(Pageable pageable, String username);
 
-
     //save updates to bug
     void save(Project theProject);
+
+    void delete(int projectId);
 
 
 }

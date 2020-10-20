@@ -54,4 +54,14 @@ public class ProjectServiceImpl implements ProjectService {
     public void save(Project theProject) {
         projectDAO.save(theProject);
     }
+
+    @Override
+    public Project getProjectById(int theId) {
+         return projectDAO.getProjectById(theId);
+    }
+
+    @Override
+    public void delete(int projectId) {
+        projectDAO.delete(projectId);
+    }
 }

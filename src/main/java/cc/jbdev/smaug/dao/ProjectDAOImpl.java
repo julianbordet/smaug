@@ -63,7 +63,31 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         Session currentSession = entityManager.unwrap(Session.class);
 
-        currentSession.save(theProject);
+        currentSession.saveOrUpdate(theProject);
 
+    }
+
+    @Override
+    @Transactional
+    public Project getProjectById(int theId) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Project> theQuery = currentSession.createQuery("from Project where project_id = '" + theId + "'", Project.class);
+
+        Project theProject = theQuery.getSingleResult();
+
+        return theProject;
+    }
+
+    @Override
+    @Transactional
+    public void delete(int projectId) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query theQuery = currentSession.createQuery("delete from Project where project_id = '" + projectId + "'");
+
+        theQuery.executeUpdate();
     }
 }

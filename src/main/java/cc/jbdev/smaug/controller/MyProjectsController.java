@@ -83,5 +83,34 @@ public class MyProjectsController {
         return "dashboardpage";
     }
 
+    @GetMapping("/showProjectDetail")
+    public String showBugDetail(@RequestParam("projectId") int theId, Model theModel) {
+
+        Project elProjectClickeadoEs = projectService.getProjectById(theId);
+
+        theModel.addAttribute("theProject", elProjectClickeadoEs);
+
+        return "showProjectDetailPage";
+
+    }
+
+    @PostMapping("/updateProject")
+    public String updateBug(@ModelAttribute("theProject") Project theProject){
+
+
+        projectService.save(theProject);
+
+        return "dashboardpage";
+
+    }
+
+    @GetMapping("/deleteproject")
+    public String deleteBug(@RequestParam("projectId") int projectId){
+
+        projectService.delete(projectId);
+
+        return "dashboardpage";
+    }
+
 
 }

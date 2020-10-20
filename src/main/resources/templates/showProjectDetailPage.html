@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="UTF-8">
-    <title>Bug details</title>
+    <title>Project details</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
@@ -75,89 +75,51 @@
     <div class="col-11" id="background-for-working-zone">
 
 
-        <form th:action="@{~/mybugs/updateBug}" th:object="${theBug}" method="post">
+        <form th:action="@{~/myprojects/updateProject}" th:object="${theProject}" method="post">
 
-            <!--First Row: name, id, project, severity, priority-->
+            <!--First Row: name, id, owner, is active-->
 
-                <div class="row w-100 justify-content-around mt-3">
-                    <div class="form-group">
-                        <label for="bugtitle">Bug Title:</label>
-                        <input class="form-control" type="text" id="bugtitle" th:field="${theBug.bugTitle}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bugId">Bug Id:</label>
-                        <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bugproject">Project:</label>
-                        <input class="form-control" type="text" id="bugproject" readonly th:field="${theBug.projectId}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bugSeverity">Severity:</label>
-                        <input class="form-control" type="text" id="bugSeverity" th:field="${theBug.bugSeverity}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
-                        <input class="form-control" type="text" id="bugPriority" th:field="${theBug.bugPriority}">
-                    </div>
-                </div>
-
-            <!--Second Row: createdby, responsible-dev, due date, date created-->
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
-                    <label for="bugCreatedBy">Created by:</label>
-                    <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
+                    <label for="projecttitle">Project Name:</label>
+                    <input class="form-control" type="text" id="projecttitle" th:field="${theProject.projectName}">
                 </div>
 
                 <div class="form-group">
-                    <label for="bugStatus">Status:</label>
-                    <input class="form-control" type="text" id="bugStatus" th:field="${theBug.bugStatus}">
+                    <label for="projectId">Project Id:</label>
+                    <input class="form-control" type="text" id="projectId" readonly th:field="${theProject.projectId}">
                 </div>
 
                 <div class="form-group">
-                    <label for="bugResponsibleDev">Assigned to:</label>
-                    <input class="form-control" type="text" id="bugResponsibleDev" readonly th:field="${theBug.bugResponsibleDev}">
+                    <label for="projectowner">Project owner:</label>
+                    <input class="form-control" type="text" id="projectowner" readonly th:field="${theProject.projectOwner}">
                 </div>
 
                 <div class="form-group">
-                    <label for="bugDueDate">Due date:</label>
-                    <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">
-                </div>
-
-                <div class="form-group">
-                    <label for="bugCreated">Date created:</label>
-                    <input class="form-control" type="text" id="bugCreated" readonly th:field="${theBug.dateCreated}">
+                    <label for="isactive">Project Status (Active or Inactive):</label>
+                    <input class="form-control" type="text" id="isactive" th:field="${theProject.isActive}">
                 </div>
 
             </div>
-            <!--Third Row: description and steps to reproduce-->
+
+            <!--Second Row: description-->
             <div class="row w-100 justify-content-around mt-3">
-
-                <div class="form-group w-25">
-                    <label for="bugDescription">Description:</label>
-                    <textarea class="form-control" id="bugDescription" th:field="${theBug.bugDescription}" th:rows="5"></textarea>
-                </div>
-
-                <div class="form-group w-25">
-                    <label for="bugStepsToReproduce">Steps to Reproduce:</label>
-                    <textarea class="form-control" id="bugStepsToReproduce" th:field="${theBug.stepsToReproduce}" th:rows="5"></textarea>
+                <div class="form-group">
+                    <label for="projectDescription">Project description:</label>
+                    <input class="form-control" type="text" id="projectDescription" th:field="${theProject.projectDescription}">
                 </div>
             </div>
-            <!--Fourth Row: Submit button-->
+            <!--Third Row: Submit button-->
             <div class="row w-100 mt-4 justify-content-around">
 
                 <button class="btn btn-success w-25 mr-4" type="submit">Submit</button>
 
-                <!-------------------->
-                <!-- Delete bug button -->
-                <!-------------------->
+                <!--------------------------->
+                <!-- Delete project button -->
+                <!--------------------------->
                 <br>
-                <a th:href="@{~/mybugs/deletebug(bugId = ${theBug.bugId})}">
-                    <button type="button" class="btn btn-danger">Delete bug</button>
+                <a th:href="@{~/myprojects/deleteproject(projectId = ${theProject.projectId})}">
+                    <button type="button" class="btn btn-danger">Delete project</button>
                 </a>
 
             </div>
