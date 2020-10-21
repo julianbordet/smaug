@@ -64,14 +64,7 @@
                 </button>
             </a>
 
-            <a th:href="@{~/manageprojects/main}">
-                <button class="btn btn-outline-light w-100" type="button">
-                    <li class="text-center mt-3">
-                        <i class="fas fa-2x fa-cogs"></i>
-                        <p>Manage Projects</p>
-                    </li>
-                </button>
-            </a>
+
 
         </ul>
     </div>
@@ -135,7 +128,7 @@
 
                 <div th:if="${bugPage.totalPages > 0}" class="pagination"
                      th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{/mybugs(size=${bugPage.size}, page=${pageNumber})}"
+                    <a th:href="@{~/mybugs/main(size=${bugPage.size}, page=${pageNumber})}"
                        th:text="${pageNumber}"
                        th:class="${pageNumber==bugPage.number + 1} ? active"></a>
                 </div>

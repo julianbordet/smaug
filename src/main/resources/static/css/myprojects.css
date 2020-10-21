@@ -1,0 +1,37 @@
+#mynav{
+    background-color: #212F3D;
+    color: white;
+}
+
+li {
+    padding-bottom: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+ul {
+    padding: 0px;
+}
+
+#vertnav{
+    height: 92vh;
+    background-color: #212F3D;
+}
+
+#background-for-working-zone {
+    background-color: #F2F4F4;
+}
+
+.pagetitle {
+    background-color: #F4D03F;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.myprojecttable {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}

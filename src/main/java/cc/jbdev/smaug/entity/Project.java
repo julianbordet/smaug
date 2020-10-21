@@ -2,6 +2,7 @@ package cc.jbdev.smaug.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="projects")
@@ -23,6 +24,19 @@ public class Project {
 
     @Column(name="is_active")
     private int isActive;
+
+
+    //Setting up JoinTable for project_developer. This table keeps track
+    //of which developers participate in which projects, and vice versa.
+    @ManyToMany
+    @JoinTable(
+            name="project_developer",
+            joinColumns = @JoinColumn(name="project_id"),
+            inverseJoinColumns = @JoinColumn(name="dev_username")
+    )
+    private List<Developer> developers;
+
+    
 
     public Project() {
     }
@@ -65,6 +79,39 @@ public class Project {
 
     public void setIsActive(int isActive) {
         this.isActive = isActive;
+    }
+
+    public List<Developer> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<Developer> developers) {
+        this.developers = developers;
+    }
+
+    public void addDeveloperToProject(Developer theDeveloper){
+        developers.add(theDeveloper);
+    }
+
+    public void removeDeveloperFromProject(Developer theDeveloper){
+        developers.remove(theDeveloper);
+    }
+
+    public Developer getDeveloper(String devUsername){
+
+        Developer searchedDeveloper = new Developer();
+
+        for (Developer developer : developers){
+
+            if (developer.getUsername().equals(devUsername)){
+                searchedDeveloper = developer;
+                return searchedDeveloper;
+            }
+
+        }
+
+        return searchedDeveloper;
+
     }
 
     @Override

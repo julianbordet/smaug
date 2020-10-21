@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.controller;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.entity.ProjectBugCounter;
 import cc.jbdev.smaug.service.BugService;
@@ -172,6 +173,27 @@ public class DashboardController {
             counter++;
         }
 
+
+
+        ///
+
+        //--------------------------------//
+        //  FOR TESTING PURPOSES ONLY    //
+        //------------------------------//
+
+        Project theProjecto = projectService.getProjectById(1);
+        List<Developer> listOfDevelopers = theProjecto.getDevelopers();
+        //-------------------------------
+
+        ///
+        ///
+        ///
+        ///
+
+
+
+
+
         return "dashboardpage";
     }
 
@@ -189,18 +211,6 @@ public class DashboardController {
 
 
 
-    ///
 
-    //--------------------------------//
-    //  FOR TESTING PURPOSES ONLY    //
-    //------------------------------//
-
-
-    //-------------------------------
-
-    ///
-    ///
-    ///
-    ///
 
 }

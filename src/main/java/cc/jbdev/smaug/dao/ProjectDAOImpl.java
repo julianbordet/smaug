@@ -1,6 +1,6 @@
 package cc.jbdev.smaug.dao;
 
-import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -55,5 +55,67 @@ public class ProjectDAOImpl implements ProjectDAO {
         List<Project> projectList = theQuery.getResultList();
 
         return projectList;
+    }
+
+
+
+    @Override
+    @Transactional
+    public void save(Project theProject) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.saveOrUpdate(theProject);
+
+    }
+
+    @Override
+    @Transactional
+    public Project getProjectById(int theId) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Project> theQuery = currentSession.createQuery("from Project where project_id = '" + theId + "'", Project.class);
+
+        Project theProject = theQuery.getSingleResult();
+
+        return theProject;
+    }
+
+    @Override
+    @Transactional
+    public void delete(int projectId) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query theQuery = currentSession.createQuery("delete from Project where project_id = '" + projectId + "'");
+
+        theQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void addDeveloperToProject(Project theProject, Developer theDeveloper) {
+
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        theProject.addDeveloperToProject(theDeveloper);
+
+        currentSession.save(theProject);
+
+
+    }
+
+    @Override
+    @Transactional
+    public void removeDeveloperFromProject(Project theProject, Developer theDeveloper) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        theProject.removeDeveloperFromProject(theDeveloper);
+
+        currentSession.save(theProject);
+
     }
 }
