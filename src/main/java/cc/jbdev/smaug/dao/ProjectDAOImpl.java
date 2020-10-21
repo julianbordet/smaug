@@ -104,5 +104,18 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         currentSession.save(theProject);
 
+
+    }
+
+    @Override
+    @Transactional
+    public void removeDeveloperFromProject(Project theProject, Developer theDeveloper) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        theProject.removeDeveloperFromProject(theDeveloper);
+
+        currentSession.save(theProject);
+
     }
 }

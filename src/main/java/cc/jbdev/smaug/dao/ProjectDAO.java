@@ -19,5 +19,7 @@ public interface ProjectDAO {
 
     void addDeveloperToProject(Project theProject, Developer theDeveloper);
 
+    void removeDeveloperFromProject(Project theProject, Developer theDeveloper);
+
 }
 

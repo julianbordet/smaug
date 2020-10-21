@@ -97,4 +97,9 @@ public class ProjectServiceImpl implements ProjectService {
     public void addDeveloperToProject(Project theProject, Developer theDeveloper) {
         projectDAO.addDeveloperToProject(theProject, theDeveloper);
     }
+
+    @Override
+    public void removeDeveloperFromProject(Project theProject, Developer theDeveloper) {
+        projectDAO.removeDeveloperFromProject(theProject, theDeveloper);
+    }
 }

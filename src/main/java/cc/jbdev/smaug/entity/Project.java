@@ -93,6 +93,27 @@ public class Project {
         developers.add(theDeveloper);
     }
 
+    public void removeDeveloperFromProject(Developer theDeveloper){
+        developers.remove(theDeveloper);
+    }
+
+    public Developer getDeveloper(String devUsername){
+
+        Developer searchedDeveloper = new Developer();
+
+        for (Developer developer : developers){
+
+            if (developer.getUsername().equals(devUsername)){
+                searchedDeveloper = developer;
+                return searchedDeveloper;
+            }
+
+        }
+
+        return searchedDeveloper;
+
+    }
+
     @Override
     public String toString() {
         return "Project{" +

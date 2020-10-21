@@ -144,14 +144,19 @@ public class MyProjectsController {
         theModel.addAttribute("projectId", projectId);
 
         return "addDeveloperPage";
-        //addDeveloperPage HTML PAGE NEEDS TO BE CREATED AND IMPLEMENTED
     }
 
     @GetMapping("/removedeveloper")
-    public String removeDeveloper(@RequestParam("projectId") int projectId){
+    public String removeDeveloper(@RequestParam("projectId") int projectId, Model theModel){
+
+
+        Project theProject = projectService.getProjectById(projectId);
+        List<Developer> projectDevList = theProject.getDevelopers();
+
+        theModel.addAttribute("projectDevList", projectDevList);
+        theModel.addAttribute("projectId", projectId);
 
         return "removeDeveloperPage";
-        //removeDeveloperPage HTML PAGE NEEDS TO BE CREATED AND IMPLEMENTED
     }
 
     @PostMapping("/adddeveloperconfirm")
@@ -160,6 +165,20 @@ public class MyProjectsController {
         Project theProject = projectService.getProjectById(projectId);
 
         projectService.addDeveloperToProject(theProject, theDeveloper);
+
+        return "dashboardpage";
+    }
+
+    @PostMapping("/removedeveloperconfirm")
+    public String removedeveloperconfirm(@RequestParam("devSelected") String devSelected, @RequestParam("projectId") int projectId){
+
+
+
+        Project theProject = projectService.getProjectById(projectId);
+        Developer theDeveloper = theProject.getDeveloper(devSelected);
+
+        projectService.removeDeveloperFromProject(theProject, theDeveloper);
+
 
         return "dashboardpage";
     }
