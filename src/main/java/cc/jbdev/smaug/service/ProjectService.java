@@ -13,27 +13,30 @@ import java.util.List;
 
 public interface ProjectService {
 
+    //returns a list of ALL projects
     List<Project> getProjectsList();
 
+    //returns a list of ACTIVE projects by username
     List<Project> getActiveProjectsListForUser(String username);
 
+    //gets Project by projectId
     Project getProjectById(int theId);
 
-    //add method to paginate results for User --> Active Projects
+    //paginates Project list by username
     Page<Project> findPaginatedUserActiveProjects(Pageable pageable, String username);
 
-    //add method to paginate results for Project --> Active developers
+    //paginates a list of ACTIVE developers for a spcific project
     Page<Developer> findPaginatedProjectActiveDevelopers(Pageable pageable, int projectId);
 
-    //save updates to bug
+    //save updates/creates new project
     void save(Project theProject);
 
-    //remove bug from project
+    //deletes project by projectId
     void delete(int projectId);
 
+    //adds a Developer to a Project
     void addDeveloperToProject(Project theProject, Developer theDeveloper);
 
-
+    //removes a Developer from a Project
     void removeDeveloperFromProject(Project theProject, Developer theDeveloper);
-
 }

@@ -70,7 +70,6 @@ public class MyBugsController {
         theModel.addAttribute("theBug", elBugClickeadoEs);
 
         return "showBugDetailPage";
-
     }
 
 
@@ -78,12 +77,11 @@ public class MyBugsController {
     @PostMapping("/updateBug")
     public String updateBug(@ModelAttribute("theBug") Bug theBug){
 
-
         bugService.save(theBug);
 
-        return "dashboardpage";
-
+        return "redirect:/mybugs/main";
     }
+
 
     @GetMapping("/newbug")
     public String newBug(Model theModel){
@@ -101,17 +99,14 @@ public class MyBugsController {
         theBug.setBugId(0);
         bugService.save(theBug);
 
-        return "dashboardpage";
+        return "redirect:/mybugs/main";
     }
 
     @GetMapping("/deletebug")
     public String deleteBug(@RequestParam("bugId") int bugId){
 
         bugService.delete(bugId);
-
-        return "dashboardpage";
+        return "redirect:/mybugs/main";
     }
-
-
 
 }

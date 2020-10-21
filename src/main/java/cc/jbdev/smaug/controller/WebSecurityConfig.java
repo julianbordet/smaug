@@ -22,7 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource securityDataSource;
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -46,6 +45,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
-
 
 }

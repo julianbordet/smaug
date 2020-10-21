@@ -10,23 +10,24 @@ import java.util.List;
 public interface BugService {
 
     //get bug by bugId
-    public Bug getBugByBugId(int bugId);
+    Bug getBugByBugId(int bugId);
 
     //gets list of all bugs
-    public List<Bug> getBugList();
+    List<Bug> getBugList();
 
     //gets list of all bugs (active and inactive) for a certain user
-    public List<Bug> getBugListForUser(String username);
+    List<Bug> getBugListForUser(String username);
 
-    //gets list of only active bugs for a certain user
-    public List<Bug> getActiveBugListForUser(String username);
+    //gets list of only active bugs for a specific user
+    List<Bug> getActiveBugListForUser(String username);
 
+    //gets active bug list for a specific user
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
 
-    //add method to paginate results
+    //paginates active bugs for a specific user
     Page<Bug> findPaginatedUserActiveBugs(Pageable pageable, String username);
 
-    //save updates to bug
+    //save updates/creates new bug
     void save(Bug theBug);
 
     //deletes bug

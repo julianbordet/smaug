@@ -181,8 +181,7 @@ public class DashboardController {
         //  FOR TESTING PURPOSES ONLY    //
         //------------------------------//
 
-        Project theProjecto = projectService.getProjectById(1);
-        List<Developer> listOfDevelopers = theProjecto.getDevelopers();
+
         //-------------------------------
 
         ///

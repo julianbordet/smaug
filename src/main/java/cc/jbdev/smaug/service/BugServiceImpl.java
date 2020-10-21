@@ -21,8 +21,6 @@ public class BugServiceImpl implements BugService {
     private BugDAO bugDAO;
 
 
-
-
     @Override
     public List<Bug> getBugList() {
         return bugDAO.getBugList();

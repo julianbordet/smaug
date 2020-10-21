@@ -72,10 +72,6 @@ public class ProjectServiceImpl implements ProjectService {
         Page<Developer> developerPage = new PageImpl<Developer>(list, PageRequest.of(currentPage, pageSize), developerProjectList.size());
 
         return developerPage;
-
-
-
-
     }
 
     @Override
