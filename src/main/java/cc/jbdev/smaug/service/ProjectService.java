@@ -28,7 +28,10 @@ public interface ProjectService {
     //save updates to bug
     void save(Project theProject);
 
+    //remove bug from project
     void delete(int projectId);
+
+    void addDeveloperToProject(Project theProject, Developer theDeveloper);
 
 
 }

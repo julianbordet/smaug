@@ -89,6 +89,10 @@ public class Project {
         this.developers = developers;
     }
 
+    public void addDeveloperToProject(Developer theDeveloper){
+        developers.add(theDeveloper);
+    }
+
     @Override
     public String toString() {
         return "Project{" +

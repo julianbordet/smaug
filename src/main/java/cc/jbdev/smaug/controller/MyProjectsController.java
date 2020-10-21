@@ -141,6 +141,7 @@ public class MyProjectsController {
         Developer newDeveloper = new Developer();
 
         theModel.addAttribute("newDeveloper", newDeveloper);
+        theModel.addAttribute("projectId", projectId);
 
         return "addDeveloperPage";
         //addDeveloperPage HTML PAGE NEEDS TO BE CREATED AND IMPLEMENTED
@@ -151,6 +152,16 @@ public class MyProjectsController {
 
         return "removeDeveloperPage";
         //removeDeveloperPage HTML PAGE NEEDS TO BE CREATED AND IMPLEMENTED
+    }
+
+    @PostMapping("/adddeveloperconfirm")
+    public String addDeveloperConfirm(@RequestParam("projectId") int projectId, @ModelAttribute("newDeveloper") Developer theDeveloper){
+
+        Project theProject = projectService.getProjectById(projectId);
+
+        projectService.addDeveloperToProject(theProject, theDeveloper);
+
+        return "dashboardpage";
     }
 
 }

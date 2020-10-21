@@ -1,6 +1,5 @@
 package cc.jbdev.smaug.dao;
 
-import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import org.hibernate.Session;
@@ -92,5 +91,18 @@ public class ProjectDAOImpl implements ProjectDAO {
         Query theQuery = currentSession.createQuery("delete from Project where project_id = '" + projectId + "'");
 
         theQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void addDeveloperToProject(Project theProject, Developer theDeveloper) {
+
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        theProject.addDeveloperToProject(theDeveloper);
+
+        currentSession.save(theProject);
+
     }
 }

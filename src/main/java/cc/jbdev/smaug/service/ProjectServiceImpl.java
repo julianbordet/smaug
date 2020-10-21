@@ -92,4 +92,9 @@ public class ProjectServiceImpl implements ProjectService {
     public void delete(int projectId) {
         projectDAO.delete(projectId);
     }
+
+    @Override
+    public void addDeveloperToProject(Project theProject, Developer theDeveloper) {
+        projectDAO.addDeveloperToProject(theProject, theDeveloper);
+    }
 }
