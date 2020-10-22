@@ -31,8 +31,10 @@ public class Bug {
     @Column(name="date_created")
     private String dateCreated;
 
+    //status = 1 = bug is closed/fixed
+    //status = 2 = bug is still open
     @Column(name="status")
-    private String bugStatus;
+    private int bugStatus;
 
     @Column(name="created_by")
     private String bugCreatedBy;
@@ -106,11 +108,12 @@ public class Bug {
         this.dateCreated = dateCreated;
     }
 
-    public String getBugStatus() {
+
+    public int getBugStatus() {
         return bugStatus;
     }
 
-    public void setBugStatus(String bugStatus) {
+    public void setBugStatus(int bugStatus) {
         this.bugStatus = bugStatus;
     }
 

@@ -109,6 +109,7 @@ public class MyProjectsController {
     public String createProject(@ModelAttribute("theProject") Project theProject){
 
         theProject.setProjectId(0);
+        theProject.setIsActive(1);
         projectService.save(theProject);
 
         return "redirect:/myprojects/main";

@@ -82,7 +82,7 @@
 
             <form th:action="@{~/myprojects/createproject}" th:object="${theProject}" method="post">
 
-                <!--First Row: name, id, owner, is active-->
+                <!--First Row: name, owner,-->
 
                 <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
@@ -91,20 +91,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="projectId">Project Id:</label>
-                        <input class="form-control" type="text" id="projectId"  th:field="${theProject.projectId}">
-                    </div>
-
-                    <div class="form-group">
                         <label for="projectOwner">Owner:</label>
                         <input class="form-control" type="text" id="projectOwner"  th:field="${theProject.projectOwner}">
                     </div>
-
-                    <div class="form-group">
-                        <label for="projectActive">Is active:</label>
-                        <input class="form-control" type="text" id="projectActive" th:field="${theProject.isActive}">
-                    </div>
-
+                    
 
                 </div>
 

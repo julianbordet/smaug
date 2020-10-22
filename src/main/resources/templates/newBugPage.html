@@ -82,17 +82,12 @@
 
             <form th:action="@{~/mybugs/createBug}" th:object="${theBug}" method="post">
 
-                <!--First Row: name, id, project, severity, priority-->
+                <!--First Row: name, (no id, since its a new bug it'll be set to 0), project, severity, priority-->
 
                 <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
                         <label for="bugtitle">Bug Title:</label>
                         <input class="form-control" type="text" id="bugtitle" th:field="${theBug.bugTitle}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bugId">Bug Id:</label>
-                        <input class="form-control" type="text" id="bugId"  th:field="${theBug.bugId}">
                     </div>
 
                     <div class="form-group">
@@ -119,11 +114,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="bugStatus">Status:</label>
-                        <input class="form-control" type="text" id="bugStatus" th:field="${theBug.bugStatus}">
-                    </div>
-
-                    <div class="form-group">
                         <label for="bugResponsibleDev">Assigned to:</label>
                         <input class="form-control" type="text" id="bugResponsibleDev"  th:field="${theBug.bugResponsibleDev}">
                     </div>
@@ -133,10 +123,6 @@
                         <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">
                     </div>
 
-                    <div class="form-group">
-                        <label for="bugCreated">Date created:</label>
-                        <input class="form-control" type="text" id="bugCreated"  th:field="${theBug.dateCreated}">
-                    </div>
 
                 </div>
                 <!--Third Row: description and steps to reproduce-->

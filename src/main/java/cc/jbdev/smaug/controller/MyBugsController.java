@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -96,7 +98,34 @@ public class MyBugsController {
     @PostMapping("/createBug")
     public String createBug(@ModelAttribute("theBug") Bug theBug){
 
+        ///Helper code to get the username of the currently logged in user:
+        String myUserName;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            myUserName = ((UserDetails)principal).getUsername();
+        } else {
+            myUserName = principal.toString();
+        }
+        ///
+
+
+
+
         theBug.setBugId(0);
+        theBug.setBugStatus(2);
+        theBug.setBugCreatedBy(myUserName);
+
+
+        Date today = new Date();
+        String todayInString;
+        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
+        theBug.setDateCreated(todayInString);
+
+
+
+
+
+
         bugService.save(theBug);
 
         return "redirect:/mybugs/main";
