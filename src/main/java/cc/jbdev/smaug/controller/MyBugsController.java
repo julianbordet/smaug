@@ -65,9 +65,9 @@ public class MyBugsController {
     @GetMapping("/showBugDetail")
     public String showBugDetail(@RequestParam("bugId") int theId, Model theModel) {
 
-        Bug elBugClickeadoEs = bugService.getBugByBugId(theId);
+        Bug bugClicked = bugService.getBugByBugId(theId);
 
-        theModel.addAttribute("theBug", elBugClickeadoEs);
+        theModel.addAttribute("theBug", bugClicked);
 
         return "showBugDetailPage";
     }
@@ -106,6 +106,7 @@ public class MyBugsController {
     public String deleteBug(@RequestParam("bugId") int bugId){
 
         bugService.delete(bugId);
+
         return "redirect:/mybugs/main";
     }
 
