@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -76,5 +79,104 @@ public class BugServiceImpl implements BugService {
     @Override
     public void delete(int bugId) {
         bugDAO.delete(bugId);
+    }
+
+    @Override
+    public List<Integer> getActiveDueAndNotDueBugsCounterForUser(String username) {
+
+        List<Bug> userActiveBugList = getActiveBugListForUser(username);
+
+        Integer bugsDue = 0;
+        Integer bugsNotDue = 0;
+
+        for(Bug bug : userActiveBugList){
+
+            String bugDueDateInString = bug.getBugDueDate();
+
+            Date dueDateInDate = new Date();
+
+            try {
+                dueDateInDate = new SimpleDateFormat("yyyy-MM-dd").parse(bugDueDateInString);
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+
+            Date today = new Date();
+
+            if (dueDateInDate.after(today)){
+                bugsNotDue++;
+            } else {
+                bugsDue++;
+            }
+        }
+
+        List<Integer> bugsDueAndNotDueCounter = new ArrayList<>();
+        bugsDueAndNotDueCounter.add(bugsDue);
+        bugsDueAndNotDueCounter.add(bugsNotDue);
+
+        return bugsDueAndNotDueCounter;
+    }
+
+    @Override
+    public List<Integer> getActiveBugsCounterBySeverity(String username) {
+
+        Integer criticalBugCount = 0;
+        Integer majorBugCount = 0;
+        Integer minorBugCount = 0;
+        Integer lowBugCount = 0;
+
+        List<Bug> userActiveBugList = getActiveBugListForUser(username);
+
+        for(Bug bug : userActiveBugList) {
+            if (bug.getBugSeverity().equals("CRITICAL")){
+                criticalBugCount++;
+            }
+            if (bug.getBugSeverity().equals("MAJOR")){
+                majorBugCount++;
+            }
+            if (bug.getBugSeverity().equals("MINOR")){
+                minorBugCount++;
+            }
+            if (bug.getBugSeverity().equals("LOW")){
+                lowBugCount++;
+            }
+        }
+
+        List<Integer> listOfBugsBySeverity = new ArrayList<>();
+        listOfBugsBySeverity.add(criticalBugCount);
+        listOfBugsBySeverity.add(majorBugCount);
+        listOfBugsBySeverity.add(minorBugCount);
+        listOfBugsBySeverity.add(lowBugCount);
+
+        return listOfBugsBySeverity;
+    }
+
+    @Override
+    public List<Integer> getActiveBugsCounterByPriority(String username) {
+
+        Integer userHighPriorityBugCount = 0;
+        Integer userMediumPriorityBugCount = 0;
+        Integer userLowPriorityBugCount = 0;
+
+        List<Bug> userActiveBugList = getActiveBugListForUser(username);
+
+        for(Bug bug : userActiveBugList) {
+            if (bug.getBugPriority().equals("HIGH")){
+                userHighPriorityBugCount++;
+            }
+            if (bug.getBugPriority().equals("MEDIUM")){
+                userMediumPriorityBugCount++;
+            }
+            if (bug.getBugPriority().equals("LOW")){
+                userLowPriorityBugCount++;
+            }
+        }
+
+        List<Integer> listOfBugsByPriority = new ArrayList<>();
+        listOfBugsByPriority.add(userHighPriorityBugCount);
+        listOfBugsByPriority.add(userMediumPriorityBugCount);
+        listOfBugsByPriority.add(userLowPriorityBugCount);
+
+        return listOfBugsByPriority;
     }
 }

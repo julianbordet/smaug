@@ -36,6 +36,7 @@ public class DashboardController {
     @GetMapping("/main")
     public String viewDashboard(Model theModel){
 
+
         ///Helper code to get the username of the currently logged in user:
         String myUserName;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -46,87 +47,37 @@ public class DashboardController {
         }
         ///
 
+
+        /////IDEAL SITUATION
         ///card1
         ///get total ACTIVE bugs owned by user, add a counter for bugs due and not due to the model.
-        List<Bug> userActiveBugList = bugService.getActiveBugListForUser(myUserName);
-        int bugsDue = 0;
-        int bugsNotDue = 0;
+        List<Integer> bugsCounter = bugService.getActiveDueAndNotDueBugsCounterForUser(myUserName);
+        theModel.addAttribute("userBugsDue", bugsCounter.get(0));
+        theModel.addAttribute("userBugsNotDue", bugsCounter.get(1));
+        //////////////
 
-        for(Bug bug : userActiveBugList){
-
-            String bugDueDateInString = bug.getBugDueDate();
-
-            Date dueDateInDate = new Date();
-
-            try {
-                dueDateInDate = new SimpleDateFormat("yyyy-MM-dd").parse(bugDueDateInString);
-            } catch (Exception exc) {
-                exc.printStackTrace();
-            }
-
-            Date today = new Date();
-
-            if (dueDateInDate.after(today)){
-                bugsNotDue++;
-            } else {
-                bugsDue++;
-            }
-        }
-        theModel.addAttribute("userBugsDue", bugsDue);
-        theModel.addAttribute("userBugsNotDue", bugsNotDue);
-        ///
-
+        /////IDEAL SITUATION
         ///card2
         ///get total ACTIVE bugs owned by user, then add to the model the count for
         ///each type of severity
-        int criticalBugCount = 0;
-        int majorBugCount = 0;
-        int minorBugCount = 0;
-        int lowBugCount = 0;
+        List<Integer> bugsSeverity = bugService.getActiveBugsCounterBySeverity(myUserName);
 
-        for(Bug bug : userActiveBugList) {
-            if (bug.getBugSeverity().equals("CRITICAL")){
-                criticalBugCount++;
-            }
-            if (bug.getBugSeverity().equals("MAJOR")){
-                majorBugCount++;
-            }
-            if (bug.getBugSeverity().equals("MINOR")){
-                minorBugCount++;
-            }
-            if (bug.getBugSeverity().equals("LOW")){
-                lowBugCount++;
-            }
-        }
+        theModel.addAttribute("userCriticalBugCount", bugsSeverity.get(0));
+        theModel.addAttribute("userMajorBugCount", bugsSeverity.get(1));
+        theModel.addAttribute("userMinorBugCount", bugsSeverity.get(2));
+        theModel.addAttribute("userLowBugCount", bugsSeverity.get(3));
+        //////////////
 
-        theModel.addAttribute("userCriticalBugCount", criticalBugCount);
-        theModel.addAttribute("userMajorBugCount", majorBugCount);
-        theModel.addAttribute("userMinorBugCount", minorBugCount);
-        theModel.addAttribute("userLowBugCount", lowBugCount);
-        ///
-
-
+        /////IDEAL SITUATION
         ///card3
         ///show a chart for bug priority
-        int userHighPriorityBugCount = 0;
-        int userMediumPriorityBugCount = 0;
-        int userLowPriorityBugCount = 0;
 
-        for(Bug bug : userActiveBugList) {
-            if (bug.getBugPriority().equals("HIGH")){
-                userHighPriorityBugCount++;
-            }
-            if (bug.getBugPriority().equals("MEDIUM")){
-                userMediumPriorityBugCount++;
-            }
-            if (bug.getBugPriority().equals("LOW")){
-                userLowPriorityBugCount++;
-            }
-        }
-        theModel.addAttribute("userHighPriority", userHighPriorityBugCount);
-        theModel.addAttribute("userMediumPriority", userMediumPriorityBugCount);
-        theModel.addAttribute("userLowPriority", userLowPriorityBugCount);
-        ///
+        List<Integer> bugsPriority = bugService.getActiveBugsCounterByPriority(myUserName);
+
+        theModel.addAttribute("userHighPriority", bugsPriority.get(0));
+        theModel.addAttribute("userMediumPriority", bugsPriority.get(1));
+        theModel.addAttribute("userLowPriority", bugsPriority.get(2));
+        /////////////
 
 
         ///card4
@@ -175,22 +126,12 @@ public class DashboardController {
 
 
 
-        ///
-
         //--------------------------------//
         //  FOR TESTING PURPOSES ONLY    //
         //------------------------------//
 
 
         //-------------------------------
-
-        ///
-        ///
-        ///
-        ///
-
-
-
 
 
         return "dashboardpage";

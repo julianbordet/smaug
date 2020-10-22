@@ -33,4 +33,16 @@ public interface BugService {
     //deletes bug
     void delete(int bugId);
 
+    //returns an Integer List representing the total amount of active (not closed as fixed or archived) bugs for a
+    // specific user. The element 0 in the list represents the count for due bugs, the element 1 in the list represents
+    // the counter for bugs not due
+    List<Integer> getActiveDueAndNotDueBugsCounterForUser(String username);
+
+    //returns a list of 4 elements. Element 0 is a counter for bugs with Critical Priority, element 1 = major priority,
+    //element 2 = minor priority, element 3 = low priority
+    List<Integer> getActiveBugsCounterBySeverity(String username);
+
+    //Returns a list of 3 elements. Element 0 is a counter for bugs with High priority, element 1 = medium priority
+    //element 2 = low priority
+    List<Integer> getActiveBugsCounterByPriority(String username);
 }
