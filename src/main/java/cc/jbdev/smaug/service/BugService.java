@@ -5,6 +5,7 @@ import cc.jbdev.smaug.entity.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface BugService {
@@ -45,4 +46,8 @@ public interface BugService {
     //Returns a list of 3 elements. Element 0 is a counter for bugs with High priority, element 1 = medium priority
     //element 2 = low priority
     List<Integer> getActiveBugsCounterByPriority(String username);
+
+    //Returns a hashmap with a key representing the project name, and the value representing the active bug amount
+    //for such project.
+    HashMap<String, Integer> getMapProjectNameBugCounter(List<Project> projectList, String username);
 }

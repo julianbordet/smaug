@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BugServiceImpl implements BugService {
@@ -178,5 +175,23 @@ public class BugServiceImpl implements BugService {
         listOfBugsByPriority.add(userLowPriorityBugCount);
 
         return listOfBugsByPriority;
+    }
+
+    @Override
+    public HashMap<String, Integer> getMapProjectNameBugCounter(List<Project> projectList, String myUserName) {
+
+        HashMap<String, Integer> mapProjectBugCounter = new HashMap<>();
+
+        for (Project project : projectList){
+
+            List<Bug> bugListForProject = getProjectActiveBugsByUser(project, myUserName);
+
+            Integer bugCounterForProject = bugListForProject.size();
+            String projectName = project.getProjectName();
+
+            mapProjectBugCounter.put(projectName, bugCounterForProject);
+        }
+
+        return mapProjectBugCounter;
     }
 }
