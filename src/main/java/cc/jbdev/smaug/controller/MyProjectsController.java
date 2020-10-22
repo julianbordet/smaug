@@ -1,6 +1,5 @@
 package cc.jbdev.smaug.controller;
 
-import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;

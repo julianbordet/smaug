@@ -1,24 +1,16 @@
 package cc.jbdev.smaug.controller;
 
-import cc.jbdev.smaug.entity.Bug;
-import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
-import cc.jbdev.smaug.entity.ProjectBugCounter;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -45,7 +37,6 @@ public class DashboardController {
         ///
 
 
-        /////IDEAL SITUATION
         ///card1
         ///get total ACTIVE bugs owned by user, add a counter for bugs due and not due to the model.
         List<Integer> bugsCounter = bugService.getActiveDueAndNotDueBugsCounterForUser(myUserName);
@@ -54,7 +45,6 @@ public class DashboardController {
         theModel.addAttribute("userBugsNotDue", bugsCounter.get(1));
         //////////////
 
-        /////IDEAL SITUATION
         ///card2
         ///get total ACTIVE bugs owned by user, then add to the model the count for
         ///each type of severity
@@ -66,7 +56,6 @@ public class DashboardController {
         theModel.addAttribute("userLowBugCount", bugsSeverity.get(3));
         //////////////
 
-        /////IDEAL SITUATION
         ///card3
         ///show a chart for bug priority
         List<Integer> bugsPriority = bugService.getActiveBugsCounterByPriority(myUserName);
@@ -76,7 +65,6 @@ public class DashboardController {
         theModel.addAttribute("userLowPriority", bugsPriority.get(2));
         /////////////
 
-        /////IDEAL SITUATION
         ///card4
         ///show total number of bugs by project
         List<Project> userActiveProjectList = projectService.getActiveProjectsListForUser(myUserName);
