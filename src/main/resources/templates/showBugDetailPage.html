@@ -111,19 +111,23 @@
                     </div>
 
 
-
-
-
-
-
-
-
-
-                    <div class="form-group">
+                <!--    <div class="form-group">
                         <label for="bugPriority">Priority:</label>
                         <input class="form-control" type="text" id="bugPriority" readonly th:field="${theBug.bugPriority}">
                     </div>
-                </div>
+                </div>-->
+
+
+            <div class="form-group">
+                <label for="bugPriority">Priority:</label>
+                <select class="form-control" id="bugPriority" disabled th:field="${theBug.bugPriority}">
+                    <option id="optionsPriority1" disabled th:value="HIGH">High</option>
+                    <option id="optionsPriority2" disabled th:value="MEDIUM">Medium</option>
+                    <option id="optionsPriority3" disabled th:value="LOW">Low</option>
+                </select>
+            </div>
+
+
 
             <!--Second Row: createdby, responsible-dev, due date, date created-->
             <div class="row w-100 justify-content-around mt-3">
@@ -207,7 +211,7 @@
         document.getElementById('bugtitle').readOnly = false;
         document.getElementById('bugproject').readOnly = false;
         document.getElementById('bugSeverity').disabled = false;
-        document.getElementById('bugPriority').readOnly = false;
+        document.getElementById('bugPriority').disabled = false;
         document.getElementById('bugStatus').readOnly = false;
         document.getElementById('bugResponsibleDev').readOnly = false;
         document.getElementById('bugDueDate').readOnly = false;
@@ -217,6 +221,9 @@
         document.getElementById('optionsSeverity2').disabled = false;
         document.getElementById('optionsSeverity3').disabled = false;
         document.getElementById('optionsSeverity4').disabled = false;
+        document.getElementById('optionsPriority1').disabled = false;
+        document.getElementById('optionsPriority2').disabled = false;
+        document.getElementById('optionsPriority3').disabled = false;
     };
 </script>
 

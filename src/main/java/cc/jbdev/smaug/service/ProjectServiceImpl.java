@@ -98,4 +98,9 @@ public class ProjectServiceImpl implements ProjectService {
     public void removeDeveloperFromProject(Project theProject, Developer theDeveloper) {
         projectDAO.removeDeveloperFromProject(theProject, theDeveloper);
     }
+
+    @Override
+    public List<String> getListOfActiveDevelopers() {
+        return projectDAO.getListOfActiveDevelopers();
+    }
 }

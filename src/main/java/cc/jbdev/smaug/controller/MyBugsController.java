@@ -88,6 +88,10 @@ public class MyBugsController {
     @GetMapping("/newbug")
     public String newBug(Model theModel){
 
+
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+
+
         Bug bug = new Bug();
 
         theModel.addAttribute("theBug", bug);

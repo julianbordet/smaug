@@ -27,5 +27,8 @@ public interface ProjectDAO {
 
     //removes a Developer from a Project
     void removeDeveloperFromProject(Project theProject, Developer theDeveloper);
+
+    //gets a String list containing all active user ids
+    List<String> getListOfActiveDevelopers();
 }
 
