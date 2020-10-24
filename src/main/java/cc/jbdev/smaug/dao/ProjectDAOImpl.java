@@ -140,4 +140,18 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return usernameList;
     }
+
+    @Override
+    @Transactional
+    public List<Project> getActiveProjects() {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Project> theQuery = currentSession.createQuery("from Project where is_active = '1'", Project.class);
+
+        List<Project> projectList = theQuery.getResultList();
+
+
+        return projectList;
+    }
 }

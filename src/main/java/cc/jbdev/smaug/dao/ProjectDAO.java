@@ -10,6 +10,9 @@ public interface ProjectDAO {
     //returns a list of ALL projects
     List<Project> getProjectsList();
 
+    //returns a list of ALL ACTIVE projects
+    List<Project> getActiveProjects();
+
     //returns a list of ACTIVE projects by username
     List<Project> getActiveProjectsListForUser(String username);
 

@@ -103,4 +103,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<String> getListOfActiveDevelopers() {
         return projectDAO.getListOfActiveDevelopers();
     }
+
+    @Override
+    public List<Project> getActiveProjects() {
+        return projectDAO.getActiveProjects();
+    }
 }

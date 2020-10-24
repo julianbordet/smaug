@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.controller;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,11 +91,12 @@ public class MyBugsController {
 
 
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
-
         theModel.addAttribute("devList", activeDevelopers);
 
-        Bug bug = new Bug();
+        List<Project> activeProjects = projectService.getActiveProjects();
+        theModel.addAttribute("projectList", activeProjects);
 
+        Bug bug = new Bug();
         theModel.addAttribute("theBug", bug);
 
         return "newBugPage";
