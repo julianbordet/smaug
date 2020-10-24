@@ -95,23 +95,34 @@
                         <input class="form-control" type="text" id="bugproject"  th:field="${theBug.projectId}">
                     </div>
 
-                    <div class="form-group">
-                        <label for="bugSeverity">Severity:</label>
-                        <input class="form-control" type="text" id="bugSeverity" th:field="${theBug.bugSeverity}">
-                    </div>
+                   
 
                     <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
-                        <input class="form-control" type="text" id="bugPriority" th:field="${theBug.bugPriority}">
+                        <label for="bugSev">Severity:</label>
+                        <select class="form-control" id="bugSev" th:field="${theBug.bugSeverity}">
+                            <option th:value="CRITICAL">Critical</option>
+                            <option th:value="MAJOR">Major</option>
+                            <option th:value="MINOR">Minor</option>
+                            <option th:value="LOW">Low</option>
+                        </select>
                     </div>
+
+
+
+
+
+                <div class="form-group">
+                    <label for="bugPriority">Priority:</label>
+                    <select class="form-control" id="bugPriority" th:field="${theBug.bugPriority}">
+                        <option th:value="HIGH">High</option>
+                        <option th:value="MEDIUM">Medium</option>
+                        <option th:value="LOW">Low</option>
+                    </select>
                 </div>
 
                 <!--Second Row: createdby, responsible-dev, due date, date created-->
-                <div class="row w-100 justify-content-around mt-3">
-                    <div class="form-group">
-                        <label for="bugCreatedBy">Created by:</label>
-                        <input class="form-control" type="text" id="bugCreatedBy"  th:field="${theBug.bugCreatedBy}">
-                    </div>
+
+
 
                     <div class="form-group">
                         <label for="bugResponsibleDev">Assigned to:</label>
