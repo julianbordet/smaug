@@ -124,10 +124,22 @@
 
 
 
-                    <div class="form-group">
+                   <!-- <div class="form-group">
                         <label for="bugResponsibleDev">Assigned to:</label>
                         <input class="form-control" type="text" id="bugResponsibleDev"  th:field="${theBug.bugResponsibleDev}">
+                    </div>-->
+
+
+
+                    <div class="form-group">
+                        <label for="bugResponsibleDev">Assigned to:</label>
+                        <select class="form-control" id="bugResponsibleDev" th:field="${theBug.bugResponsibleDev}">
+                            <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                        </select>
                     </div>
+
+
+
 
                     <div class="form-group">
                         <label for="bugDueDate">Due date:</label>

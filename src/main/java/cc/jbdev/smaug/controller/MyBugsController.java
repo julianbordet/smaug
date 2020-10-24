@@ -91,6 +91,7 @@ public class MyBugsController {
 
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
 
+        theModel.addAttribute("devList", activeDevelopers);
 
         Bug bug = new Bug();
 
