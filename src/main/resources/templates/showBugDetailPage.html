@@ -95,10 +95,29 @@
                         <input class="form-control" type="text" id="bugproject" readonly th:field="${theBug.projectId}">
                     </div>
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="bugSeverity">Severity:</label>
                         <input class="form-control" type="text" id="bugSeverity" readonly th:field="${theBug.bugSeverity}">
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="bugSeverity">Severity:</label>
+                        <select class="form-control" id="bugSeverity" disabled th:field="${theBug.bugSeverity}">
+                            <option id="optionsSeverity1" disabled th:value="CRITICAL">Critical</option>
+                            <option id="optionsSeverity2" disabled th:value="MAJOR">Major</option>
+                            <option id="optionsSeverity3" disabled th:value="MINOR">Minor</option>
+                            <option id="optionsSeverity4" disabled th:value="LOW">Low</option>
+                        </select>
                     </div>
+
+
+
+
+
+
+
+
+
 
                     <div class="form-group">
                         <label for="bugPriority">Priority:</label>
@@ -187,15 +206,20 @@
     document.getElementById('editButton').onclick = function (){
         document.getElementById('bugtitle').readOnly = false;
         document.getElementById('bugproject').readOnly = false;
-        document.getElementById('bugSeverity').readOnly = false;
+        document.getElementById('bugSeverity').disabled = false;
         document.getElementById('bugPriority').readOnly = false;
         document.getElementById('bugStatus').readOnly = false;
         document.getElementById('bugResponsibleDev').readOnly = false;
         document.getElementById('bugDueDate').readOnly = false;
         document.getElementById('bugDescription').readOnly = false;
         document.getElementById('bugStepsToReproduce').readOnly = false;
+        document.getElementById('optionsSeverity1').disabled = false;
+        document.getElementById('optionsSeverity2').disabled = false;
+        document.getElementById('optionsSeverity3').disabled = false;
+        document.getElementById('optionsSeverity4').disabled = false;
     };
 </script>
+
 
 
 </body>
