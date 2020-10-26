@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.controller;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
@@ -78,6 +79,11 @@ public class MyBugsController {
 
         List<Project> activeProjects = projectService.getActiveProjects();
         theModel.addAttribute("projectList", activeProjects);
+
+
+        //Get a list of BugTransactions for the bug, to show in the bug transaction history
+        List<BugTransaction> bugTransactionList = bugService.getBugTransactionsByBugId(theId);
+        theModel.addAttribute("bugTransactions", bugTransactionList);
 
 
         return "showBugDetailPage";

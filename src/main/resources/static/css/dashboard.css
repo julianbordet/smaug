@@ -27,3 +27,10 @@ ul {
 #background-for-working-zone {
     background-color: #F2F4F4;
 }
+
+.mybugtable {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
