@@ -143,9 +143,17 @@
                     <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
                 </div>
 
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label for="bugStatus">Status:</label>
                     <input class="form-control" type="text" id="bugStatus" readonly th:field="${theBug.bugStatus}">
+                </div>-->
+
+                <div class="form-group">
+                    <label for="bugStatus">Status:</label>
+                    <select class="form-control" id="bugStatus" disabled th:field="${theBug.bugStatus}">
+                        <option th:value="2">In progress</option>
+                        <option th:value="1">Fixed</option>
+                    </select>
                 </div>
 
                <!-- <div class="form-group">
@@ -227,12 +235,12 @@
         document.getElementById('bugproject').disabled = false;
         document.getElementById('bugSeverity').disabled = false;
         document.getElementById('bugPriority').disabled = false;
-        document.getElementById('bugStatus').readOnly = false;
+        document.getElementById('bugStatus').disabled = false;
         document.getElementById('bugResponsibleDev').disabled = false;
         document.getElementById('bugDueDate').readOnly = false;
         document.getElementById('bugDescription').readOnly = false;
         document.getElementById('bugStepsToReproduce').readOnly = false;
-      
+
 
     };
 </script>
