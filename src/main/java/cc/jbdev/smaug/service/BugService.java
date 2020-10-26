@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.service;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,4 +51,7 @@ public interface BugService {
     //Returns a hashmap with a key representing the project name, and the value representing the active bug amount
     //for such project.
     HashMap<String, Integer> getMapProjectNameBugCounter(List<Project> projectList, String username);
+
+
+    List<BugTransaction> getBugTransactionsByBugId(int bugId);
 }

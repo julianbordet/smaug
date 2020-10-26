@@ -3,6 +3,7 @@ package cc.jbdev.smaug.entity;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="bugs")
@@ -47,6 +48,9 @@ public class Bug {
 
     @Column(name="priority")
     private String bugPriority;
+
+    @OneToMany(mappedBy="bugId")
+    private List<BugTransaction> bugTransactions;
 
     public Bug(){
 

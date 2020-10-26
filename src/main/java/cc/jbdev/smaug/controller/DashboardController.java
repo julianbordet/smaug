@@ -1,5 +1,6 @@
 package cc.jbdev.smaug.controller;
 
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
@@ -86,9 +87,10 @@ public class DashboardController {
         //  FOR TESTING PURPOSES ONLY    //
         //------------------------------//
 
+        int bugId = 2;
+        List<BugTransaction> bugTransactionsForBug2 = bugService.getBugTransactionsByBugId(bugId);
 
-
-
+        System.out.println("test");
 
 
         //----------------------------//

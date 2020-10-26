@@ -2,6 +2,7 @@ package cc.jbdev.smaug.service;
 
 import cc.jbdev.smaug.dao.BugDAO;
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -193,5 +194,10 @@ public class BugServiceImpl implements BugService {
         }
 
         return mapProjectBugCounter;
+    }
+
+    @Override
+    public List<BugTransaction> getBugTransactionsByBugId(int bugId) {
+        return bugDAO.getBugTransactionsByBugId(bugId);
     }
 }

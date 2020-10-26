@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.dao;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -140,5 +141,19 @@ public class BugDAOImpl implements BugDAO {
 
         theQuery.executeUpdate();
 
+    }
+
+    @Override
+    @Transactional
+    public List<BugTransaction> getBugTransactionsByBugId(int bugId) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<BugTransaction> theQuery = currentSession.createQuery("from BugTransaction where bug_id = '" +bugId+"'", BugTransaction.class);
+
+        List<BugTransaction> bugTransactionList = theQuery.getResultList();
+
+
+        return bugTransactionList;
     }
 }

@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.dao;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface BugDAO {
 
     //deletes bug
     void delete(int bugId);
+
+    List<BugTransaction> getBugTransactionsByBugId(int bugId);
 }
