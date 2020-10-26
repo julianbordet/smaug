@@ -200,4 +200,9 @@ public class BugServiceImpl implements BugService {
     public List<BugTransaction> getBugTransactionsByBugId(int bugId) {
         return bugDAO.getBugTransactionsByBugId(bugId);
     }
+
+    @Override
+    public void saveTransaction(BugTransaction newBugTransaction) {
+        bugDAO.saveTransaction(newBugTransaction);
+    }
 }

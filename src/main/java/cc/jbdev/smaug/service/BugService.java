@@ -54,4 +54,6 @@ public interface BugService {
 
 
     List<BugTransaction> getBugTransactionsByBugId(int bugId);
+
+    void saveTransaction(BugTransaction newBugTransaction);
 }

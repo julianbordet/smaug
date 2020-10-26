@@ -30,4 +30,6 @@ public interface BugDAO {
     void delete(int bugId);
 
     List<BugTransaction> getBugTransactionsByBugId(int bugId);
+
+    void saveTransaction(BugTransaction newBugTransaction);
 }

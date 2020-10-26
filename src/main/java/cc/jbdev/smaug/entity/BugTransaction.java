@@ -18,8 +18,8 @@ public class BugTransaction {
     private String transaction;
 
    /* @Column(name="bug_id")
-    private int bugId;
-*/
+    private int bugId;*/
+
     @ManyToOne
     @JoinColumn(name="bug_id")
     private Bug bugId;
@@ -51,11 +51,19 @@ public class BugTransaction {
         this.transaction = transaction;
     }
 
-    public Bug getBugId() {
+   public Bug getBugId() {
         return bugId;
     }
 
     public void setBugId(Bug bugId) {
         this.bugId = bugId;
     }
+
+   /* public int getBugId() {
+        return bugId;
+    }
+
+    public void setBugId(int bugId) {
+        this.bugId = bugId;
+    }*/
 }

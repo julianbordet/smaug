@@ -137,15 +137,24 @@ public class MyBugsController {
         theBug.setBugCreatedBy(myUserName);
 
 
+
+
         Date today = new Date();
         String todayInString;
         todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
         theBug.setDateCreated(todayInString);
 
 
+        //Create new transaction for bug creation
+        BugTransaction newBugTransaction = new BugTransaction();
+        newBugTransaction.setDate(todayInString);
+        newBugTransaction.setTransaction("Bug created (added by controller)");
+        newBugTransaction.setTransactionId(0);
+        newBugTransaction.setBugId(theBug);
 
+        //bugService.saveTransaction(newBugTransaction);
 
-
+        theBug.addBugTransactions(newBugTransaction);
 
         bugService.save(theBug);
 
