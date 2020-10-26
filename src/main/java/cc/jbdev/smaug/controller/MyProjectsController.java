@@ -70,9 +70,7 @@ public class MyProjectsController {
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
 
-       /* List<Developer> projectDevList = elProjectClickeadoEs.getDevelopers();
-        theModel.addAttribute("projectDevList", projectDevList);
-*/
+
         int currentPage = 1;
         int pageSize = 15;
 

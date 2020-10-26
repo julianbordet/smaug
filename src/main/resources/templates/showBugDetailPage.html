@@ -196,7 +196,7 @@
             <!--Fourth Row: Submit button-->
             <div class="row w-100 mt-4 justify-content-around">
 
-                <button class="btn btn-success w-25 mr-4" type="submit">Update bug</button>
+                <button class="btn btn-success w-25 mr-4" type="submit" id="updateBugButton" hidden >Update bug</button>
 
                 <!----------------------->
                 <!-- Update button -->
@@ -240,6 +240,8 @@
         document.getElementById('bugDueDate').readOnly = false;
         document.getElementById('bugDescription').readOnly = false;
         document.getElementById('bugStepsToReproduce').readOnly = false;
+        document.getElementById('updateBugButton').hidden = false;
+        document.getElementById('editButton').hidden = true;
 
 
     };
