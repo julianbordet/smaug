@@ -82,7 +82,7 @@
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projecttitle">Project Name:</label>
-                    <input class="form-control" type="text" id="projecttitle" th:field="${theProject.projectName}">
+                    <input class="form-control" type="text" id="projecttitle" readonly th:field="${theProject.projectName}">
                 </div>
 
                 <div class="form-group">
@@ -90,15 +90,32 @@
                     <input class="form-control" type="text" id="projectId" readonly th:field="${theProject.projectId}">
                 </div>
 
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label for="projectowner">Project owner:</label>
-                    <input class="form-control" type="text" id="projectowner" readonly th:field="${theProject.projectOwner}">
-                </div>
+                    <input class="form-control" type="text" id="projectowner"  th:field="${theProject.projectOwner}">
+                </div>-->
 
                 <div class="form-group">
-                    <label for="isactive">Project Status (Active or Inactive):</label>
-                    <input class="form-control" type="text" id="isactive" th:field="${theProject.isActive}">
+                    <label for="projectowner">Project owner:</label>
+                    <select class="form-control" id="projectowner" disabled th:field="${theProject.projectOwner}">
+                        <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                    </select>
                 </div>
+
+
+                <!-- <div class="form-group">
+                     <label for="isactive">Project Status (Active or Inactive):</label>
+                     <input class="form-control" type="text" id="isactive" th:field="${theProject.isActive}">
+                 </div>-->
+
+                <div class="form-group">
+                    <label for="isactive">Status:</label>
+                    <select class="form-control" id="isactive" disabled th:field="${theProject.isActive}">
+                        <option th:value="1">Active</option>
+                        <option th:value="0">Inactive</option>
+                    </select>
+                </div>
+
 
             </div>
 
@@ -106,7 +123,7 @@
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projectDescription">Project description:</label>
-                    <input class="form-control" type="text" id="projectDescription" th:field="${theProject.projectDescription}">
+                    <input class="form-control" type="text" id="projectDescription" readonly th:field="${theProject.projectDescription}">
                 </div>
             </div>
 
@@ -117,6 +134,13 @@
             <div class="row w-100 mt-4 justify-content-around">
 
                 <button class="btn btn-success w-25 mr-4" type="submit">Update project</button>
+
+                <!----------------------->
+                <!-- Update button -->
+                <!----------------------->
+                <br>
+                <button type="button" class="btn btn-warning" id="editButton">Edit</button>
+                </a>
 
                 <!--------------------------->
                 <!-- Delete project button -->
@@ -200,6 +224,19 @@
     </div>
 
 </div>
+
+
+<script>
+    document.getElementById('editButton').onclick = function (){
+        document.getElementById('isactive').disabled = false;
+        document.getElementById('projectowner').disabled = false;
+        document.getElementById('projecttitle').readOnly = false;
+        document.getElementById('projectDescription').readOnly = false;
+    };
+</script>
+
+
+
 
 </body>
 
