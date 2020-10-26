@@ -102,6 +102,10 @@ public class MyProjectsController {
         Project theProject = new Project();
         theModel.addAttribute("theProject", theProject);
 
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+        theModel.addAttribute("devList", activeDevelopers);
+
+
         return "newProjectPage";
     }
 

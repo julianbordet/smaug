@@ -133,7 +133,7 @@
             <!--Third Row: Submit button-->
             <div class="row w-100 mt-4 justify-content-around">
 
-                <button class="btn btn-success w-25 mr-4" type="submit">Update project</button>
+                <button class="btn btn-success w-25 mr-4" type="submit" hidden id="updateProjectButton">Update project</button>
 
                 <!----------------------->
                 <!-- Update button -->
@@ -232,6 +232,9 @@
         document.getElementById('projectowner').disabled = false;
         document.getElementById('projecttitle').readOnly = false;
         document.getElementById('projectDescription').readOnly = false;
+        document.getElementById('updateProjectButton').hidden = false;
+        document.getElementById('editButton').hidden = true;
+
     };
 </script>
 
