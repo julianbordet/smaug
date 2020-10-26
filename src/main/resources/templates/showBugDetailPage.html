@@ -90,9 +90,16 @@
                         <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
                     </div>
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="bugproject">Project:</label>
                         <input class="form-control" type="text" id="bugproject" readonly th:field="${theBug.projectId}">
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="bugproject">Project:</label>
+                        <select class="form-control" id="bugproject" disabled th:field="${theBug.projectId}">
+                            <option th:each="proj : ${projectList}" th:value="${proj.projectId}" th:text="${proj.projectName}"></option>
+                        </select>
                     </div>
 
                     <!--<div class="form-group">
@@ -103,10 +110,10 @@
                     <div class="form-group">
                         <label for="bugSeverity">Severity:</label>
                         <select class="form-control" id="bugSeverity" disabled th:field="${theBug.bugSeverity}">
-                            <option id="optionsSeverity1" disabled th:value="CRITICAL">Critical</option>
-                            <option id="optionsSeverity2" disabled th:value="MAJOR">Major</option>
-                            <option id="optionsSeverity3" disabled th:value="MINOR">Minor</option>
-                            <option id="optionsSeverity4" disabled th:value="LOW">Low</option>
+                            <option th:value="CRITICAL">Critical</option>
+                            <option th:value="MAJOR">Major</option>
+                            <option th:value="MINOR">Minor</option>
+                            <option th:value="LOW">Low</option>
                         </select>
                     </div>
 
@@ -121,9 +128,9 @@
             <div class="form-group">
                 <label for="bugPriority">Priority:</label>
                 <select class="form-control" id="bugPriority" disabled th:field="${theBug.bugPriority}">
-                    <option id="optionsPriority1" disabled th:value="HIGH">High</option>
-                    <option id="optionsPriority2" disabled th:value="MEDIUM">Medium</option>
-                    <option id="optionsPriority3" disabled th:value="LOW">Low</option>
+                    <option th:value="HIGH">High</option>
+                    <option th:value="MEDIUM">Medium</option>
+                    <option th:value="LOW">Low</option>
                 </select>
             </div>
 
@@ -141,9 +148,17 @@
                     <input class="form-control" type="text" id="bugStatus" readonly th:field="${theBug.bugStatus}">
                 </div>
 
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label for="bugResponsibleDev">Assigned to:</label>
                     <input class="form-control" type="text" id="bugResponsibleDev" readonly th:field="${theBug.bugResponsibleDev}">
+                </div>-->
+
+
+                <div class="form-group">
+                    <label for="bugResponsibleDev">Assigned to:</label>
+                    <select class="form-control" id="bugResponsibleDev" disabled th:field="${theBug.bugResponsibleDev}">
+                        <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -209,21 +224,16 @@
 <script>
     document.getElementById('editButton').onclick = function (){
         document.getElementById('bugtitle').readOnly = false;
-        document.getElementById('bugproject').readOnly = false;
+        document.getElementById('bugproject').disabled = false;
         document.getElementById('bugSeverity').disabled = false;
         document.getElementById('bugPriority').disabled = false;
         document.getElementById('bugStatus').readOnly = false;
-        document.getElementById('bugResponsibleDev').readOnly = false;
+        document.getElementById('bugResponsibleDev').disabled = false;
         document.getElementById('bugDueDate').readOnly = false;
         document.getElementById('bugDescription').readOnly = false;
         document.getElementById('bugStepsToReproduce').readOnly = false;
-        document.getElementById('optionsSeverity1').disabled = false;
-        document.getElementById('optionsSeverity2').disabled = false;
-        document.getElementById('optionsSeverity3').disabled = false;
-        document.getElementById('optionsSeverity4').disabled = false;
-        document.getElementById('optionsPriority1').disabled = false;
-        document.getElementById('optionsPriority2').disabled = false;
-        document.getElementById('optionsPriority3').disabled = false;
+      
+
     };
 </script>
 

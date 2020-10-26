@@ -72,6 +72,14 @@ public class MyBugsController {
 
         theModel.addAttribute("theBug", bugClicked);
 
+
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+        theModel.addAttribute("devList", activeDevelopers);
+
+        List<Project> activeProjects = projectService.getActiveProjects();
+        theModel.addAttribute("projectList", activeProjects);
+
+
         return "showBugDetailPage";
     }
 
