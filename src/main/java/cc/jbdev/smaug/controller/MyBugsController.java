@@ -161,6 +161,9 @@ public class MyBugsController {
     @GetMapping("/deletebug")
     public String deleteBug(@RequestParam("bugId") int bugId){
 
+        //Bug theBugToDelete = bugService.getBugByBugId(bugId);
+
+
         bugService.delete(bugId);
 
         return "redirect:/mybugs/main";

@@ -135,8 +135,11 @@ public class BugDAOImpl implements BugDAO {
 
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query theQuery = currentSession.createQuery("delete from Bug where bug_id = '" + bugId + "'");
+        Query theQueryForTransaction = currentSession.createQuery("delete from BugTransaction where bug_id = '" + bugId + "'");
 
+        theQueryForTransaction.executeUpdate();
+
+        Query theQuery = currentSession.createQuery("delete from Bug where bug_id = '" + bugId + "'");
 
 
         theQuery.executeUpdate();

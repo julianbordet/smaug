@@ -51,9 +51,11 @@ public class Bug {
     private String bugPriority;
 
     @OneToMany(mappedBy="bugId",
-                cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-               //   cascade = {CascadeType.ALL})
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
+                //  cascade = {CascadeType.ALL})
     private List<BugTransaction> bugTransactions;
+
+
 
     public Bug(){
 
