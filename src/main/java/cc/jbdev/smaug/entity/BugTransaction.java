@@ -20,7 +20,7 @@ public class BugTransaction {
    /* @Column(name="bug_id")
     private int bugId;
 */
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="bug_id")
     private Bug bugId;
 

@@ -2,6 +2,7 @@ package cc.jbdev.smaug.entity;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +50,9 @@ public class Bug {
     @Column(name="priority")
     private String bugPriority;
 
-    @OneToMany(mappedBy="bugId")
+    @OneToMany(mappedBy="bugId",
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+               //   cascade = {CascadeType.ALL})
     private List<BugTransaction> bugTransactions;
 
     public Bug(){
@@ -151,6 +154,22 @@ public class Bug {
 
     public void setBugPriority(String bugPriority) {
         this.bugPriority = bugPriority;
+    }
+
+    public List<BugTransaction> getBugTransactions() {
+        return bugTransactions;
+    }
+
+    public void addBugTransactions(BugTransaction newBugTransaction) {
+
+        if(this.bugTransactions == null){
+            this.bugTransactions = new ArrayList<>();
+        }
+
+        bugTransactions.add(newBugTransaction);
+
+        newBugTransaction.setBugId(this);
+
     }
 
     @Override

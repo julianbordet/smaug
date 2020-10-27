@@ -143,7 +143,13 @@ public class MyBugsController {
         theBug.setDateCreated(todayInString);
 
 
-
+        //Create a new transaction and add it to the bug
+        BugTransaction newBug = new BugTransaction();
+        newBug.setDate("2020-10-27");
+        newBug.setTransaction("Bug created (Ts created by app)");
+        newBug.setTransactionId(0);
+        theBug.addBugTransactions(newBug);
+        //////
 
 
 
