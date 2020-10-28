@@ -294,6 +294,8 @@ public class MyBugsController {
         newBugTransaction.setDate(todayInString);
         newBugTransaction.setTransaction("Bug created");
         newBugTransaction.setTransactionId(0);
+        newBugTransaction.setTransactionCreatedBy(myUserName);
+        newBugTransaction.setTransactionDetail("Bug created");
         theBug.addBugTransactions(newBugTransaction);
         //////
 
