@@ -85,6 +85,11 @@
                         <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}">
                     </div>
 
+                    <!--hidden param for original title-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalTitle" th:value="${theBug.bugTitle}">
+                    </div>
+
                     <div class="form-group">
                         <label for="bugId">Bug Id:</label>
                         <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
@@ -186,6 +191,11 @@
                 <div class="form-group w-25">
                     <label for="bugDescription">Description:</label>
                     <textarea class="form-control" id="bugDescription" readonly th:field="${theBug.bugDescription}" th:rows="5"></textarea>
+                </div>
+
+                <!--hidden param for original description-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalDescription" th:value="${theBug.bugDescription}">
                 </div>
 
                 <div class="form-group w-25">

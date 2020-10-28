@@ -106,26 +106,43 @@ public class MyBugsController {
 
 
     @PostMapping("/updateBug")
-    public String updateBug(@ModelAttribute("theBug") Bug theBug){
+    public String updateBug(@ModelAttribute("theBug") Bug theBug,
+                            @RequestParam(value = "bugOriginalTitle") String bugOriginalTitle,
+                            @RequestParam(value = "bugOriginalDescription") String bugOriginalDescription){
 
         ///// Compare updated bug with original bug state
 
-        //Create a new bug with the original state of the bug
-        Bug bugOriginalState = bugService.getBugByBugId(theBug.getBugId());
-
         String changesMade = "";
 
-        if ( !(theBug.getBugTitle().equals(bugOriginalState.getBugTitle())) ){
-            changesMade += "Title updated. ";
+
+        if ( !(theBug.getBugTitle().equals(bugOriginalTitle)) ){
+                changesMade += "Title updated. ";
         }
 
-        if ( !(theBug.getBugDescription().equals(bugOriginalState.getBugDescription())) ){
-            changesMade += "Description updated. ";
+        if ( !(theBug.getBugTitle().equals(bugOriginalDescription)) ){
+                changesMade += "Description updated. ";
         }
 
-        //--
 
-            //////
+
+
+        //Create a new bug with the original state of the bug
+
+
+        //-- BLE BLE BLE OTROS CHECKS DE IFS PARA LOS OTROS FIELDS
+
+
+
+        Date today = new Date();
+        String todayInString;
+        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
+        //Create a new transaction and add it to the bug
+        BugTransaction newBugTransaction = new BugTransaction();
+        newBugTransaction.setDate(todayInString);
+        newBugTransaction.setTransaction(changesMade);
+        newBugTransaction.setTransactionId(0);
+        theBug.addBugTransactions(newBugTransaction);
+        //////
 
 
         bugService.save(theBug);
