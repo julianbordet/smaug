@@ -180,16 +180,22 @@ public class MyBugsController {
         Date today = new Date();
         String todayInString;
         todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
-        //Create a new transaction and add it to the bug
-        BugTransaction newBugTransaction = new BugTransaction();
-        newBugTransaction.setDate(todayInString);
+
 
         //check if changesMade variable is empty
-        newBugTransaction.setTransaction(changesMade);
+
+        if ( !(changesMade.isEmpty()) ){
+
+            //Create a new transaction and add it to the bug
+            BugTransaction newBugTransaction = new BugTransaction();
+            newBugTransaction.setDate(todayInString);
+            newBugTransaction.setTransaction(changesMade);
+            newBugTransaction.setTransactionId(0);
+            theBug.addBugTransactions(newBugTransaction);
+        }
 
 
-        newBugTransaction.setTransactionId(0);
-        theBug.addBugTransactions(newBugTransaction);
+
         //////
 
 
