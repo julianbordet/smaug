@@ -73,6 +73,20 @@ public class MyBugsController {
 
         theModel.addAttribute("theBug", bugClicked);
 
+       /* //Add a copy of the bug to use for reference when checking changes for the transaction history
+        Bug bugOriginalState = new Bug();
+        bugOriginalState.setBugTitle(bugClicked.getBugTitle());
+        bugOriginalState.setBugDescription(bugClicked.getBugDescription());
+        bugOriginalState.setStepsToReproduce(bugClicked.getStepsToReproduce());
+        bugOriginalState.setBugSeverity(bugClicked.getBugSeverity());
+        bugOriginalState.setDateCreated(bugClicked.getDateCreated());
+        bugOriginalState.setBugStatus(bugClicked.getBugStatus());
+        bugOriginalState.setBugResponsibleDev(bugClicked.getBugResponsibleDev());
+        bugOriginalState.setBugDueDate(bugClicked.getBugDueDate());
+        bugOriginalState.setBugPriority(bugClicked.getBugPriority());
+
+        theModel.addAttribute("theOriginalBug", bugOriginalState);
+        /////////*/
 
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
@@ -93,6 +107,26 @@ public class MyBugsController {
 
     @PostMapping("/updateBug")
     public String updateBug(@ModelAttribute("theBug") Bug theBug){
+
+        ///// Compare updated bug with original bug state
+
+        //Create a new bug with the original state of the bug
+        Bug bugOriginalState = bugService.getBugByBugId(theBug.getBugId());
+
+        String changesMade = "";
+
+        if ( !(theBug.getBugTitle().equals(bugOriginalState.getBugTitle())) ){
+            changesMade += "Title updated. ";
+        }
+
+        if ( !(theBug.getBugDescription().equals(bugOriginalState.getBugDescription())) ){
+            changesMade += "Description updated. ";
+        }
+
+        //--
+
+            //////
+
 
         bugService.save(theBug);
 
@@ -144,11 +178,11 @@ public class MyBugsController {
 
 
         //Create a new transaction and add it to the bug
-        BugTransaction newBug = new BugTransaction();
-        newBug.setDate("2020-10-27");
-        newBug.setTransaction("Bug created (Ts created by app)");
-        newBug.setTransactionId(0);
-        theBug.addBugTransactions(newBug);
+        BugTransaction newBugTransaction = new BugTransaction();
+        newBugTransaction.setDate(todayInString);
+        newBugTransaction.setTransaction("Bug created");
+        newBugTransaction.setTransactionId(0);
+        theBug.addBugTransactions(newBugTransaction);
         //////
 
 
