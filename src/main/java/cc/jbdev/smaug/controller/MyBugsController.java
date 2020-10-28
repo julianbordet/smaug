@@ -118,48 +118,87 @@ public class MyBugsController {
                             @RequestParam(value = "bugOriginalStepsToReproduce") String bugOriginalStepsToReproduce)
     {
 
+        ///Helper code to get the username of the currently logged in user:
+        String myUserName;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            myUserName = ((UserDetails)principal).getUsername();
+        } else {
+            myUserName = principal.toString();
+        }
+        ///
+
+
+
         ///// Compare updated bug with original bug state
 
         String changesMade = "";
+        String changesMadeDetail = "";
 
 
         if ( !(theBug.getBugTitle().equals(bugOriginalTitle)) ){
                 changesMade += "Title updated. ";
+                changesMadeDetail += "Title updated from: " + bugOriginalTitle + " to: " + theBug.getBugTitle();
+                changesMadeDetail += "\n";
         }
 
         if ( !(theBug.getBugDescription().equals(bugOriginalDescription)) ){
                 changesMade += "Description updated. ";
+                changesMadeDetail += "Description updated: " + theBug.getBugDescription();
+                changesMadeDetail += "\n";
         }
 
-        int updatedBugId = theBug.getBugId();
-        Integer originalBugId = Integer.parseInt(bugOriginalProjectId);
 
         if ( !(theBug.getProjectId() ==  Integer.parseInt(bugOriginalProjectId) ) ){
             changesMade += "Assigned project changed. ";
+            changesMadeDetail += "Project reassigned from: " +
+                    projectService.getProjectById(Integer.parseInt(bugOriginalProjectId)).getProjectName() +
+                    " to: " + projectService.getProjectById(theBug.getProjectId()).getProjectName() +
+                    "\n";
         }
 
         if ( !(theBug.getBugSeverity().equals(bugOriginalSeverity)) ){
             changesMade += "Severity updated. ";
+            changesMadeDetail += "Bug severity updated from: " + bugOriginalSeverity + " to: " +
+                    theBug.getBugSeverity() +
+                    "\n";
         }
 
         if ( !(theBug.getBugPriority().equals(bugOriginalPriority)) ){
             changesMade += "Priority updated. ";
+            changesMadeDetail += "Priority updated from: " + bugOriginalPriority + " to: " +
+                    theBug.getBugPriority() +
+                    "\n";
         }
 
-        if ( !(theBug.getBugStatus() ==  Integer.parseInt(bugOriginalStatus) ) ){
+        int updatedBugStatus = theBug.getBugStatus();
+        int originalBugStatus = Integer.parseInt(bugOriginalStatus);
+
+        if ( !(updatedBugStatus ==  originalBugStatus) ){
             changesMade += "Status updated. ";
+
+            if(updatedBugStatus == 1) {
+                changesMadeDetail += "Status updated from: In Progress to Fixed\n";
+            } else {
+                changesMadeDetail += "Status updated from: Fixed to In Progress\n";
+            }
         }
 
         if ( !(theBug.getBugResponsibleDev().equals(bugOriginalResponsibleDev)) ){
             changesMade += "Responsible dev changed. ";
+            changesMadeDetail += "Responsible dev changed from: " + bugOriginalResponsibleDev + " to: " + theBug.getBugResponsibleDev() +
+                    "\n";
         }
 
         if ( !(theBug.getBugDueDate().equals(bugOriginalDueDate)) ){
             changesMade += "Due date updated. ";
+            changesMadeDetail += "Due date updated from: " + bugOriginalDueDate + " to: " + theBug.getBugDueDate() +
+                    "\n";
         }
 
         if ( !(theBug.getStepsToReproduce().equals(bugOriginalStepsToReproduce)) ){
             changesMade += "Steps to reproduce updated. ";
+            changesMadeDetail += "Steps to reproduce updated: " + theBug.getStepsToReproduce();
         }
 
 
@@ -191,6 +230,8 @@ public class MyBugsController {
             newBugTransaction.setDate(todayInString);
             newBugTransaction.setTransaction(changesMade);
             newBugTransaction.setTransactionId(0);
+            newBugTransaction.setTransactionCreatedBy(myUserName);
+            newBugTransaction.setTransactionDetail(changesMadeDetail);
             theBug.addBugTransactions(newBugTransaction);
         }
 

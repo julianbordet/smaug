@@ -17,15 +17,17 @@ public class BugTransaction {
     @Column(name="transaction")
     private String transaction;
 
-   /* @Column(name="bug_id")
-    private int bugId;
-*/
-
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
     //@ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="bug_id")
     private Bug bugId;
+
+    @Column(name="transaction_detail")
+    private String transactionDetail;
+
+    @Column(name="transaction_created_by")
+    private String transactionCreatedBy;
 
     public BugTransaction() {
     }
@@ -60,5 +62,21 @@ public class BugTransaction {
 
     public void setBugId(Bug bugId) {
         this.bugId = bugId;
+    }
+
+    public String getTransactionDetail() {
+        return transactionDetail;
+    }
+
+    public void setTransactionDetail(String transactionDetail) {
+        this.transactionDetail = transactionDetail;
+    }
+
+    public String getTransactionCreatedBy() {
+        return transactionCreatedBy;
+    }
+
+    public void setTransactionCreatedBy(String transactionCreatedBy) {
+        this.transactionCreatedBy = transactionCreatedBy;
     }
 }
