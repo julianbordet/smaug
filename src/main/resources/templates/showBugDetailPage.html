@@ -107,10 +107,12 @@
                         </select>
                     </div>
 
-                    <!--<div class="form-group">
-                        <label for="bugSeverity">Severity:</label>
-                        <input class="form-control" type="text" id="bugSeverity" readonly th:field="${theBug.bugSeverity}">
-                    </div>-->
+                    <!--hidden param for original project-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalProjectId" th:value="${theBug.projectId}">
+                    </div>
+
+
 
                     <div class="form-group">
                         <label for="bugSeverity">Severity:</label>
@@ -122,12 +124,12 @@
                         </select>
                     </div>
 
-
-                <!--    <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
-                        <input class="form-control" type="text" id="bugPriority" readonly th:field="${theBug.bugPriority}">
+                    <!--hidden param for original severity-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalSeverity" th:value="${theBug.bugSeverity}">
                     </div>
-                </div>-->
+
+
 
 
             <div class="form-group">
@@ -139,6 +141,10 @@
                 </select>
             </div>
 
+                    <!--hidden param for original Priority-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalPriority" th:value="${theBug.bugPriority}">
+                    </div>
 
 
             <!--Second Row: createdby, responsible-dev, due date, date created-->
@@ -148,10 +154,7 @@
                     <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
                 </div>
 
-               <!-- <div class="form-group">
-                    <label for="bugStatus">Status:</label>
-                    <input class="form-control" type="text" id="bugStatus" readonly th:field="${theBug.bugStatus}">
-                </div>-->
+
 
                 <div class="form-group">
                     <label for="bugStatus">Status:</label>
@@ -161,10 +164,12 @@
                     </select>
                 </div>
 
-               <!-- <div class="form-group">
-                    <label for="bugResponsibleDev">Assigned to:</label>
-                    <input class="form-control" type="text" id="bugResponsibleDev" readonly th:field="${theBug.bugResponsibleDev}">
-                </div>-->
+                <!--hidden param for original Status-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalStatus" th:value="${theBug.bugStatus}">
+                </div>
+
+
 
 
                 <div class="form-group">
@@ -174,10 +179,22 @@
                     </select>
                 </div>
 
+                <!--hidden param for original Assigned To-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalResponsibleDev" th:value="${theBug.bugResponsibleDev}">
+                </div>
+
+
                 <div class="form-group">
                     <label for="bugDueDate">Due date:</label>
                     <input class="form-control" type="text" id="bugDueDate" readonly th:field="${theBug.bugDueDate}">
                 </div>
+
+                <!--hidden param for original Due date-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalDueDate" th:value="${theBug.bugDueDate}">
+                </div>
+
 
                 <div class="form-group">
                     <label for="bugCreated">Date created:</label>
@@ -202,6 +219,13 @@
                     <label for="bugStepsToReproduce">Steps to Reproduce:</label>
                     <textarea class="form-control" id="bugStepsToReproduce" readonly th:field="${theBug.stepsToReproduce}" th:rows="5"></textarea>
                 </div>
+
+                <!--hidden param for original steps to reproduce-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalStepsToReproduce" th:value="${theBug.stepsToReproduce}">
+                </div>
+
+
             </div>
             <!--Fourth Row: Submit button-->
             <div class="row w-100 mt-4 justify-content-around">

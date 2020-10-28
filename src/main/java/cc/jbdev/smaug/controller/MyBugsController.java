@@ -108,7 +108,15 @@ public class MyBugsController {
     @PostMapping("/updateBug")
     public String updateBug(@ModelAttribute("theBug") Bug theBug,
                             @RequestParam(value = "bugOriginalTitle") String bugOriginalTitle,
-                            @RequestParam(value = "bugOriginalDescription") String bugOriginalDescription){
+                            @RequestParam(value = "bugOriginalDescription") String bugOriginalDescription,
+                            @RequestParam(value = "bugOriginalProjectId") String bugOriginalProjectId,
+                            @RequestParam(value = "bugOriginalSeverity") String bugOriginalSeverity,
+                            @RequestParam(value = "bugOriginalPriority") String bugOriginalPriority,
+                            @RequestParam(value = "bugOriginalStatus") String bugOriginalStatus,
+                            @RequestParam(value = "bugOriginalResponsibleDev") String bugOriginalResponsibleDev,
+                            @RequestParam(value = "bugOriginalDueDate") String bugOriginalDueDate,
+                            @RequestParam(value = "bugOriginalStepsToReproduce") String bugOriginalStepsToReproduce)
+    {
 
         ///// Compare updated bug with original bug state
 
@@ -119,9 +127,45 @@ public class MyBugsController {
                 changesMade += "Title updated. ";
         }
 
-        if ( !(theBug.getBugTitle().equals(bugOriginalDescription)) ){
+        if ( !(theBug.getBugDescription().equals(bugOriginalDescription)) ){
                 changesMade += "Description updated. ";
         }
+
+        int updatedBugId = theBug.getBugId();
+        Integer originalBugId = Integer.parseInt(bugOriginalProjectId);
+
+        if ( !(theBug.getProjectId() ==  Integer.parseInt(bugOriginalProjectId) ) ){
+            changesMade += "Assigned project changed. ";
+        }
+
+        if ( !(theBug.getBugSeverity().equals(bugOriginalSeverity)) ){
+            changesMade += "Severity updated. ";
+        }
+
+        if ( !(theBug.getBugPriority().equals(bugOriginalPriority)) ){
+            changesMade += "Priority updated. ";
+        }
+
+        if ( !(theBug.getBugStatus() ==  Integer.parseInt(bugOriginalStatus) ) ){
+            changesMade += "Status updated. ";
+        }
+
+        if ( !(theBug.getBugResponsibleDev().equals(bugOriginalResponsibleDev)) ){
+            changesMade += "Responsible dev changed. ";
+        }
+
+        if ( !(theBug.getBugDueDate().equals(bugOriginalDueDate)) ){
+            changesMade += "Due date updated. ";
+        }
+
+        if ( !(theBug.getStepsToReproduce().equals(bugOriginalStepsToReproduce)) ){
+            changesMade += "Steps to reproduce updated. ";
+        }
+
+
+
+
+
 
 
 
@@ -139,7 +183,11 @@ public class MyBugsController {
         //Create a new transaction and add it to the bug
         BugTransaction newBugTransaction = new BugTransaction();
         newBugTransaction.setDate(todayInString);
+
+        //check if changesMade variable is empty
         newBugTransaction.setTransaction(changesMade);
+
+
         newBugTransaction.setTransactionId(0);
         theBug.addBugTransactions(newBugTransaction);
         //////
