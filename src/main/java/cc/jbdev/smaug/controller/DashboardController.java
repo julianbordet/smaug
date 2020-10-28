@@ -87,10 +87,7 @@ public class DashboardController {
         //  FOR TESTING PURPOSES ONLY    //
         //------------------------------//
 
-        int bugId = 2;
-        List<BugTransaction> bugTransactionsForBug2 = bugService.getBugTransactionsByBugId(bugId);
-
-        System.out.println("test");
+       
 
 
         //----------------------------//
