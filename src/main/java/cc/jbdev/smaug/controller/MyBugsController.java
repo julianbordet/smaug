@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +62,22 @@ public class MyBugsController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
+
+        ////////// Add a list of applicable project names to the model
+
+
+        List<Bug> myBugList = bugService.getActiveBugListForUser(myUserName);
+        List<String> listOfApplicableProjectNames = new ArrayList<>();
+
+        for (Bug bug : myBugList){
+            Project project = projectService.getProjectById(bug.getProjectId());
+            String projectName = project.getProjectName();
+            listOfApplicableProjectNames.add(projectName);
+        }
+
+        theModel.addAttribute("projectNames", listOfApplicableProjectNames);
+
+        ///////
 
         return "mybugspage";
     }

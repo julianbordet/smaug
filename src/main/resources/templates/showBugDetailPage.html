@@ -266,6 +266,7 @@
             <tr>
                 <th th:text="'Date'"/>
                 <th th:text="'Update'"/>
+                <th th:text="'Developer'"/>
             </tr>
             </thead>
 
@@ -277,6 +278,8 @@
 
                 <td th:text="${ transaction.date }"/>
                 <td th:text="${ transaction.transaction }"/>
+                <td th:text="${ transaction.transactionCreatedBy }"/>
+
 
             </tr>
             </tbody>

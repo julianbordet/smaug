@@ -94,6 +94,9 @@
                     <tr>
                         <th th:text="'Bug Id'"/>
                         <th th:text="'Bug Name'"/>
+
+                        <th th:text="'Project'"/>
+
                         <th th:text="'Severity'"/>
                         <th th:text="'Priority'"/>
                         <th th:text="'Status'"/>
@@ -118,6 +121,7 @@
 
                         <td th:text="${ bug.bugId }"/>
                         <td th:text="${ bug.bugTitle }"/>
+                        <td th:text="${projectNames[iStat.index]}"/>
                         <td th:text="${ bug.bugSeverity}"/>
                         <td th:text="${ bug.bugPriority}"/>
                         <td th:text="'In Progress'"/>
