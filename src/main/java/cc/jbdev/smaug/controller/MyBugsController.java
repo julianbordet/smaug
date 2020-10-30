@@ -15,10 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -84,26 +81,14 @@ public class MyBugsController {
 
 
     @GetMapping("/showBugDetail")
-    public String showBugDetail(@RequestParam("bugId") int theId, Model theModel) {
+    public String showBugDetail(@RequestParam("bugId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
 
         Bug bugClicked = bugService.getBugByBugId(theId);
 
         theModel.addAttribute("theBug", bugClicked);
 
-       /* //Add a copy of the bug to use for reference when checking changes for the transaction history
-        Bug bugOriginalState = new Bug();
-        bugOriginalState.setBugTitle(bugClicked.getBugTitle());
-        bugOriginalState.setBugDescription(bugClicked.getBugDescription());
-        bugOriginalState.setStepsToReproduce(bugClicked.getStepsToReproduce());
-        bugOriginalState.setBugSeverity(bugClicked.getBugSeverity());
-        bugOriginalState.setDateCreated(bugClicked.getDateCreated());
-        bugOriginalState.setBugStatus(bugClicked.getBugStatus());
-        bugOriginalState.setBugResponsibleDev(bugClicked.getBugResponsibleDev());
-        bugOriginalState.setBugDueDate(bugClicked.getBugDueDate());
-        bugOriginalState.setBugPriority(bugClicked.getBugPriority());
 
-        theModel.addAttribute("theOriginalBug", bugOriginalState);
-        /////////*/
+        
 
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
@@ -112,10 +97,24 @@ public class MyBugsController {
         theModel.addAttribute("projectList", activeProjects);
 
 
-        //Get a list of BugTransactions for the bug, to show in the bug transaction history
-        List<BugTransaction> bugTransactionList = bugService.getBugTransactionsByBugId(theId);
-        theModel.addAttribute("bugTransactions", bugTransactionList);
 
+
+        //pagination for bug transaction
+
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Page<BugTransaction> bugTransactions = bugService.findPaginatedBugTransactions(PageRequest.of(currentPage - 1, pageSize), theId);
+
+
+        theModel.addAttribute("bugTransactions", bugTransactions);
+
+        int totalPages = bugTransactions.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
+        ///////
 
         return "showBugDetailPage";
     }

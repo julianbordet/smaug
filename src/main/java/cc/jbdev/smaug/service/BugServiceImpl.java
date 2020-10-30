@@ -4,6 +4,7 @@ import cc.jbdev.smaug.dao.BugDAO;
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
+import cc.jbdev.smaug.utility.BugTransactionComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -63,6 +64,43 @@ public class BugServiceImpl implements BugService {
 
         return bugPage;
     }
+
+    @Override
+    public Page<BugTransaction> findPaginatedBugTransactions(Pageable pageable, int bugId) {
+
+        List<BugTransaction> bugTransactions = getBugTransactionsByBugId(bugId);
+
+        BugTransactionComparator transactionComparator = new BugTransactionComparator();
+
+        Collections.sort(bugTransactions, Collections.reverseOrder(transactionComparator));
+
+
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<BugTransaction> list;
+
+        if (bugTransactions.size() < startItem){
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, bugTransactions.size());
+            list = bugTransactions.subList(startItem, toIndex);
+        }
+
+        Page<BugTransaction> bugTransactionPage = new PageImpl<BugTransaction>(list, PageRequest.of(currentPage, pageSize), bugTransactions.size());
+
+        return bugTransactionPage;
+    }
+
+
+
+
+
+
+
+
+
 
     @Override
     public Bug getBugByBugId(int bugId) {
