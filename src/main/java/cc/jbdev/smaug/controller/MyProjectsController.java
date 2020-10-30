@@ -60,7 +60,8 @@ public class MyProjectsController {
 
 
     @GetMapping("/showProjectDetail")
-    public String showBugDetail(@RequestParam("projectId") int theId, Model theModel) {
+    public String showBugDetail(@RequestParam("projectId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page,
+                                @RequestParam("size") Optional<Integer> size) {
 
         Project elProjectClickeadoEs = projectService.getProjectById(theId);
 

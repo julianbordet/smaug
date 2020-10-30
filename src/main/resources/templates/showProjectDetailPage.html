@@ -191,7 +191,7 @@
 
         <div th:if="${developerPage.totalPages > 0}" class="pagination"
              th:each="pageNumber : ${pageNumbers}">
-            <a th:href="@{~/myprojects/showProjectDetail(size=${developerPage.size}, page=${pageNumber})}"
+            <a th:href="@{~/myprojects/showProjectDetail(size=${developerPage.size}, page=${pageNumber}, projectId = ${theProject.projectId})}"
                th:text="${pageNumber}"
                th:class="${pageNumber==developerPage.number + 1} ? active"></a>
         </div>

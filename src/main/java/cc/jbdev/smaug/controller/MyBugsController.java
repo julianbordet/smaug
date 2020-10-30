@@ -88,7 +88,7 @@ public class MyBugsController {
         theModel.addAttribute("theBug", bugClicked);
 
 
-        
+
 
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
