@@ -76,6 +76,11 @@ public class MyBugsController {
 
         ///////
 
+        ///Add to the model a list of bugs assigned to the dev that are marked as fixed
+        List<Bug> inactiveBugList = bugService.getListOfInactiveBugsForUser(myUserName);
+        theModel.addAttribute("inactiveBugList", inactiveBugList);
+        //////
+
         return "mybugspage";
     }
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Toggle/Switch Button</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="customSwitches">
+    <label class="custom-control-label" for="customSwitches">Show inactive bugs</label><br>
+</div>
+
+<script>
+    var switchStatus = false;
+
+$("#customSwitches").on('change', function() {
+if ($(this).is(':checked')) {
+switchStatus = $(this).is(':checked');
+console.log(switchStatus)
+}
+
+else {
+switchStatus = $(this).is(':checked');
+console.log(switchStatus)}
+});
+</script>
+
+
+
+
+</body>
+</html>

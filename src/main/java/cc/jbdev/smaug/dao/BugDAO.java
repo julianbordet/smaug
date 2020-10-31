@@ -20,6 +20,9 @@ public interface BugDAO {
     //gets active bug list for a specific user
     List<Bug> getActiveBugListForUser(String username);
 
+    //gets inactive bug list for a specific user
+    List<Bug> getListOfInactiveBugsForUser(String username);
+
     //paginates active bugs for a specific user
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
 

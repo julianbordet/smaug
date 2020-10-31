@@ -39,6 +39,11 @@ public class BugServiceImpl implements BugService {
     }
 
     @Override
+    public List<Bug> getListOfInactiveBugsForUser(String username) {
+        return bugDAO.getListOfInactiveBugsForUser(username);
+    }
+
+    @Override
     public List<Bug> getProjectActiveBugsByUser(Project project, String username) {
         return bugDAO.getProjectActiveBugsByUser(project, username);
     }

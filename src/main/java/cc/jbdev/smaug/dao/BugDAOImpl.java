@@ -87,6 +87,18 @@ public class BugDAOImpl implements BugDAO {
     }
 
     @Override
+    public List<Bug> getListOfInactiveBugsForUser(String username) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = '1'", Bug.class);
+
+        List<Bug> bugList = theQuery.getResultList();
+
+        return bugList;
+    }
+
+    @Override
     @Transactional
     public List<Bug> getProjectActiveBugsByUser(Project project, String username) {
 
