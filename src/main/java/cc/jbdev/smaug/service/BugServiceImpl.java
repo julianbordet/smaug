@@ -71,6 +71,29 @@ public class BugServiceImpl implements BugService {
     }
 
     @Override
+    public Page<Bug> findPaginatedUserInactiveBugs(Pageable pageable, String username) {
+
+        List<Bug> userBugList = getListOfInactiveBugsForUser(username);
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Bug> list;
+
+        if (userBugList.size() < startItem){
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, userBugList.size());
+            list = userBugList.subList(startItem, toIndex);
+        }
+
+        Page<Bug> bugPage = new PageImpl<Bug>(list, PageRequest.of(currentPage, pageSize), userBugList.size());
+
+        return bugPage;
+
+    }
+
+    @Override
     public Page<BugTransaction> findPaginatedBugTransactions(Pageable pageable, int bugId) {
 
         List<BugTransaction> bugTransactions = getBugTransactionsByBugId(bugId);

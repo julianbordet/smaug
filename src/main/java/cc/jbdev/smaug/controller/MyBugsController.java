@@ -61,8 +61,6 @@ public class MyBugsController {
         }
 
         ////////// Add a list of applicable project names to the model
-
-
         List<Bug> myBugList = bugService.getActiveBugListForUser(myUserName);
         List<String> listOfApplicableProjectNames = new ArrayList<>();
 
@@ -76,12 +74,60 @@ public class MyBugsController {
 
         ///////
 
-        ///Add to the model a list of bugs assigned to the dev that are marked as fixed
-        List<Bug> inactiveBugList = bugService.getListOfInactiveBugsForUser(myUserName);
-        theModel.addAttribute("inactiveBugList", inactiveBugList);
-        //////
+
 
         return "mybugspage";
+    }
+
+    @GetMapping("/inactivebugs")
+    public String showInactiveBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
+                                   @RequestParam("size") Optional<Integer> size){
+
+        ///Helper code to get the username of the currently logged in user:
+        String myUserName;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            myUserName = ((UserDetails)principal).getUsername();
+        } else {
+            myUserName = principal.toString();
+        }
+        ///
+
+
+
+        //paginate results
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(15);
+
+        Page<Bug> inactiveBugPage = bugService.findPaginatedUserInactiveBugs(PageRequest.of(currentPage - 1, pageSize), myUserName);
+
+        theModel.addAttribute("inactiveBugPage", inactiveBugPage);
+
+        int totalPages = inactiveBugPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
+        ////////
+
+        ////////// Add a list of applicable project names to the model
+        List<Bug> myBugList = bugService.getActiveBugListForUser(myUserName);
+        List<String> listOfApplicableProjectNames = new ArrayList<>();
+
+        for (Bug bug : myBugList){
+            Project project = projectService.getProjectById(bug.getProjectId());
+            String projectName = project.getProjectName();
+            listOfApplicableProjectNames.add(projectName);
+        }
+
+        theModel.addAttribute("projectNames", listOfApplicableProjectNames);
+        ///////
+
+
+
+
+
+        return "inactiveBugsPage";
     }
 
 
