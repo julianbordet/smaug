@@ -78,7 +78,7 @@ public class BugDAOImpl implements BugDAO {
         /////////////////
         //Since the query below is done in HQL the "from Bug" should refer to the @Entity class name
         //not to the table name, which in this case is "bugs".
-        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = '2'", Bug.class);
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND is_fixed = '0'", Bug.class);
 
         //execute query and get result list
         List<Bug> bugList = theQuery.getResultList();
@@ -91,7 +91,7 @@ public class BugDAOImpl implements BugDAO {
 
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = '1'", Bug.class);
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND is_fixed = '1'", Bug.class);
 
         List<Bug> bugList = theQuery.getResultList();
 
@@ -110,7 +110,7 @@ public class BugDAOImpl implements BugDAO {
         /////////////////
         //Since the query below is done in HQL the "from Bug" should refer to the @Entity class name
         //not to the table name, which in this case is "bugs".
-        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND status = '2' AND project_id = '" + project.getProjectId() + "'", Bug.class);
+        Query<Bug> theQuery = currentSession.createQuery("from Bug where responsible_dev = '" + username + "'" + "AND is_fixed = '0' AND project_id = '" + project.getProjectId() + "'", Bug.class);
 
         List<Bug> bugListByProject = theQuery.getResultList();
 

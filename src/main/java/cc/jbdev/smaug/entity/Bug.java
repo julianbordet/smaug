@@ -35,7 +35,7 @@ public class Bug {
 
     //status = 1 = bug is closed/fixed
     //status = 2 = bug is still open
-    @Column(name="status")
+    @Column(name="is_fixed")
     private int bugStatus;
 
     @Column(name="created_by")

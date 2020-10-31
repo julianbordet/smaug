@@ -111,7 +111,7 @@ public class MyBugsController {
         ////////
 
         ////////// Add a list of applicable project names to the model
-        List<Bug> myBugList = bugService.getActiveBugListForUser(myUserName);
+        List<Bug> myBugList = bugService.getListOfInactiveBugsForUser(myUserName);
         List<String> listOfApplicableProjectNames = new ArrayList<>();
 
         for (Bug bug : myBugList){
@@ -346,7 +346,7 @@ public class MyBugsController {
 
 
         theBug.setBugId(0);
-        theBug.setBugStatus(2);
+        theBug.setBugStatus(0);
         theBug.setBugCreatedBy(myUserName);
 
 
