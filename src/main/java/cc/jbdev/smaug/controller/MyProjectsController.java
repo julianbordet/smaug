@@ -4,6 +4,7 @@ import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
+import cc.jbdev.smaug.utility.UserUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,20 +33,14 @@ public class MyProjectsController {
     public String showMyProjects(Model theModel, @RequestParam("page") Optional<Integer> page,
                                  @RequestParam("size") Optional<Integer> size) {
 
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            myUserName = ((UserDetails) principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
+        UserUtility userUtility = new UserUtility();
+
+
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Project> projectPage = projectService.findPaginatedUserActiveProjects(PageRequest.of(currentPage - 1, pageSize), myUserName);
+        Page<Project> projectPage = projectService.findPaginatedUserActiveProjects(PageRequest.of(currentPage - 1, pageSize), userUtility.getMyUserName());
 
         theModel.addAttribute("projectPage", projectPage);
 
