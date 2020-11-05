@@ -5,6 +5,7 @@ import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
+import cc.jbdev.smaug.utility.UserUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,22 +36,15 @@ public class MyBugsController {
     public String showMyBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
                              @RequestParam("size") Optional<Integer> size){
 
+        UserUtility userUtility = new UserUtility();
 
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
+
 
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Bug> bugPage = bugService.findPaginatedUserActiveBugs(PageRequest.of(currentPage - 1, pageSize), myUserName);
+        Page<Bug> bugPage = bugService.findPaginatedUserActiveBugs(PageRequest.of(currentPage - 1, pageSize), userUtility.getMyUserName());
 
         theModel.addAttribute("bugPage", bugPage);
 
@@ -61,7 +55,7 @@ public class MyBugsController {
         }
 
         ////////// Add a list of applicable project names to the model
-        List<Bug> myBugList = bugService.getActiveBugListForUser(myUserName);
+        List<Bug> myBugList = bugService.getActiveBugListForUser(userUtility.getMyUserName());
         List<String> listOfApplicableProjectNames = new ArrayList<>();
 
         for (Bug bug : myBugList){
@@ -83,15 +77,9 @@ public class MyBugsController {
     public String showInactiveBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
                                    @RequestParam("size") Optional<Integer> size){
 
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
+        UserUtility userUtility = new UserUtility();
+
+
 
 
 
@@ -99,7 +87,7 @@ public class MyBugsController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Bug> inactiveBugPage = bugService.findPaginatedUserInactiveBugs(PageRequest.of(currentPage - 1, pageSize), myUserName);
+        Page<Bug> inactiveBugPage = bugService.findPaginatedUserInactiveBugs(PageRequest.of(currentPage - 1, pageSize), userUtility.getMyUserName());
 
         theModel.addAttribute("inactiveBugPage", inactiveBugPage);
 
@@ -111,7 +99,7 @@ public class MyBugsController {
         ////////
 
         ////////// Add a list of applicable project names to the model
-        List<Bug> myBugList = bugService.getListOfInactiveBugsForUser(myUserName);
+        List<Bug> myBugList = bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName());
         List<String> listOfApplicableProjectNames = new ArrayList<>();
 
         for (Bug bug : myBugList){
@@ -133,6 +121,8 @@ public class MyBugsController {
 
     @GetMapping("/showBugDetail")
     public String showBugDetail(@RequestParam("bugId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+
+
 
         Bug bugClicked = bugService.getBugByBugId(theId);
 
@@ -185,15 +175,10 @@ public class MyBugsController {
                             @RequestParam(value = "bugOriginalStepsToReproduce") String bugOriginalStepsToReproduce)
     {
 
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
+        UserUtility userUtility = new UserUtility();
+
+
+
 
 
 
@@ -297,7 +282,7 @@ public class MyBugsController {
             newBugTransaction.setDate(todayInString);
             newBugTransaction.setTransaction(changesMade);
             newBugTransaction.setTransactionId(0);
-            newBugTransaction.setTransactionCreatedBy(myUserName);
+            newBugTransaction.setTransactionCreatedBy(userUtility.getMyUserName());
             newBugTransaction.setTransactionDetail(changesMadeDetail);
             theBug.addBugTransactions(newBugTransaction);
         }
@@ -332,22 +317,14 @@ public class MyBugsController {
     @PostMapping("/createBug")
     public String createBug(@ModelAttribute("theBug") Bug theBug){
 
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
+        UserUtility userUtility = new UserUtility();
 
 
 
 
         theBug.setBugId(0);
         theBug.setBugStatus(0);
-        theBug.setBugCreatedBy(myUserName);
+        theBug.setBugCreatedBy(userUtility.getMyUserName());
 
 
         Date today = new Date();
@@ -361,7 +338,7 @@ public class MyBugsController {
         newBugTransaction.setDate(todayInString);
         newBugTransaction.setTransaction("Bug created");
         newBugTransaction.setTransactionId(0);
-        newBugTransaction.setTransactionCreatedBy(myUserName);
+        newBugTransaction.setTransactionCreatedBy(userUtility.getMyUserName());
         newBugTransaction.setTransactionDetail("Bug created");
         theBug.addBugTransactions(newBugTransaction);
         //////
@@ -375,9 +352,6 @@ public class MyBugsController {
 
     @GetMapping("/deletebug")
     public String deleteBug(@RequestParam("bugId") int bugId){
-
-        //Bug theBugToDelete = bugService.getBugByBugId(bugId);
-
 
         bugService.delete(bugId);
 
