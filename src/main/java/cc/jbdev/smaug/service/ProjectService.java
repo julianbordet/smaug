@@ -25,11 +25,9 @@ public interface ProjectService {
     //gets Project by projectId
     Project getProjectById(int theId);
 
-    //paginates Project list by username
-    Page<Project> findPaginatedUserActiveProjects(Pageable pageable, String username);
 
-    //paginates a list of ACTIVE developers for a spcific project
-    Page<Developer> findPaginatedProjectActiveDevelopers(Pageable pageable, int projectId);
+    Page paginate(Pageable pageable, List theParameterList);
+
 
     //save updates/creates new project
     void save(Project theProject);

@@ -44,7 +44,10 @@ public class MyBugsController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Bug> bugPage = bugService.findPaginatedUserActiveBugs(PageRequest.of(currentPage - 1, pageSize), userUtility.getMyUserName());
+
+        //PAGINATION UPDATE 1////
+        Page<Bug> bugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getActiveBugListForUser(userUtility.getMyUserName()));
+        ///
 
         theModel.addAttribute("bugPage", bugPage);
 
@@ -87,7 +90,10 @@ public class MyBugsController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Bug> inactiveBugPage = bugService.findPaginatedUserInactiveBugs(PageRequest.of(currentPage - 1, pageSize), userUtility.getMyUserName());
+        //PAGINATION UPDATE 2////
+        Page<Bug> inactiveBugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName()));
+        //////
+
 
         theModel.addAttribute("inactiveBugPage", inactiveBugPage);
 
@@ -145,8 +151,10 @@ public class MyBugsController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
+        //Has own pagination method since the results need to be in reverse order, so that newer transactions
+        //appear first in the list
         Page<BugTransaction> bugTransactions = bugService.findPaginatedBugTransactions(PageRequest.of(currentPage - 1, pageSize), theId);
-
+        ///
 
         theModel.addAttribute("bugTransactions", bugTransactions);
 

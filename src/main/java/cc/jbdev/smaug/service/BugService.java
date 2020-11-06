@@ -29,11 +29,9 @@ public interface BugService {
     //gets active bug list for a specific user
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
 
-    //paginates active bugs for a specific user
-    Page<Bug> findPaginatedUserActiveBugs(Pageable pageable, String username);
 
-    //paginates inactive bugs for a specific user
-    Page<Bug> findPaginatedUserInactiveBugs(Pageable pageable, String username);
+    Page paginate(Pageable pageable, List theParameterList);
+
 
     //paginates bug-transaction-history for a specific bug
     Page<BugTransaction> findPaginatedBugTransactions(Pageable pageable, int bugId);

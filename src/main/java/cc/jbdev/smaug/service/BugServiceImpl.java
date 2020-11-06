@@ -48,50 +48,29 @@ public class BugServiceImpl implements BugService {
         return bugDAO.getProjectActiveBugsByUser(project, username);
     }
 
-    @Override
-    public Page<Bug> findPaginatedUserActiveBugs(Pageable pageable, String username) {
 
-        List<Bug> userBugList = getActiveBugListForUser(username);
 
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        List<Bug> list;
-
-        if (userBugList.size() < startItem){
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, userBugList.size());
-            list = userBugList.subList(startItem, toIndex);
-        }
-
-        Page<Bug> bugPage = new PageImpl<Bug>(list, PageRequest.of(currentPage, pageSize), userBugList.size());
-
-        return bugPage;
-    }
-
-    @Override
-    public Page<Bug> findPaginatedUserInactiveBugs(Pageable pageable, String username) {
-
-        List<Bug> userBugList = getListOfInactiveBugsForUser(username);
+    public Page paginate(Pageable pageable, List theParameterList){
 
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<Bug> list;
+        List list;
 
-        if (userBugList.size() < startItem){
+        if (theParameterList.size() < startItem){
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, userBugList.size());
-            list = userBugList.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, theParameterList.size());
+            list = theParameterList.subList(startItem, toIndex);
         }
 
-        Page<Bug> bugPage = new PageImpl<Bug>(list, PageRequest.of(currentPage, pageSize), userBugList.size());
+        Page thePage = new PageImpl(list, PageRequest.of(currentPage, pageSize), theParameterList.size());
 
-        return bugPage;
 
+        return thePage;
     }
+
+
 
     @Override
     public Page<BugTransaction> findPaginatedBugTransactions(Pageable pageable, int bugId) {
@@ -120,14 +99,6 @@ public class BugServiceImpl implements BugService {
 
         return bugTransactionPage;
     }
-
-
-
-
-
-
-
-
 
 
     @Override

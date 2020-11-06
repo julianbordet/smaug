@@ -25,17 +25,10 @@ public class DashboardController {
     ProjectService projectService;
 
 
-
-
-
-
     @GetMapping("/main")
     public String viewDashboard(Model theModel){
 
-
         UserUtility userUtility = new UserUtility();
-
-
 
         ///card1
         ///get total ACTIVE bugs owned by user, add a counter for bugs due and not due to the model.
@@ -94,21 +87,4 @@ public class DashboardController {
 
         return "dashboardpage";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

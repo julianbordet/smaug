@@ -40,7 +40,11 @@ public class MyProjectsController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Project> projectPage = projectService.findPaginatedUserActiveProjects(PageRequest.of(currentPage - 1, pageSize), userUtility.getMyUserName());
+
+        //PAGINATION UPDATE
+        Page<Project> projectPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getActiveProjectsListForUser(userUtility.getMyUserName()));
+        //
+
 
         theModel.addAttribute("projectPage", projectPage);
 
@@ -70,7 +74,9 @@ public class MyProjectsController {
         int currentPage = 1;
         int pageSize = 15;
 
-        Page<Developer> developerPage = projectService.findPaginatedProjectActiveDevelopers(PageRequest.of(currentPage - 1, pageSize), theId);
+        ///PAGINATION UPDATE
+        Page<Developer> developerPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getProjectById(theId).getDevelopers());
+        //
 
         theModel.addAttribute("developerPage", developerPage);
 
