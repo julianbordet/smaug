@@ -5,6 +5,7 @@ import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.utility.BugTransactionComparator;
+import cc.jbdev.smaug.utility.UserUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,6 +22,9 @@ public class BugServiceImpl implements BugService {
 
     @Autowired
     private BugDAO bugDAO;
+
+    @Autowired
+    private ProjectService projectService;
 
 
     @Override
@@ -236,5 +240,101 @@ public class BugServiceImpl implements BugService {
     @Override
     public List<BugTransaction> getBugTransactionsByBugId(int bugId) {
         return bugDAO.getBugTransactionsByBugId(bugId);
+    }
+
+    @Override
+    public void compareBugsAndCreateTransaction(Bug updatedBug, Bug originalBug) {
+
+        UserUtility userUtility = new UserUtility();
+
+        String changesMade = "";
+        String changesMadeDetail = "";
+
+
+        if ( !(updatedBug.getBugTitle().equals(originalBug.getBugTitle())) ){
+            changesMade += "Title updated. ";
+            changesMadeDetail += "Title updated from: " + originalBug.getBugTitle() + " to: " + updatedBug.getBugTitle();
+            changesMadeDetail += "\n";
+        }
+
+        if ( !(updatedBug.getBugDescription().equals(originalBug.getBugDescription())) ){
+            changesMade += "Description updated. ";
+            changesMadeDetail += "Description updated: " + updatedBug.getBugDescription();
+            changesMadeDetail += "\n";
+        }
+
+
+        if ( !(updatedBug.getProjectId() ==  originalBug.getProjectId() ) ){
+            changesMade += "Assigned project changed. ";
+            changesMadeDetail += "Project reassigned from: " +
+                    projectService.getProjectById(originalBug.getProjectId()).getProjectName() +
+                    " to: " + projectService.getProjectById(updatedBug.getProjectId()).getProjectName() +
+                    "\n";
+        }
+
+        if ( !(updatedBug.getBugSeverity().equals(originalBug.getBugSeverity())) ){
+            changesMade += "Severity updated. ";
+            changesMadeDetail += "Bug severity updated from: " + originalBug.getBugSeverity() + " to: " +
+                    updatedBug.getBugSeverity() +
+                    "\n";
+        }
+
+        if ( !(updatedBug.getBugPriority().equals(originalBug.getBugPriority())) ){
+            changesMade += "Priority updated. ";
+            changesMadeDetail += "Priority updated from: " + originalBug.getBugPriority() + " to: " +
+                    updatedBug.getBugPriority() +
+                    "\n";
+        }
+
+        int updatedBugStatus = updatedBug.getBugStatus();
+        int originalBugStatus = originalBug.getBugStatus();
+
+        if ( !(updatedBugStatus ==  originalBugStatus) ){
+            changesMade += "Status updated. ";
+
+            if(updatedBugStatus == 1) {
+                changesMadeDetail += "Status updated from: In Progress to Fixed\n";
+            } else {
+                changesMadeDetail += "Status updated from: Fixed to In Progress\n";
+            }
+        }
+
+        if ( !(updatedBug.getBugResponsibleDev().equals(originalBug.getBugResponsibleDev())) ){
+            changesMade += "Responsible dev changed. ";
+            changesMadeDetail += "Responsible dev changed from: " + originalBug.getBugResponsibleDev() + " to: " + updatedBug.getBugResponsibleDev() +
+                    "\n";
+        }
+
+        if ( !(updatedBug.getBugDueDate().equals(originalBug.getBugDueDate())) ){
+            changesMade += "Due date updated. ";
+            changesMadeDetail += "Due date updated from: " + originalBug.getBugDueDate() + " to: " + updatedBug.getBugDueDate() +
+                    "\n";
+        }
+
+        if ( !(updatedBug.getStepsToReproduce().equals(originalBug.getStepsToReproduce())) ){
+            changesMade += "Steps to reproduce updated. ";
+            changesMadeDetail += "Steps to reproduce updated: " + updatedBug.getStepsToReproduce();
+        }
+
+
+        //Create a new date for the bug transaction
+        Date today = new Date();
+        String todayInString;
+        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
+
+
+        //check if changesMade variable is empty
+        if ( !(changesMade.isEmpty()) ){
+
+            //If it's not empty create a new transaction and add it to the bug
+            BugTransaction newBugTransaction = new BugTransaction();
+            newBugTransaction.setDate(todayInString);
+            newBugTransaction.setTransaction(changesMade);
+            newBugTransaction.setTransactionId(0);
+            newBugTransaction.setTransactionCreatedBy(userUtility.getMyUserName());
+            newBugTransaction.setTransactionDetail(changesMadeDetail);
+            updatedBug.addBugTransactions(newBugTransaction);
+        }
+
     }
 }

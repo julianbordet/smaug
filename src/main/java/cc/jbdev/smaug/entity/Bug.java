@@ -61,6 +61,21 @@ public class Bug {
 
     }
 
+    public Bug(String bugOriginalTitle, String bugOriginalDescription, String bugOriginalProjectId,
+               String bugOriginalSeverity, String bugOriginalPriority, String bugOriginalStatus,
+               String bugOriginalResponsibleDev, String bugOriginalDueDate, String bugOriginalStepsToReproduce){
+
+        this.bugTitle = bugOriginalTitle;
+        this.bugDescription = bugOriginalDescription;
+        this.projectId = Integer.parseInt(bugOriginalProjectId);
+        this.bugSeverity = bugOriginalSeverity;
+        this.bugPriority = bugOriginalPriority;
+        this.bugStatus = Integer.parseInt(bugOriginalStatus);
+        this.bugResponsibleDev = bugOriginalResponsibleDev;
+        this.bugDueDate = bugOriginalDueDate;
+        this.stepsToReproduce = bugOriginalStepsToReproduce;
+    }
+
     public int getBugId() {
         return bugId;
     }

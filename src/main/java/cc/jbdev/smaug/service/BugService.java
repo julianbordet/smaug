@@ -61,4 +61,6 @@ public interface BugService {
 
 
     List<BugTransaction> getBugTransactionsByBugId(int bugId);
+
+    void compareBugsAndCreateTransaction(Bug updatedBug, Bug originalBug);
 }

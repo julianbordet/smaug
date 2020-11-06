@@ -39,16 +39,11 @@ public class MyBugsController {
         UserUtility userUtility = new UserUtility();
 
 
-
-
+        //Adds a paginated list of active bugs for currently logged in user to the Model
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-
-        //PAGINATION UPDATE 1////
         Page<Bug> bugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getActiveBugListForUser(userUtility.getMyUserName()));
-        ///
-
         theModel.addAttribute("bugPage", bugPage);
 
         int totalPages = bugPage.getTotalPages();
@@ -56,6 +51,7 @@ public class MyBugsController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
+        ////
 
         ////////// Add a list of applicable project names to the model
         List<Bug> myBugList = bugService.getActiveBugListForUser(userUtility.getMyUserName());
@@ -83,18 +79,11 @@ public class MyBugsController {
         UserUtility userUtility = new UserUtility();
 
 
-
-
-
-        //paginate results
+        //paginate inactive bugs
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        //PAGINATION UPDATE 2////
         Page<Bug> inactiveBugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName()));
-        //////
-
-
         theModel.addAttribute("inactiveBugPage", inactiveBugPage);
 
         int totalPages = inactiveBugPage.getTotalPages();
@@ -129,13 +118,8 @@ public class MyBugsController {
     public String showBugDetail(@RequestParam("bugId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
 
 
-
         Bug bugClicked = bugService.getBugByBugId(theId);
-
         theModel.addAttribute("theBug", bugClicked);
-
-
-
 
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
@@ -144,10 +128,7 @@ public class MyBugsController {
         theModel.addAttribute("projectList", activeProjects);
 
 
-
-
         //pagination for bug transaction
-
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
@@ -171,7 +152,7 @@ public class MyBugsController {
 
 
     @PostMapping("/updateBug")
-    public String updateBug(@ModelAttribute("theBug") Bug theBug,
+    public String updateBug(@ModelAttribute("theBug") Bug updatedBug,
                             @RequestParam(value = "bugOriginalTitle") String bugOriginalTitle,
                             @RequestParam(value = "bugOriginalDescription") String bugOriginalDescription,
                             @RequestParam(value = "bugOriginalProjectId") String bugOriginalProjectId,
@@ -185,122 +166,17 @@ public class MyBugsController {
 
         UserUtility userUtility = new UserUtility();
 
+        ///TESTO
+        Bug originalBug = new Bug(bugOriginalTitle, bugOriginalDescription, bugOriginalProjectId,
+                            bugOriginalSeverity, bugOriginalPriority, bugOriginalStatus,
+                            bugOriginalResponsibleDev, bugOriginalDueDate, bugOriginalStepsToReproduce);
+
+        ///// Compare updated bug with original bug state, create transaction if there's difference
+        bugService.compareBugsAndCreateTransaction(updatedBug, originalBug);
+        ///
 
 
-
-
-
-        ///// Compare updated bug with original bug state
-
-        String changesMade = "";
-        String changesMadeDetail = "";
-
-
-        if ( !(theBug.getBugTitle().equals(bugOriginalTitle)) ){
-                changesMade += "Title updated. ";
-                changesMadeDetail += "Title updated from: " + bugOriginalTitle + " to: " + theBug.getBugTitle();
-                changesMadeDetail += "\n";
-        }
-
-        if ( !(theBug.getBugDescription().equals(bugOriginalDescription)) ){
-                changesMade += "Description updated. ";
-                changesMadeDetail += "Description updated: " + theBug.getBugDescription();
-                changesMadeDetail += "\n";
-        }
-
-
-        if ( !(theBug.getProjectId() ==  Integer.parseInt(bugOriginalProjectId) ) ){
-            changesMade += "Assigned project changed. ";
-            changesMadeDetail += "Project reassigned from: " +
-                    projectService.getProjectById(Integer.parseInt(bugOriginalProjectId)).getProjectName() +
-                    " to: " + projectService.getProjectById(theBug.getProjectId()).getProjectName() +
-                    "\n";
-        }
-
-        if ( !(theBug.getBugSeverity().equals(bugOriginalSeverity)) ){
-            changesMade += "Severity updated. ";
-            changesMadeDetail += "Bug severity updated from: " + bugOriginalSeverity + " to: " +
-                    theBug.getBugSeverity() +
-                    "\n";
-        }
-
-        if ( !(theBug.getBugPriority().equals(bugOriginalPriority)) ){
-            changesMade += "Priority updated. ";
-            changesMadeDetail += "Priority updated from: " + bugOriginalPriority + " to: " +
-                    theBug.getBugPriority() +
-                    "\n";
-        }
-
-        int updatedBugStatus = theBug.getBugStatus();
-        int originalBugStatus = Integer.parseInt(bugOriginalStatus);
-
-        if ( !(updatedBugStatus ==  originalBugStatus) ){
-            changesMade += "Status updated. ";
-
-            if(updatedBugStatus == 1) {
-                changesMadeDetail += "Status updated from: In Progress to Fixed\n";
-            } else {
-                changesMadeDetail += "Status updated from: Fixed to In Progress\n";
-            }
-        }
-
-        if ( !(theBug.getBugResponsibleDev().equals(bugOriginalResponsibleDev)) ){
-            changesMade += "Responsible dev changed. ";
-            changesMadeDetail += "Responsible dev changed from: " + bugOriginalResponsibleDev + " to: " + theBug.getBugResponsibleDev() +
-                    "\n";
-        }
-
-        if ( !(theBug.getBugDueDate().equals(bugOriginalDueDate)) ){
-            changesMade += "Due date updated. ";
-            changesMadeDetail += "Due date updated from: " + bugOriginalDueDate + " to: " + theBug.getBugDueDate() +
-                    "\n";
-        }
-
-        if ( !(theBug.getStepsToReproduce().equals(bugOriginalStepsToReproduce)) ){
-            changesMade += "Steps to reproduce updated. ";
-            changesMadeDetail += "Steps to reproduce updated: " + theBug.getStepsToReproduce();
-        }
-
-
-
-
-
-
-
-
-
-        //Create a new bug with the original state of the bug
-
-
-        //-- BLE BLE BLE OTROS CHECKS DE IFS PARA LOS OTROS FIELDS
-
-
-
-        Date today = new Date();
-        String todayInString;
-        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
-
-
-        //check if changesMade variable is empty
-
-        if ( !(changesMade.isEmpty()) ){
-
-            //Create a new transaction and add it to the bug
-            BugTransaction newBugTransaction = new BugTransaction();
-            newBugTransaction.setDate(todayInString);
-            newBugTransaction.setTransaction(changesMade);
-            newBugTransaction.setTransactionId(0);
-            newBugTransaction.setTransactionCreatedBy(userUtility.getMyUserName());
-            newBugTransaction.setTransactionDetail(changesMadeDetail);
-            theBug.addBugTransactions(newBugTransaction);
-        }
-
-
-
-        //////
-
-
-        bugService.save(theBug);
+        bugService.save(updatedBug);
 
         return "redirect:/mybugs/main";
     }
