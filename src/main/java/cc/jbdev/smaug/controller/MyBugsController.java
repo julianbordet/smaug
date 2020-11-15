@@ -204,8 +204,6 @@ public class MyBugsController {
         UserUtility userUtility = new UserUtility();
 
 
-
-
         theBug.setBugId(0);
         theBug.setBugStatus(0);
         theBug.setBugCreatedBy(userUtility.getMyUserName());
