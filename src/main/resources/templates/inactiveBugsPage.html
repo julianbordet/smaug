@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Inactive Bugs</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/mybugs.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
@@ -74,13 +74,18 @@
 
         <div class="row w-100 justify-content-around mt-4">
 
+            <div class="container px-0">
+
+                <div class="w-100">
+                    <p class="text-center w-100 pagetitle font-weight-bold">INACTIVE BUGS:</p>
+                </div>
 
             <!------------------------------->
             <!-- Show active bugs button -->
             <!------------------------------->
-            <br>
+
             <a th:href="@{~/mybugs/main}">
-                <button type="button" class="btn btn-primary">Show active bugs</button>
+                <button type="button" class="btn btn-success">Show active bugs</button>
             </a>
 
             <br> <br>
@@ -127,11 +132,17 @@
                 </tbody>
             </table>
 
-            <div th:if="${inactiveBugPage.totalPages > 0}" class="pagination"
-                 th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{~/mybugs/inactivebugs(size=${inactiveBugPage.size}, page=${pageNumber})}"
-                   th:text="${pageNumber}"
-                   th:class="${pageNumber==inactiveBugPage.number + 1} ? active"></a>
+                <div class="container page">
+
+                    <div th:if="${inactiveBugPage.totalPages > 0}" class="pagination"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{~/mybugs/inactivebugs(size=${inactiveBugPage.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"
+                           th:class="${pageNumber==inactiveBugPage.number + 1} ? active"></a>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>

@@ -81,7 +81,7 @@ public class MyBugsController {
 
         //paginate inactive bugs
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(15);
+        int pageSize = size.orElse(8);
 
         Page<Bug> inactiveBugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName()));
         theModel.addAttribute("inactiveBugPage", inactiveBugPage);
