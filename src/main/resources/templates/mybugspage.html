@@ -74,28 +74,34 @@
 
         <div class="row w-100 justify-content-around mt-4">
 
-            <!--TEST
-            <br>
-            TEST
-            <br>
-            TEST
-            <br>
-            TEST
-            <br>
-            TEST-->
 
             <div class="container px-0">
 
-                <div class="w-100"><p class="text-center w-100 pagetitle ">MY BUGS:</p></div>
+                <div class="w-100">
+                    <p class="text-center w-100 pagetitle font-weight-bold">MY BUGS:</p>
+                </div>
 
+
+
+                <span>
+
+                <!-------------------->
+                <!-- Add bug button -->
+                <!-------------------->
+
+                <a th:href="@{~/mybugs/newbug}">
+                    <button type="button" class="btn btn-success">Add bug</button>
+                </a>
 
                 <!------------------------------->
                 <!-- Show inactive bugs button -->
                 <!------------------------------->
-                <br>
+
                 <a th:href="@{~/mybugs/inactivebugs}">
-                    <button type="button" class="btn btn-primary">Show inactive bugs</button>
+                    <button type="button" class="btn btn-secondary">Show inactive bugs</button>
                 </a>
+
+                </span>
 
                 <br> <br>
 
@@ -141,21 +147,16 @@
                     </tbody>
                 </table>
 
-                <div th:if="${bugPage.totalPages > 0}" class="pagination"
-                     th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{~/mybugs/main(size=${bugPage.size}, page=${pageNumber})}"
-                       th:text="${pageNumber}"
-                       th:class="${pageNumber==bugPage.number + 1} ? active"></a>
+                <div class="container page">
+
+                    <div th:if="${bugPage.totalPages > 0}" class="pagination"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{~/mybugs/main(size=${bugPage.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"
+                           th:class="${pageNumber==bugPage.number + 1} ? active"></a>
+                    </div>
+
                 </div>
-
-
-                <!-------------------->
-                <!-- Add bug button -->
-                <!-------------------->
-                <br>
-                <a th:href="@{~/mybugs/newbug}">
-                <button type="button" class="btn btn-primary">Add bug</button>
-                </a>
 
             </div>
         </div>

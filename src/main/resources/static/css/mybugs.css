@@ -24,9 +24,11 @@ ul {
 }
 
 .pagetitle {
-    background-color: #F4D03F;
+    background-color: #343a40;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    font-size: large;
+    color: white;
 }
 
 .mybugtable {
@@ -35,3 +37,16 @@ ul {
     padding-left: 0;
     padding-right: 0;
 }
+
+.page {
+    display: inline-flex;
+    background-color: #343a40;
+    font-size: 20px;
+
+}
+
+
+a:link    {color:white;}
+a:visited {color:white;}
+a:hover   {color:white;}
+a:active  {color:white;}

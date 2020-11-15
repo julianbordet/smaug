@@ -41,7 +41,7 @@ public class MyBugsController {
 
         //Adds a paginated list of active bugs for currently logged in user to the Model
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(15);
+        int pageSize = size.orElse(8);
 
         Page<Bug> bugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getActiveBugListForUser(userUtility.getMyUserName()));
         theModel.addAttribute("bugPage", bugPage);
