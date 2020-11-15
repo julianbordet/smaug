@@ -134,13 +134,13 @@
 
                 <div class="container page">
 
+
                     <div th:if="${inactiveBugPage.totalPages > 0}" class="pagination"
                          th:each="pageNumber : ${pageNumbers}">
                         <a th:href="@{~/mybugs/inactivebugs(size=${inactiveBugPage.size}, page=${pageNumber})}"
                            th:text="${pageNumber}"
                            th:class="${pageNumber==inactiveBugPage.number + 1} ? active"></a>
                     </div>
-
                 </div>
 
             </div>
