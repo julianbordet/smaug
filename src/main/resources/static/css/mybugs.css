@@ -23,9 +23,17 @@ ul {
     background-color: #F2F4F4;
 }*/
 
-#background-for-working-zone {
+/*#background-for-working-zone {
     background-image: url("../img/backgroundCompressed.jpg");
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+
+}*/
+
+#background-for-working-zone {
+    background-image: url("../img/backgroundCompressed.jpg");
+    background-repeat: repeat;
     background-position: center;
     background-size: 100% auto;
 
@@ -76,6 +84,13 @@ textarea[readonly] {
 }
 
 .mybugtable {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.myprojecttable {
     margin-left: 0;
     margin-right: 0;
     padding-left: 0;
