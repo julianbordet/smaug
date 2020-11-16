@@ -19,9 +19,53 @@ ul {
     background-color: #212F3D;
 }
 
-#background-for-working-zone {
+/*#background-for-working-zone {
     background-color: #F2F4F4;
+}*/
+
+#background-for-working-zone {
+    background-image: url("../img/backgroundCompressed.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+
 }
+
+/*input[readonly]{
+    background-color:transparent;
+    border: 0;
+    font-size: 1em;
+}*/
+
+input[readonly] {
+    background-color: lightgray !important;
+    border: 0!important;
+
+    box-shadow: none !important;
+}
+
+select[disabled] {
+    background-color: lightgray !important;
+    border: 0!important;
+
+    box-shadow: none !important;
+}
+
+textarea[readonly] {
+    background-color: lightgray !important;
+    border: 0!important;
+
+    box-shadow: none !important;
+}
+
+/*#backTest {
+    background-image: url("static/img/mainlogo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 400px;
+    height: 400px;
+}*/
+
 
 .pagetitle {
     background-color: #343a40;
