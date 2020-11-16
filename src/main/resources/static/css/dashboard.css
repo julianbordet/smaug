@@ -51,8 +51,16 @@ ul {
 }
 
 #background-for-working-zone {
-    background-color: #F2F4F4;
+    background-image: url("../img/backgroundCompressed.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+
 }
+
+/*#background-for-working-zone {
+    background-color: #F2F4F4;
+}*/
 
 .mybugtable {
     margin-left: 0;
