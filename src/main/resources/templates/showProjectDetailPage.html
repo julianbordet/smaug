@@ -86,7 +86,7 @@
             <!--------------------------->
             <!-- Update Project button -->
             <!--------------------------->
-            <button class="btn btn-success w-25 mr-4" type="submit" hidden id="updateProjectButton">Update project</button>
+            <button class="btn btn-success mr-4" type="submit" hidden id="updateProjectButton">Update project</button>
 
             <!----------------------->
             <!-- Edit button -------->
@@ -151,10 +151,17 @@
             </div>
 
             <!--Second Row: description-->
-            <div class="row w-100 justify-content-around mt-3">
+            <!--<div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projectDescription">Project description:</label>
                     <input class="form-control" type="text" id="projectDescription" readonly th:field="${theProject.projectDescription}">
+                </div>
+            </div>-->
+
+            <div class="row w-100 justify-content-around mt-3">
+                <div class="form-group">
+                    <label for="projectDescription">Project description:</label>
+                    <textarea class="form-control" id="projectDescription" readonly th:field="${theProject.projectDescription}" th:rows="5" cols="100"></textarea>
                 </div>
             </div>
 
@@ -209,18 +216,12 @@
 
         </div>
 
-
-
-        <br>
-        <hr>
-        <br>
-
         <div class="row w-100 mt-4 justify-content-around">
 
             <!------------------------------------->
             <!-- Add developer to project button -->
             <!------------------------------------->
-            <br>
+
             <a th:href="@{~/myprojects/adddeveloper(projectId = ${theProject.projectId})}">
                 <button type="button" class="btn btn-success">Add developer</button>
             </a>
@@ -228,12 +229,18 @@
             <!------------------------------------------>
             <!-- Remove developer from project button -->
             <!------------------------------------------>
-            <br>
+
             <a th:href="@{~/myprojects/removedeveloper(projectId = ${theProject.projectId})}">
                 <button type="button" class="btn btn-danger">Remove developer from project</button>
             </a>
 
         </div>
+
+        <br>
+        <hr>
+        <br>
+
+
 
 
     </div>
