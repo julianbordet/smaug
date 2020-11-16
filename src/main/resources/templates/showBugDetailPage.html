@@ -246,9 +246,9 @@
             <div class="row w-100 justify-content-around mt-3">
 
 
-                <div class="form-group w-25">
+                <div class="form-group">
                     <label for="bugDescription">Description:</label>
-                    <textarea class="form-control" id="bugDescription" readonly th:field="${theBug.bugDescription}" th:rows="5"></textarea>
+                    <textarea class="form-control" id="bugDescription" readonly th:field="${theBug.bugDescription}" th:rows="5" cols="93"></textarea>
                 </div>
 
                 <!--hidden param for original description-->
@@ -256,9 +256,9 @@
                     <input type="text" th:name="bugOriginalDescription" th:value="${theBug.bugDescription}">
                 </div>
 
-                <div class="form-group w-25">
+                <div class="form-group">
                     <label for="bugStepsToReproduce">Steps to Reproduce:</label>
-                    <textarea class="form-control" id="bugStepsToReproduce" readonly th:field="${theBug.stepsToReproduce}" th:rows="5"></textarea>
+                    <textarea class="form-control" id="bugStepsToReproduce" readonly th:field="${theBug.stepsToReproduce}" th:rows="5" cols="93"></textarea>
                 </div>
 
                 <!--hidden param for original steps to reproduce-->
