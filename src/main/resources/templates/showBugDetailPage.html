@@ -229,17 +229,17 @@
 
 
             </div>
-            <!--Fourth Row: Submit button-->
+            <!--Fourth Row: Edit and Delete bug buttons-->
             <div class="row w-100 mt-4 justify-content-around">
 
                 <button class="btn btn-success w-25 mr-4" type="submit" id="updateBugButton" hidden >Update bug</button>
 
                 <!----------------------->
-                <!-- Update button -->
+                <!-- Edit button -->
                 <!----------------------->
                 <br>
-                    <button type="button" class="btn btn-warning" id="editButton">Edit</button>
-                </a>
+                    <button type="button" class="btn btn-warning w-25" id="editButton">Edit</button>
+
 
 
 
@@ -247,9 +247,12 @@
                 <!-- Delete bug button -->
                 <!----------------------->
                 <br>
+
+                <div class="w-25">
                 <a th:href="@{~/mybugs/deletebug(bugId = ${theBug.bugId})}">
-                    <button type="button" class="btn btn-danger">Delete bug</button>
+                    <button type="button" class="btn btn-danger w-100" id="deleteButton">Delete bug</button>
                 </a>
+                </div>
 
             </div>
 
