@@ -307,7 +307,7 @@
                     <div th:if="${bugTransactions.totalPages > 0}" class="pagination"
                          th:each="pageNumber : ${pageNumbers}">
                         <a th:href="@{~/mybugs/showBugDetail(size=${bugTransactions.size}, page=${pageNumber}, bugId= ${theBug.bugId})}"
-                           th:text="${pageNumber}"
+                           th:text="'| ' + ${pageNumber} + ' |'"
                            th:class="${pageNumber==bugTransactions.number + 1} ? active"></a>
                     </div>
             </div>
