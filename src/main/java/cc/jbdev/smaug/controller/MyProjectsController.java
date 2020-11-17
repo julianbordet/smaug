@@ -138,6 +138,12 @@ public class MyProjectsController {
         theModel.addAttribute("newDeveloper", newDeveloper);
         theModel.addAttribute("projectId", projectId);
 
+        String projectName = projectService.getProjectById(projectId).getProjectName();
+        theModel.addAttribute("projectName", projectName);
+
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+        theModel.addAttribute("devList", activeDevelopers);
+
         return "addDeveloperPage";
     }
 
