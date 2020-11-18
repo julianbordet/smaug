@@ -5,8 +5,9 @@
 
     <meta charset="UTF-8">
     <title>My Bugs</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/mybugs.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
@@ -74,19 +75,36 @@
 
         <div class="row w-100 justify-content-around mt-4">
 
-            <!--TEST
-            <br>
-            TEST
-            <br>
-            TEST
-            <br>
-            TEST
-            <br>
-            TEST-->
 
             <div class="container px-0">
 
-                <div class="w-100"><p class="text-center w-100 pagetitle ">MY BUGS:</p></div>
+                <div class="w-100">
+                    <p class="text-center w-100 pagetitle font-weight-bold">MY OPEN BUGS:</p>
+                </div>
+
+
+
+                <span>
+
+                <!-------------------->
+                <!-- Add bug button -->
+                <!-------------------->
+
+                <a th:href="@{~/mybugs/newbug}">
+                    <button type="button" class="btn btn-success">Add bug</button>
+                </a>
+
+                <!------------------------------->
+                <!-- Show inactive bugs button -->
+                <!------------------------------->
+
+                <a th:href="@{~/mybugs/inactivebugs}">
+                    <button type="button" class="btn btn-secondary">Show inactive bugs</button>
+                </a>
+
+                </span>
+
+                <br> <br>
 
 
                 <table class="table table-striped table-bordered table-hover mybugtable px-0">
@@ -94,6 +112,9 @@
                     <tr>
                         <th th:text="'Bug Id'"/>
                         <th th:text="'Bug Name'"/>
+
+                        <th th:text="'Project'"/>
+
                         <th th:text="'Severity'"/>
                         <th th:text="'Priority'"/>
                         <th th:text="'Status'"/>
@@ -118,29 +139,25 @@
 
                         <td th:text="${ bug.bugId }"/>
                         <td th:text="${ bug.bugTitle }"/>
+                        <td th:text="${projectNames[iStat.index]}"/>
                         <td th:text="${ bug.bugSeverity}"/>
                         <td th:text="${ bug.bugPriority}"/>
-                        <td th:text="${ bug.bugStatus}"/>
+                        <td th:text="'In Progress'"/>
                         <td th:text="${ bug.bugDueDate}"/>
                     </tr>
                     </tbody>
                 </table>
 
-                <div th:if="${bugPage.totalPages > 0}" class="pagination"
-                     th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{~/mybugs/main(size=${bugPage.size}, page=${pageNumber})}"
-                       th:text="${pageNumber}"
-                       th:class="${pageNumber==bugPage.number + 1} ? active"></a>
+                <div class="container page">
+
+                    <div th:if="${bugPage.totalPages > 0}" class="pagination"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{~/mybugs/main(size=${bugPage.size}, page=${pageNumber})}"
+                           th:text="'| ' + ${pageNumber} + ' |'"
+                           th:class="${pageNumber==bugPage.number + 1} ? active"></a>
+                    </div>
+
                 </div>
-
-
-                <!-------------------->
-                <!-- Add bug button -->
-                <!-------------------->
-                <br>
-                <a th:href="@{~/mybugs/newbug}">
-                <button type="button" class="btn btn-primary">Add bug</button>
-                </a>
 
             </div>
         </div>
@@ -161,6 +178,9 @@
         location.href = "/mybugs/showBugDetail?bugId=" + value;
     }
 </script>
+
+<!--  Script to check if show inactive bugs button is pressed-->
+
 
 
 </html>

@@ -30,52 +30,24 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Page<Project> findPaginatedUserActiveProjects(Pageable pageable, String username) {
+    public Page paginate(Pageable pageable, List theParameterList) {
 
-        List<Project> userProjectList = projectDAO.getActiveProjectsListForUser(username);
+            int pageSize = pageable.getPageSize();
+            int currentPage = pageable.getPageNumber();
+            int startItem = currentPage * pageSize;
+            List list;
 
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        List<Project> list;
+            if (theParameterList.size() < startItem){
+                list = Collections.emptyList();
+            } else {
+                int toIndex = Math.min(startItem + pageSize, theParameterList.size());
+                list = theParameterList.subList(startItem, toIndex);
+            }
 
-        if (userProjectList.size() < startItem){
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, userProjectList.size());
-            list = userProjectList.subList(startItem, toIndex);
-        }
-
-        Page<Project> projectPage = new PageImpl<Project>(list, PageRequest.of(currentPage, pageSize), userProjectList.size());
-
-        return projectPage;
-    }
-
-    @Override
-    public Page<Developer> findPaginatedProjectActiveDevelopers(Pageable pageable, int projectId) {
+            Page thePage = new PageImpl(list, PageRequest.of(currentPage, pageSize), theParameterList.size());
 
 
-        List<Developer> developerProjectList = projectDAO.getProjectById(projectId).getDevelopers();
-
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        List<Developer> list;
-
-        if (developerProjectList.size() < startItem){
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, developerProjectList.size());
-            list = developerProjectList.subList(startItem, toIndex);
-        }
-
-        Page<Developer> developerPage = new PageImpl<Developer>(list, PageRequest.of(currentPage, pageSize), developerProjectList.size());
-
-        return developerPage;
-
-
-
-
+            return thePage;
     }
 
     @Override
@@ -101,5 +73,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void removeDeveloperFromProject(Project theProject, Developer theDeveloper) {
         projectDAO.removeDeveloperFromProject(theProject, theDeveloper);
+    }
+
+    @Override
+    public List<String> getListOfActiveDevelopers() {
+        return projectDAO.getListOfActiveDevelopers();
+    }
+
+    @Override
+    public List<Project> getActiveProjects() {
+        return projectDAO.getActiveProjects();
     }
 }

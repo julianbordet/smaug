@@ -8,7 +8,7 @@
     <title>Project details</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/myprojects.css}">
+    <link rel="stylesheet" th:href="@{/css/mybugs.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -77,12 +77,43 @@
 
         <form th:action="@{~/myprojects/updateProject}" th:object="${theProject}" method="post">
 
+            <hr>
+
+            <div class="row w-100 mt-4 ml-4">
+
+                <span>
+
+            <!--------------------------->
+            <!-- Update Project button -->
+            <!--------------------------->
+            <button class="btn btn-success mr-4" type="submit" hidden id="updateProjectButton">Update project</button>
+
+            <!----------------------->
+            <!-- Edit button -------->
+            <!----------------------->
+            <button type="button" class="btn btn-warning mr-3" id="editButton">Edit Project</button>
+            </a>
+
+            <!--------------------------->
+            <!-- Delete project button -->
+            <!--------------------------->
+
+            <a th:href="@{~/myprojects/deleteproject(projectId = ${theProject.projectId})}">
+                <button type="button" class="btn btn-danger">Delete project</button>
+            </a>
+
+                    </span>
+
+            </div>
+
+            <hr>
+
             <!--First Row: name, id, owner, is active-->
 
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projecttitle">Project Name:</label>
-                    <input class="form-control" type="text" id="projecttitle" th:field="${theProject.projectName}">
+                    <input class="form-control" type="text" id="projecttitle" readonly th:field="${theProject.projectName}">
                 </div>
 
                 <div class="form-group">
@@ -90,42 +121,48 @@
                     <input class="form-control" type="text" id="projectId" readonly th:field="${theProject.projectId}">
                 </div>
 
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label for="projectowner">Project owner:</label>
-                    <input class="form-control" type="text" id="projectowner" readonly th:field="${theProject.projectOwner}">
-                </div>
+                    <input class="form-control" type="text" id="projectowner"  th:field="${theProject.projectOwner}">
+                </div>-->
 
                 <div class="form-group">
-                    <label for="isactive">Project Status (Active or Inactive):</label>
-                    <input class="form-control" type="text" id="isactive" th:field="${theProject.isActive}">
+                    <label for="projectowner">Project owner:</label>
+                    <select class="form-control" id="projectowner" disabled th:field="${theProject.projectOwner}">
+                        <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                    </select>
                 </div>
+
+
+                <!-- <div class="form-group">
+                     <label for="isactive">Project Status (Active or Inactive):</label>
+                     <input class="form-control" type="text" id="isactive" th:field="${theProject.isActive}">
+                 </div>-->
+
+                <div class="form-group">
+                    <label for="isactive">Status:</label>
+                    <select class="form-control" id="isactive" disabled th:field="${theProject.isActive}">
+                        <option th:value="1">Active</option>
+                        <option th:value="0">Inactive</option>
+                    </select>
+                </div>
+
 
             </div>
 
             <!--Second Row: description-->
+            <!--<div class="row w-100 justify-content-around mt-3">
+                <div class="form-group">
+                    <label for="projectDescription">Project description:</label>
+                    <input class="form-control" type="text" id="projectDescription" readonly th:field="${theProject.projectDescription}">
+                </div>
+            </div>-->
+
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projectDescription">Project description:</label>
-                    <input class="form-control" type="text" id="projectDescription" th:field="${theProject.projectDescription}">
+                    <textarea class="form-control" id="projectDescription" readonly th:field="${theProject.projectDescription}" th:rows="5" cols="100"></textarea>
                 </div>
-            </div>
-
-
-
-
-            <!--Third Row: Submit button-->
-            <div class="row w-100 mt-4 justify-content-around">
-
-                <button class="btn btn-success w-25 mr-4" type="submit">Update project</button>
-
-                <!--------------------------->
-                <!-- Delete project button -->
-                <!--------------------------->
-                <br>
-                <a th:href="@{~/myprojects/deleteproject(projectId = ${theProject.projectId})}">
-                    <button type="button" class="btn btn-danger">Delete project</button>
-                </a>
-
             </div>
 
 
@@ -138,12 +175,13 @@
         <hr>
         <br>
 
+        <div class="container">
         <h4>Developers assigned to this project:</h4>
         <br>
 
         <!-- EVERYTHING DOWN BELOW NEEDS UPDATING -->
 
-        <table class="table table-striped table-bordered table-hover myprojecttable px-0">
+        <table class="table table-striped table-bordered table-hover myprojecttable table-sm">
             <thead class="thead-dark">
             <tr>
                 <th th:text="'Username'"/>
@@ -159,29 +197,34 @@
 
 
                 <td th:text="${developer.username}"/>
-                <td th:text="Dev"/>
+
+               <td th:text="Dev"/>
+
+                <!--<td th:text="${developer.}"/>-->
 
             </tr>
             </tbody>
         </table>
 
-        <div th:if="${developerPage.totalPages > 0}" class="pagination"
-             th:each="pageNumber : ${pageNumbers}">
-            <a th:href="@{~/myprojects/showProjectDetail(size=${developerPage.size}, page=${pageNumber})}"
-               th:text="${pageNumber}"
-               th:class="${pageNumber==developerPage.number + 1} ? active"></a>
+        <div class="row w-100 justify-content-around mt-0 mx-0">
+            <div class="container page mx-0">
+                <div th:if="${developerPage.totalPages > 0}" class="pagination"
+                     th:each="pageNumber : ${pageNumbers}">
+                    <a th:href="@{~/myprojects/showProjectDetail(size=${developerPage.size}, page=${pageNumber}, projectId = ${theProject.projectId})}"
+                       th:text="'| ' + ${pageNumber} + ' |'"
+                       th:class="${pageNumber==developerPage.number + 1} ? active"></a>
+                </div>
+            </div>
         </div>
 
-        <br>
-        <hr>
-        <br>
+        </div>
 
         <div class="row w-100 mt-4 justify-content-around">
 
             <!------------------------------------->
             <!-- Add developer to project button -->
             <!------------------------------------->
-            <br>
+
             <a th:href="@{~/myprojects/adddeveloper(projectId = ${theProject.projectId})}">
                 <button type="button" class="btn btn-success">Add developer</button>
             </a>
@@ -189,17 +232,39 @@
             <!------------------------------------------>
             <!-- Remove developer from project button -->
             <!------------------------------------------>
-            <br>
+
             <a th:href="@{~/myprojects/removedeveloper(projectId = ${theProject.projectId})}">
                 <button type="button" class="btn btn-danger">Remove developer from project</button>
             </a>
 
         </div>
 
+        <br>
+        <hr>
+        <br>
+
+
+
 
     </div>
 
 </div>
+
+
+<script>
+    document.getElementById('editButton').onclick = function (){
+        document.getElementById('isactive').disabled = false;
+        document.getElementById('projectowner').disabled = false;
+        document.getElementById('projecttitle').readOnly = false;
+        document.getElementById('projectDescription').readOnly = false;
+        document.getElementById('updateProjectButton').hidden = false;
+        document.getElementById('editButton').hidden = true;
+
+    };
+</script>
+
+
+
 
 </body>
 

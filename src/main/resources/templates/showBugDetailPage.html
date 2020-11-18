@@ -6,10 +6,12 @@
 
     <meta charset="UTF-8">
     <title>Bug details</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/mybugs.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
           integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
@@ -77,12 +79,53 @@
 
         <form th:action="@{~/mybugs/updateBug}" th:object="${theBug}" method="post">
 
+            <hr>
+
+            <div class="row w-100 mt-4 ml-4">
+
+
+
+                <span>
+
+                <button class="btn btn-success mr-3" type="submit" id="updateBugButton" hidden >Update bug</button>
+
+                <!----------------------->
+                <!-- Edit button -->
+                <!----------------------->
+
+                <button type="button" class="btn btn-warning mr-3" id="editButton">Edit bug</button>
+
+
+
+
+                <!----------------------->
+                <!-- Delete bug button -->
+                <!----------------------->
+
+
+
+                    <a th:href="@{~/mybugs/deletebug(bugId = ${theBug.bugId})}">
+                        <button type="button" class="btn btn-danger" id="deleteButton">Delete bug</button>
+                    </a>
+
+                    </span>
+
+
+            </div>
+
+            <hr>
+
             <!--First Row: name, id, project, severity, priority-->
 
                 <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
                         <label for="bugtitle">Bug Title:</label>
-                        <input class="form-control" type="text" id="bugtitle" th:field="${theBug.bugTitle}">
+                        <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}">
+                    </div>
+
+                    <!--hidden param for original title-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalTitle" th:value="${theBug.bugTitle}">
                     </div>
 
                     <div class="form-group">
@@ -90,20 +133,58 @@
                         <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
                     </div>
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="bugproject">Project:</label>
                         <input class="form-control" type="text" id="bugproject" readonly th:field="${theBug.projectId}">
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="bugproject">Project:</label>
+                        <select class="form-control" id="bugproject" disabled th:field="${theBug.projectId}">
+                            <option th:each="proj : ${projectList}" th:value="${proj.projectId}" th:text="${proj.projectName}"></option>
+                        </select>
                     </div>
+
+                    <!--hidden param for original project-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalProjectId" th:value="${theBug.projectId}">
+                    </div>
+
+
 
                     <div class="form-group">
                         <label for="bugSeverity">Severity:</label>
-                        <input class="form-control" type="text" id="bugSeverity" th:field="${theBug.bugSeverity}">
+                        <select class="form-control" id="bugSeverity" disabled th:field="${theBug.bugSeverity}">
+                            <option th:value="CRITICAL">Critical</option>
+                            <option th:value="MAJOR">Major</option>
+                            <option th:value="MINOR">Minor</option>
+                            <option th:value="LOW">Low</option>
+                        </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
-                        <input class="form-control" type="text" id="bugPriority" th:field="${theBug.bugPriority}">
+                    <!--hidden param for original severity-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalSeverity" th:value="${theBug.bugSeverity}">
                     </div>
+
+
+
+
+            <div class="form-group">
+                <label for="bugPriority">Priority:</label>
+                <select class="form-control" id="bugPriority" disabled th:field="${theBug.bugPriority}">
+                    <option th:value="HIGH">High</option>
+                    <option th:value="MEDIUM">Medium</option>
+                    <option th:value="LOW">Low</option>
+                </select>
+            </div>
+
+                    <!--hidden param for original Priority-->
+                    <div hidden>
+                        <input type="text" th:name="bugOriginalPriority" th:value="${theBug.bugPriority}">
+                    </div>
+
+
                 </div>
 
             <!--Second Row: createdby, responsible-dev, due date, date created-->
@@ -113,20 +194,47 @@
                     <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
                 </div>
 
+
+
                 <div class="form-group">
                     <label for="bugStatus">Status:</label>
-                    <input class="form-control" type="text" id="bugStatus" th:field="${theBug.bugStatus}">
+                    <select class="form-control" id="bugStatus" disabled th:field="${theBug.bugStatus}">
+                        <option th:value="0">In progress</option>
+                        <option th:value="1">Fixed</option>
+                    </select>
                 </div>
+
+                <!--hidden param for original Status-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalStatus" th:value="${theBug.bugStatus}">
+                </div>
+
+
+
 
                 <div class="form-group">
                     <label for="bugResponsibleDev">Assigned to:</label>
-                    <input class="form-control" type="text" id="bugResponsibleDev" readonly th:field="${theBug.bugResponsibleDev}">
+                    <select class="form-control" id="bugResponsibleDev" disabled th:field="${theBug.bugResponsibleDev}">
+                        <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                    </select>
                 </div>
+
+                <!--hidden param for original Assigned To-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalResponsibleDev" th:value="${theBug.bugResponsibleDev}">
+                </div>
+
 
                 <div class="form-group">
                     <label for="bugDueDate">Due date:</label>
-                    <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">
+                    <input class="form-control" type="text" id="bugDueDate" readonly th:field="${theBug.bugDueDate}">
                 </div>
+
+                <!--hidden param for original Due date-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalDueDate" th:value="${theBug.bugDueDate}">
+                </div>
+
 
                 <div class="form-group">
                     <label for="bugCreated">Date created:</label>
@@ -137,41 +245,101 @@
             <!--Third Row: description and steps to reproduce-->
             <div class="row w-100 justify-content-around mt-3">
 
-                <div class="form-group w-25">
+
+                <div class="form-group">
                     <label for="bugDescription">Description:</label>
-                    <textarea class="form-control" id="bugDescription" th:field="${theBug.bugDescription}" th:rows="5"></textarea>
+                    <textarea class="form-control" id="bugDescription" readonly th:field="${theBug.bugDescription}" th:rows="5" cols="93"></textarea>
                 </div>
 
-                <div class="form-group w-25">
+                <!--hidden param for original description-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalDescription" th:value="${theBug.bugDescription}">
+                </div>
+
+                <div class="form-group">
                     <label for="bugStepsToReproduce">Steps to Reproduce:</label>
-                    <textarea class="form-control" id="bugStepsToReproduce" th:field="${theBug.stepsToReproduce}" th:rows="5"></textarea>
+                    <textarea class="form-control" id="bugStepsToReproduce" readonly th:field="${theBug.stepsToReproduce}" th:rows="5" cols="93"></textarea>
                 </div>
-            </div>
-            <!--Fourth Row: Submit button-->
-            <div class="row w-100 mt-4 justify-content-around">
 
-                <button class="btn btn-success w-25 mr-4" type="submit">Update bug</button>
+                <!--hidden param for original steps to reproduce-->
+                <div hidden>
+                    <input type="text" th:name="bugOriginalStepsToReproduce" th:value="${theBug.stepsToReproduce}">
+                </div>
 
-                <!-------------------->
-                <!-- Delete bug button -->
-                <!-------------------->
-                <br>
-                <a th:href="@{~/mybugs/deletebug(bugId = ${theBug.bugId})}">
-                    <button type="button" class="btn btn-danger">Delete bug</button>
-                </a>
 
             </div>
-
-
-
 
 
         </form>
+
+        <hr>
+
+
+
+        <div class="container">
+        <h3>Bug Transaction history:</h3>
+
+            <div class="row w-100 justify-content-around mt-4">
+                <table class="table table-striped table-bordered table-hover mybugtable table-sm">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th th:text="'Date'"/>
+                        <th th:text="'Update'"/>
+                        <th th:text="'Developer'"/>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="transaction, iStat : ${bugTransactions}"
+                        th:style="${iStat.odd}? 'font-weight: bold;'"
+                        th:alt-title="${iStat.even}? 'even' : 'odd'">
+
+
+                        <td th:text="${ transaction.date }"/>
+                        <td th:text="${ transaction.transaction }"/>
+                        <td th:text="${ transaction.transactionCreatedBy }"/>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        <div class="row w-100 justify-content-around mt-0">
+            <div class="container page">
+
+                    <div th:if="${bugTransactions.totalPages > 0}" class="pagination"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{~/mybugs/showBugDetail(size=${bugTransactions.size}, page=${pageNumber}, bugId= ${theBug.bugId})}"
+                           th:text="'| ' + ${pageNumber} + ' |'"
+                           th:class="${pageNumber==bugTransactions.number + 1} ? active"></a>
+                    </div>
+            </div>
+        </div>
 
 
     </div>
 
 </div>
+
+
+<script>
+    document.getElementById('editButton').onclick = function (){
+        document.getElementById('bugtitle').readOnly = false;
+        document.getElementById('bugproject').disabled = false;
+        document.getElementById('bugSeverity').disabled = false;
+        document.getElementById('bugPriority').disabled = false;
+        document.getElementById('bugStatus').disabled = false;
+        document.getElementById('bugResponsibleDev').disabled = false;
+        document.getElementById('bugDueDate').readOnly = false;
+        document.getElementById('bugDescription').readOnly = false;
+        document.getElementById('bugStepsToReproduce').readOnly = false;
+        document.getElementById('updateBugButton').hidden = false;
+        document.getElementById('editButton').hidden = true;
+
+
+    };
+</script>
+
+
 
 </body>
 

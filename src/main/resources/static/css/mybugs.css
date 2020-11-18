@@ -19,14 +19,68 @@ ul {
     background-color: #212F3D;
 }
 
-#background-for-working-zone {
+/*#background-for-working-zone {
     background-color: #F2F4F4;
+}*/
+
+/*#background-for-working-zone {
+    background-image: url("../img/backgroundCompressed.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+
+}*/
+
+#background-for-working-zone {
+    background-image: url("../img/backgroundCompressed.jpg");
+    background-repeat: repeat;
+    background-position: center;
+    background-size: 100% auto;
+
 }
 
+/*input[readonly]{
+    background-color:transparent;
+    border: 0;
+    font-size: 1em;
+}*/
+
+input[readonly] {
+    background-color: lightgray !important;
+    border: 0!important;
+
+    box-shadow: none !important;
+}
+
+select[disabled] {
+    background-color: lightgray !important;
+    border: 0!important;
+
+    box-shadow: none !important;
+}
+
+textarea[readonly] {
+    background-color: lightgray !important;
+    border: 0!important;
+
+    box-shadow: none !important;
+}
+
+/*#backTest {
+    background-image: url("static/img/mainlogo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 400px;
+    height: 400px;
+}*/
+
+
 .pagetitle {
-    background-color: #F4D03F;
+    background-color: #343a40;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    font-size: large;
+    color: white;
 }
 
 .mybugtable {
@@ -35,3 +89,29 @@ ul {
     padding-left: 0;
     padding-right: 0;
 }
+
+.myprojecttable {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.page {
+    display: inline-flex;
+    background-color: #343a40;
+    font-size: 20px;
+
+}
+
+/*#projectDescription{
+    width: auto;
+}*/
+
+
+
+a:link    {color:white;}
+a:visited {color:white;}
+a:hover   {color:white;}
+a:active  {color:white;}
+

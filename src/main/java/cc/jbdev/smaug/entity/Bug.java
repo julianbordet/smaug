@@ -2,7 +2,9 @@ package cc.jbdev.smaug.entity;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="bugs")
@@ -31,8 +33,10 @@ public class Bug {
     @Column(name="date_created")
     private String dateCreated;
 
-    @Column(name="status")
-    private String bugStatus;
+    //status = 1 = bug is closed/fixed
+    //status = 2 = bug is still open
+    @Column(name="is_fixed")
+    private int bugStatus;
 
     @Column(name="created_by")
     private String bugCreatedBy;
@@ -46,8 +50,30 @@ public class Bug {
     @Column(name="priority")
     private String bugPriority;
 
+    @OneToMany(mappedBy="bugId",
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
+                //  cascade = {CascadeType.ALL})
+    private List<BugTransaction> bugTransactions;
+
+
+
     public Bug(){
 
+    }
+
+    public Bug(String bugOriginalTitle, String bugOriginalDescription, String bugOriginalProjectId,
+               String bugOriginalSeverity, String bugOriginalPriority, String bugOriginalStatus,
+               String bugOriginalResponsibleDev, String bugOriginalDueDate, String bugOriginalStepsToReproduce){
+
+        this.bugTitle = bugOriginalTitle;
+        this.bugDescription = bugOriginalDescription;
+        this.projectId = Integer.parseInt(bugOriginalProjectId);
+        this.bugSeverity = bugOriginalSeverity;
+        this.bugPriority = bugOriginalPriority;
+        this.bugStatus = Integer.parseInt(bugOriginalStatus);
+        this.bugResponsibleDev = bugOriginalResponsibleDev;
+        this.bugDueDate = bugOriginalDueDate;
+        this.stepsToReproduce = bugOriginalStepsToReproduce;
     }
 
     public int getBugId() {
@@ -106,11 +132,12 @@ public class Bug {
         this.dateCreated = dateCreated;
     }
 
-    public String getBugStatus() {
+
+    public int getBugStatus() {
         return bugStatus;
     }
 
-    public void setBugStatus(String bugStatus) {
+    public void setBugStatus(int bugStatus) {
         this.bugStatus = bugStatus;
     }
 
@@ -144,6 +171,22 @@ public class Bug {
 
     public void setBugPriority(String bugPriority) {
         this.bugPriority = bugPriority;
+    }
+
+    public List<BugTransaction> getBugTransactions() {
+        return bugTransactions;
+    }
+
+    public void addBugTransactions(BugTransaction newBugTransaction) {
+
+        if(this.bugTransactions == null){
+            this.bugTransactions = new ArrayList<>();
+        }
+
+        bugTransactions.add(newBugTransaction);
+
+        newBugTransaction.setBugId(this);
+
     }
 
     @Override

@@ -14,10 +14,36 @@ ul {
     padding: 0px;
 }
 
-.mycards {
-    height: 400px;
-    margin-top: 20px;
+
+@media screen and (max-width: 3440px) {
+    .mycards {
+        height: 570px;
+        margin-top: 20px;
+    }
 }
+
+@media screen and (max-width: 2560px) {
+    .mycards {
+        height: 500px;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 1920px){
+    .mycards {
+        height: 350px;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 1920px){
+    .mycards {
+        height: 350px;
+        margin-top: 20px;
+    }
+}
+
+
 
 #vertnav{
     height: 92vh;
@@ -25,5 +51,20 @@ ul {
 }
 
 #background-for-working-zone {
+    background-image: url("../img/backgroundCompressed.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+
+}
+
+/*#background-for-working-zone {
     background-color: #F2F4F4;
+}*/
+
+.mybugtable {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }

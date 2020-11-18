@@ -1,10 +1,10 @@
 package cc.jbdev.smaug.controller;
 
-import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
+import cc.jbdev.smaug.utility.UserUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,24 +31,20 @@ public class MyProjectsController {
 
     @GetMapping("/main")
     public String showMyProjects(Model theModel, @RequestParam("page") Optional<Integer> page,
-                                 @RequestParam("size") Optional<Integer> size){
+                                 @RequestParam("size") Optional<Integer> size) {
 
-        ///Helper code to get the username of the currently logged in user:
-        String myUserName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails){
-            myUserName = ((UserDetails)principal).getUsername();
-        } else {
-            myUserName = principal.toString();
-        }
-        ///
+        UserUtility userUtility = new UserUtility();
 
 
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-        Page<Project> projectPage = projectService.findPaginatedUserActiveProjects(PageRequest.of(currentPage - 1, pageSize), myUserName);
+
+        //PAGINATION UPDATE
+        Page<Project> projectPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getActiveProjectsListForUser(userUtility.getMyUserName()));
+        //
+
 
         theModel.addAttribute("projectPage", projectPage);
 
@@ -58,51 +54,29 @@ public class MyProjectsController {
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
 
-
-
-        return "myprojectspage";
+            return "myprojectspage";
     }
 
-
-    @GetMapping("/newproject")
-    public String addNewProject(Model theModel){
-
-        Project theProject = new Project();
-
-        theModel.addAttribute("theProject", theProject);
-
-        return "newProjectPage";
-    }
-
-    @PostMapping("/createproject")
-    public String createProject(@ModelAttribute("theProject") Project theProject){
-
-        theProject.setProjectId(0);
-        projectService.save(theProject);
-
-
-        return "dashboardpage";
-    }
 
     @GetMapping("/showProjectDetail")
-    public String showBugDetail(@RequestParam("projectId") int theId, Model theModel) {
+    public String showBugDetail(@RequestParam("projectId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page,
+                                @RequestParam("size") Optional<Integer> size) {
 
         Project elProjectClickeadoEs = projectService.getProjectById(theId);
 
         theModel.addAttribute("theProject", elProjectClickeadoEs);
 
-        List<Developer> projectDevList = elProjectClickeadoEs.getDevelopers();
 
-        theModel.addAttribute("devList", projectDevList);
-
-
-
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+        theModel.addAttribute("devList", activeDevelopers);
 
 
         int currentPage = 1;
         int pageSize = 15;
 
-        Page<Developer> developerPage = projectService.findPaginatedProjectActiveDevelopers(PageRequest.of(currentPage - 1, pageSize), theId);
+        ///PAGINATION UPDATE
+        Page<Developer> developerPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getProjectById(theId).getDevelopers());
+        //
 
         theModel.addAttribute("developerPage", developerPage);
 
@@ -111,20 +85,41 @@ public class MyProjectsController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
-        //
 
         return "showProjectDetailPage";
-
     }
+
 
     @PostMapping("/updateProject")
     public String updateBug(@ModelAttribute("theProject") Project theProject){
 
-
         projectService.save(theProject);
 
-        return "dashboardpage";
+        return "redirect:/myprojects/main";
+    }
 
+    @GetMapping("/newproject")
+    public String addNewProject(Model theModel){
+
+        Project theProject = new Project();
+        theModel.addAttribute("theProject", theProject);
+
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+        theModel.addAttribute("devList", activeDevelopers);
+
+
+        return "newProjectPage";
+    }
+
+
+    @PostMapping("/createproject")
+    public String createProject(@ModelAttribute("theProject") Project theProject){
+
+        theProject.setProjectId(0);
+        theProject.setIsActive(1);
+        projectService.save(theProject);
+
+        return "redirect:/myprojects/main";
     }
 
     @GetMapping("/deleteproject")
@@ -132,7 +127,7 @@ public class MyProjectsController {
 
         projectService.delete(projectId);
 
-        return "dashboardpage";
+        return "redirect:/myprojects/main";
     }
 
     @GetMapping("/adddeveloper")
@@ -143,12 +138,29 @@ public class MyProjectsController {
         theModel.addAttribute("newDeveloper", newDeveloper);
         theModel.addAttribute("projectId", projectId);
 
+        String projectName = projectService.getProjectById(projectId).getProjectName();
+        theModel.addAttribute("projectName", projectName);
+
+        List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
+        theModel.addAttribute("devList", activeDevelopers);
+
         return "addDeveloperPage";
     }
 
+
+    @PostMapping("/adddeveloperconfirm")
+    public String addDeveloperConfirm(@RequestParam("projectId") int projectId, @ModelAttribute("newDeveloper") Developer theDeveloper){
+
+        Project theProject = projectService.getProjectById(projectId);
+
+        projectService.addDeveloperToProject(theProject, theDeveloper);
+
+        return "redirect:/myprojects/main";
+    }
+
+
     @GetMapping("/removedeveloper")
     public String removeDeveloper(@RequestParam("projectId") int projectId, Model theModel){
-
 
         Project theProject = projectService.getProjectById(projectId);
         List<Developer> projectDevList = theProject.getDevelopers();
@@ -159,28 +171,16 @@ public class MyProjectsController {
         return "removeDeveloperPage";
     }
 
-    @PostMapping("/adddeveloperconfirm")
-    public String addDeveloperConfirm(@RequestParam("projectId") int projectId, @ModelAttribute("newDeveloper") Developer theDeveloper){
-
-        Project theProject = projectService.getProjectById(projectId);
-
-        projectService.addDeveloperToProject(theProject, theDeveloper);
-
-        return "dashboardpage";
-    }
 
     @PostMapping("/removedeveloperconfirm")
     public String removedeveloperconfirm(@RequestParam("devSelected") String devSelected, @RequestParam("projectId") int projectId){
-
-
 
         Project theProject = projectService.getProjectById(projectId);
         Developer theDeveloper = theProject.getDeveloper(devSelected);
 
         projectService.removeDeveloperFromProject(theProject, theDeveloper);
 
-
-        return "dashboardpage";
+        return "redirect:/myprojects/main";
     }
 
 }

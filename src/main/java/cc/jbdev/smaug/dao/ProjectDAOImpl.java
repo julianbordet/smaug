@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -117,5 +119,39 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         currentSession.save(theProject);
 
+    }
+
+    @Override
+    @Transactional
+    public List<String> getListOfActiveDevelopers() {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Developer> theQuery = currentSession.createQuery("from Developer where enabled = '1'", Developer.class);
+
+        List<Developer> developersList = theQuery.getResultList();
+
+        List<String> usernameList = new ArrayList<>();
+
+        for (Developer developer : developersList){
+            String username = developer.getUsername();
+            usernameList.add(username);
+        }
+
+        return usernameList;
+    }
+
+    @Override
+    @Transactional
+    public List<Project> getActiveProjects() {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Project> theQuery = currentSession.createQuery("from Project where is_active = '1'", Project.class);
+
+        List<Project> projectList = theQuery.getResultList();
+
+
+        return projectList;
     }
 }

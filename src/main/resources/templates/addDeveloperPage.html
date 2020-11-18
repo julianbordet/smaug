@@ -82,30 +82,61 @@
                 <!--First Row: dev username, role, project id-->
 
                 <div class="row w-100 justify-content-around mt-3">
-                    <div class="form-group">
+
+                    <!--<div class="form-group">
                         <label for="devusername">Dev username:</label>
                         <input class="form-control" type="text" id="devusername" th:field="${newDeveloper.username}">
-                    </div>
+                    </div>-->
 
-                    <div class="form-group">
+                    <div class="row w-100 justify-content-around mt-3">
+
+                        <div class="form-group">
+                            <label for="devusername">Dev username:</label>
+                            <select class="form-control" id="devusername" th:field="${newDeveloper.username}">
+                                <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                            </select>
+                        </div>
+
+                    <!--<div class="form-group">
+                        <label for="bugResponsibleDev">Assigned to:</label>
+                        <select class="form-control" id="bugResponsibleDev" disabled th:field="${theBug.bugResponsibleDev}">
+                            <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                        </select>
+                    </div>-->
+
+                    <!--<div class="form-group">
                         <label for="devpassword">Dev password:</label>
                         <input class="form-control" type="text" id="devpassword" th:field="${newDeveloper.password}">
-                    </div>
+                    </div>-->
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="devenabled">Dev enabled:</label>
                         <input class="form-control" type="text" id="devenabled" th:field="${newDeveloper.enabled}">
-                    </div>
+                    </div>-->
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="devrole">Role:</label>
                         <input class="form-control" type="text" id="devrole"  >
-                    </div>
+                    </div>-->
 
-                    <div class="form-group">
-                        <label for="projectId">Project Id:</label>
+                        <div class="form-group">
+                            <label for="devrole">Role:</label>
+                            <select class="form-control" id="devrole">
+                                <option value="ROLE_ADMIN">Admin</option>
+                                <option value="ROLE_PM">Project Manager</option>
+                                <option value="ROLE_DEV">Developer</option>
+                            </select>
+                        </div>
+
+                    <div class="form-group" hidden>
+                        <label for="projectId" >Project Id:</label>
                         <input class="form-control" type="text" id="projectId" name="projectId" readonly  th:value="${projectId}">
                     </div>
+
+                        <div class="form-group">
+                            <label for="projectName" >Project Name:</label>
+                            <input class="form-control" type="text" id="projectName" readonly  th:value="${projectName}">
+                        </div>
 
                 <!--Second Row: Submit button-->
                 <div class="row w-100 justify-content-around mt-4">

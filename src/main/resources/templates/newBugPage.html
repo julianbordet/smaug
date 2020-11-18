@@ -82,7 +82,7 @@
 
             <form th:action="@{~/mybugs/createBug}" th:object="${theBug}" method="post">
 
-                <!--First Row: name, id, project, severity, priority-->
+                <!--First Row: name, (no id, since its a new bug it'll be set to 0), project, severity, priority-->
 
                 <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
@@ -90,53 +90,69 @@
                         <input class="form-control" type="text" id="bugtitle" th:field="${theBug.bugTitle}">
                     </div>
 
-                    <div class="form-group">
-                        <label for="bugId">Bug Id:</label>
-                        <input class="form-control" type="text" id="bugId"  th:field="${theBug.bugId}">
-                    </div>
-
-                    <div class="form-group">
+                   <!-- <div class="form-group">
                         <label for="bugproject">Project:</label>
                         <input class="form-control" type="text" id="bugproject"  th:field="${theBug.projectId}">
                     </div>
-
+-->
                     <div class="form-group">
-                        <label for="bugSeverity">Severity:</label>
-                        <input class="form-control" type="text" id="bugSeverity" th:field="${theBug.bugSeverity}">
+                        <label for="bugproject">Project:</label>
+                        <select class="form-control" id="bugproject" th:field="${theBug.projectId}">
+                            <option th:each="proj : ${projectList}" th:value="${proj.projectId}" th:text="${proj.projectName}"></option>
+                        </select>
                     </div>
 
+
+
                     <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
-                        <input class="form-control" type="text" id="bugPriority" th:field="${theBug.bugPriority}">
+                        <label for="bugSev">Severity:</label>
+                        <select class="form-control" id="bugSev" th:field="${theBug.bugSeverity}">
+                            <option th:value="CRITICAL">Critical</option>
+                            <option th:value="MAJOR">Major</option>
+                            <option th:value="MINOR">Minor</option>
+                            <option th:value="LOW">Low</option>
+                        </select>
                     </div>
+
+
+
+
+
+                <div class="form-group">
+                    <label for="bugPriority">Priority:</label>
+                    <select class="form-control" id="bugPriority" th:field="${theBug.bugPriority}">
+                        <option th:value="HIGH">High</option>
+                        <option th:value="MEDIUM">Medium</option>
+                        <option th:value="LOW">Low</option>
+                    </select>
                 </div>
 
                 <!--Second Row: createdby, responsible-dev, due date, date created-->
-                <div class="row w-100 justify-content-around mt-3">
-                    <div class="form-group">
-                        <label for="bugCreatedBy">Created by:</label>
-                        <input class="form-control" type="text" id="bugCreatedBy"  th:field="${theBug.bugCreatedBy}">
-                    </div>
 
-                    <div class="form-group">
-                        <label for="bugStatus">Status:</label>
-                        <input class="form-control" type="text" id="bugStatus" th:field="${theBug.bugStatus}">
-                    </div>
+
+
+                   <!-- <div class="form-group">
+                        <label for="bugResponsibleDev">Assigned to:</label>
+                        <input class="form-control" type="text" id="bugResponsibleDev"  th:field="${theBug.bugResponsibleDev}">
+                    </div>-->
+
+
 
                     <div class="form-group">
                         <label for="bugResponsibleDev">Assigned to:</label>
-                        <input class="form-control" type="text" id="bugResponsibleDev"  th:field="${theBug.bugResponsibleDev}">
+                        <select class="form-control" id="bugResponsibleDev" th:field="${theBug.bugResponsibleDev}">
+                            <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                        </select>
                     </div>
+
+
+
 
                     <div class="form-group">
                         <label for="bugDueDate">Due date:</label>
                         <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">
                     </div>
 
-                    <div class="form-group">
-                        <label for="bugCreated">Date created:</label>
-                        <input class="form-control" type="text" id="bugCreated"  th:field="${theBug.dateCreated}">
-                    </div>
 
                 </div>
                 <!--Third Row: description and steps to reproduce-->
