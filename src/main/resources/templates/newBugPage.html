@@ -150,7 +150,10 @@
 
                     <div class="form-group">
                         <label for="bugDueDate">Due date:</label>
-                        <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">
+                       <!-- <input class="form-control" type="text" id="bugDueDate" th:field="${theBug.bugDueDate}">-->
+                        <input class="form-control" type="date" id="bugDueDate"
+                               value="2021-09-10"
+                               min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDueDate}">
                     </div>
 
 
