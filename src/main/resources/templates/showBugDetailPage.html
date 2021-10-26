@@ -120,7 +120,7 @@
                 <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
                         <label for="bugtitle">Bug Title:</label>
-                        <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}" maxlength="50">
+                        <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}" maxlength="50" required>
                     </div>
 
                     <!--hidden param for original title-->
@@ -230,7 +230,7 @@
                   <!--  <input class="form-control" type="text" id="bugDueDate" readonly th:field="${theBug.bugDueDate}">-->
                     <input class="form-control" type="date" id="bugDueDate"
                            value="2021-09-10"
-                           min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDueDate}" readonly>
+                           min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDueDate}" readonly required>
                 </div>
 
                 <!--hidden param for original Due date-->

@@ -113,7 +113,7 @@
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projecttitle">Project Name:</label>
-                    <input class="form-control" type="text" id="projecttitle" readonly th:field="${theProject.projectName}">
+                    <input class="form-control" type="text" id="projecttitle" readonly th:field="${theProject.projectName}" required>
                 </div>
 
                 <div class="form-group">
@@ -161,7 +161,7 @@
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
                     <label for="projectDescription">Project description:</label>
-                    <textarea class="form-control" id="projectDescription" readonly th:field="${theProject.projectDescription}" th:rows="5" cols="100"></textarea>
+                    <textarea class="form-control" id="projectDescription" readonly th:field="${theProject.projectDescription}" th:rows="5" cols="100" required></textarea>
                 </div>
             </div>
 
