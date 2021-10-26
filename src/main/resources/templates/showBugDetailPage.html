@@ -238,6 +238,13 @@
                     <input type="text" th:name="bugOriginalDueDate" th:value="${theBug.bugDueDate}">
                 </div>
 
+                <div class="form-group">
+                    <label for="bugDateFixed">Date fixed:</label>
+                    <input class="form-control" type="date" id="bugDateFixed"
+                           value="2021-09-10"
+                           min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDateFixed}" readonly>
+                </div>
+
 
                 <div class="form-group">
                     <label for="bugCreated">Date created:</label>
@@ -340,6 +347,16 @@
 
 
     };
+
+    //Event listener for 'bugStatus' field, if changed to fixed then removes the readOnly
+    //from the bugDateFixed field.
+    document.getElementById('bugStatus').addEventListener('change', function() {
+        if(this.value == 1){
+            document.getElementById('bugDateFixed').readOnly = false;
+        } else {
+            document.getElementById('bugDateFixed').readOnly = true;
+        }
+    });
 </script>
 
 

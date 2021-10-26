@@ -47,6 +47,9 @@ public class Bug {
     @Column(name="due_date")
     private String bugDueDate;
 
+    @Column(name="date_fixed")
+    private String bugDateFixed;
+
     @Column(name="priority")
     private String bugPriority;
 
@@ -187,6 +190,14 @@ public class Bug {
 
         newBugTransaction.setBugId(this);
 
+    }
+
+    public String getBugDateFixed() {
+        return bugDateFixed;
+    }
+
+    public void setBugDateFixed(String bugDateFixed) {
+        this.bugDateFixed = bugDateFixed;
     }
 
     @Override
