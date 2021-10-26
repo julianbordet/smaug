@@ -125,7 +125,7 @@
                     <tbody>
                     <tr th:each="bug, iStat : ${bugPage.content}"
                         th:style="${iStat.odd}? 'font-weight: bold;'"
-                        th:alt-title="${iStat.even}? 'even' : 'odd'"
+                        th:alt-title="${iStat.even}? '' : ''"
 
                         th:bugId="${bug.bugId}"
                         th:onclick="rowClicked(this.getAttribute('bugId'));">

@@ -102,7 +102,7 @@
                 <tbody>
                 <tr th:each="project, iStat : ${projectPage.content}"
                     th:style="${iStat.odd}? 'font-weight: bold;'"
-                    th:alt-title="${iStat.even}? 'even' : 'odd'"
+                    th:alt-title="${iStat.even}? '' : ''"
                     th:projectId="${project.projectId}"
                     th:onclick="rowClicked(this.getAttribute('projectId'));">
                     <!-- the th:onclick calls the javascript function rowClicked defined later below
