@@ -120,7 +120,7 @@
                 <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
                         <label for="bugtitle">Bug Title:</label>
-                        <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}">
+                        <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}" maxlength="50">
                     </div>
 
                     <!--hidden param for original title-->
@@ -251,7 +251,7 @@
 
                 <div class="form-group">
                     <label for="bugDescription">Description:</label>
-                    <textarea class="form-control" id="bugDescription" readonly th:field="${theBug.bugDescription}" th:rows="5" cols="93"></textarea>
+                    <textarea class="form-control" id="bugDescription" readonly th:field="${theBug.bugDescription}" th:rows="5" cols="93" maxlength="450"></textarea>
                 </div>
 
                 <!--hidden param for original description-->
@@ -261,7 +261,7 @@
 
                 <div class="form-group">
                     <label for="bugStepsToReproduce">Steps to Reproduce:</label>
-                    <textarea class="form-control" id="bugStepsToReproduce" readonly th:field="${theBug.stepsToReproduce}" th:rows="5" cols="93"></textarea>
+                    <textarea class="form-control" id="bugStepsToReproduce" readonly th:field="${theBug.stepsToReproduce}" th:rows="5" cols="93" maxlength="900"></textarea>
                 </div>
 
                 <!--hidden param for original steps to reproduce-->
