@@ -13,7 +13,9 @@ li {
 tbody {
     cursor: pointer;
 }
-
+#bugtitle{
+    width:300px;
+}
 
 ul {
     padding: 0px;
