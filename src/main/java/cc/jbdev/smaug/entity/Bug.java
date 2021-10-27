@@ -1,9 +1,12 @@
 package cc.jbdev.smaug.entity;
 
+import cc.jbdev.smaug.validation.ValidatePriority;
+import cc.jbdev.smaug.validation.ValidateSeverity;
+
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,9 +18,12 @@ public class Bug {
     @Column(name="bug_id")
     private int bugId;
 
+    @NotNull
     @Column(name="project_id")
     private int projectId;
 
+    @NotNull
+    @Size(min=1)
     @Column(name="title")
     private String bugTitle;
 
@@ -28,28 +34,32 @@ public class Bug {
     private String stepsToReproduce;
 
     @Column(name="severity")
+    @ValidateSeverity("")
     private String bugSeverity;
 
     @Column(name="date_created")
     private String dateCreated;
 
-    //status = 1 = bug is closed/fixed
-    //status = 2 = bug is still open
+    //status =  = bug is closed/fixed
+    //status =  = bug is still open
     @Column(name="is_fixed")
     private int bugStatus;
 
     @Column(name="created_by")
     private String bugCreatedBy;
 
+    @NotNull
     @Column(name="responsible_dev")
     private String bugResponsibleDev;
 
+    @NotNull
     @Column(name="due_date")
     private String bugDueDate;
 
     @Column(name="date_fixed")
     private String bugDateFixed;
 
+    @ValidatePriority("")
     @Column(name="priority")
     private String bugPriority;
 

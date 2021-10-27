@@ -88,6 +88,30 @@
 			<version>2.3.4.RELEASE</version>
 		</dependency>
 
+		<!--Using Hibernate validator for validations 27-oct-2021-->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator-cdi</artifactId>
+			<version>6.2.0.Final</version>
+		</dependency>
+
+	<!--	<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator-osgi</artifactId>
+			<version>6.2.0.Final</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<version>6.2.0.Final</version>
+		</dependency>
 
 		<!-- adding jaxb -->
 

@@ -13,8 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -205,9 +207,29 @@ public class MyBugsController {
     }
 
     @PostMapping("/createBug")
-    public String createBug(@ModelAttribute("theBug") Bug theBug){
+    public String createBug(@Valid  @ModelAttribute("theBug") Bug theBug, BindingResult theBindingResult){
 
         UserUtility userUtility = new UserUtility();
+
+        /////VALIDATION////
+
+        if(theBindingResult.hasErrors()){
+            return "error-page";
+        }
+
+
+        //if (validations){
+        // return string to error page.
+        // }
+        //0. que el bug no sea null
+        //1. que el bug tenga titulo DONE
+        //2. que tenga proejecto ------y el proyecto sea uno que ya exista
+        //3. que tenga severity y este dentro del rango correcto DONE
+        //4. que tenga priority y este dentor del rango correcto DONE
+        //5. que ete asignado a alguien y sea un usuario existente
+        //6. que tenga due date y que este en el formato correcto
+
+        /////
 
 
         theBug.setBugId(0);
