@@ -72,28 +72,23 @@
     <!--Main area-->
     <div class="col-11" id="background-for-working-zone">
 
+<!--
         <div class="row w-100 justify-content-around mt-4">
+-->
+        <div class="container">
 
 
-
-
-
-
-
-            <form th:action="@{~/myprojects/createproject}" th:object="${theProject}" method="post">
+        <form th:action="@{~/myprojects/createproject}" th:object="${theProject}" method="post">
 
                 <!--First Row: name, owner,-->
 
                 <div class="row w-100 justify-content-around mt-3">
+
                     <div class="form-group">
                         <label for="projectName">Project Name:</label>
                         <input class="form-control" type="text" id="projectName" th:field="${theProject.projectName}" required>
                     </div>
 
-                    <!--<div class="form-group">
-                        <label for="projectOwner">Owner:</label>
-                        <input class="form-control" type="text" id="projectOwner"  th:field="${theProject.projectOwner}">
-                    </div>-->
 
                     <div class="form-group">
                         <label for="projectowner">Project owner:</label>
@@ -101,12 +96,7 @@
                             <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
                         </select>
                     </div>
-                    
 
-                </div>
-
-                <!--Second Row: description-->
-                <div class="row w-100 justify-content-around mt-3">
                     <div class="form-group">
                         <label for="description">Project description:</label>
                         <input class="form-control" type="text" id="description"  th:field="${theProject.projectDescription}" required>
@@ -114,7 +104,8 @@
 
                 </div>
 
-                <!--Third Row: Submit button-->
+
+                <!--Second Row: Submit button-->
                 <div class="row w-100 justify-content-around mt-4">
 
                     <button class="btn btn-success w-25" type="submit">Submit</button>
