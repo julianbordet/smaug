@@ -115,13 +115,17 @@
 
             <hr>
 
+            <!--Test alignment-->
+            <div class="row w-100 justify-content-around">
+
             <!--First Row: name, id, project, severity, priority-->
 
                 <div class="row w-100 justify-content-around mt-3">
 
                     <div class="form-group">
-                        <label for="bugtitle">Bug Title:</label>
+                        <label for="bugtitle" class="col-m-8 col-form-label">Bug Title:
                         <input class="form-control" type="text" id="bugtitle" readonly th:field="${theBug.bugTitle}" maxlength="50" required>
+                        </label>
                     </div>
 
                     <!--hidden param for original title-->
@@ -130,8 +134,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="bugId">Bug Id:</label>
+                        <label for="bugId" class="col-m-8 col-form-label">Bug Id:
                         <input class="form-control" type="text" id="bugId" readonly th:field="${theBug.bugId}">
+                        </label>
                     </div>
 
                     <!--<div class="form-group">
@@ -140,10 +145,11 @@
                     </div>-->
 
                     <div class="form-group">
-                        <label for="bugproject">Project:</label>
-                        <select class="form-control" id="bugproject" disabled th:field="${theBug.projectId}">
-                            <option th:each="proj : ${projectList}" th:value="${proj.projectId}" th:text="${proj.projectName}"></option>
-                        </select>
+                        <label for="bugproject" class="col-m-8 col-form-label">Project:
+                            <select class="form-control" id="bugproject" disabled th:field="${theBug.projectId}">
+                                <option th:each="proj : ${projectList}" th:value="${proj.projectId}" th:text="${proj.projectName}"></option>
+                            </select>
+                        </label>
                     </div>
 
                     <!--hidden param for original project-->
@@ -154,13 +160,14 @@
 
 
                     <div class="form-group">
-                        <label for="bugSeverity">Severity:</label>
-                        <select class="form-control" id="bugSeverity" disabled th:field="${theBug.bugSeverity}">
-                            <option th:value="CRITICAL">Critical</option>
-                            <option th:value="MAJOR">Major</option>
-                            <option th:value="MINOR">Minor</option>
-                            <option th:value="LOW">Low</option>
-                        </select>
+                        <label for="bugSeverity" class="col-m-8 col-form-label">Severity:
+                            <select class="form-control" id="bugSeverity" disabled th:field="${theBug.bugSeverity}">
+                                <option th:value="CRITICAL">Critical</option>
+                                <option th:value="MAJOR">Major</option>
+                                <option th:value="MINOR">Minor</option>
+                                <option th:value="LOW">Low</option>
+                            </select>
+                        </label>
                     </div>
 
                     <!--hidden param for original severity-->
@@ -172,12 +179,13 @@
 
 
             <div class="form-group">
-                <label for="bugPriority">Priority:</label>
-                <select class="form-control" id="bugPriority" disabled th:field="${theBug.bugPriority}">
-                    <option th:value="HIGH">High</option>
-                    <option th:value="MEDIUM">Medium</option>
-                    <option th:value="LOW">Low</option>
-                </select>
+                <label for="bugPriority" class="col-m-8 col-form-label">Priority:
+                    <select class="form-control" id="bugPriority" disabled th:field="${theBug.bugPriority}">
+                        <option th:value="HIGH">High</option>
+                        <option th:value="MEDIUM">Medium</option>
+                        <option th:value="LOW">Low</option>
+                    </select>
+                </label>
             </div>
 
                     <!--hidden param for original Priority-->
@@ -191,18 +199,20 @@
             <!--Second Row: createdby, responsible-dev, due date, date created-->
             <div class="row w-100 justify-content-around mt-3">
                 <div class="form-group">
-                    <label for="bugCreatedBy">Created by:</label>
-                    <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
+                    <label for="bugCreatedBy" class="col-m-8 col-form-label">Created by:
+                        <input class="form-control" type="text" id="bugCreatedBy" readonly th:field="${theBug.bugCreatedBy}">
+                    </label>
                 </div>
 
 
 
                 <div class="form-group">
-                    <label for="bugStatus">Status:</label>
-                    <select class="form-control" id="bugStatus" disabled th:field="${theBug.bugStatus}">
-                        <option th:value="0">In progress</option>
-                        <option th:value="1">Fixed</option>
-                    </select>
+                    <label for="bugStatus" class="col-m-8 col-form-label">Status:
+                        <select class="form-control" id="bugStatus" disabled th:field="${theBug.bugStatus}">
+                            <option th:value="0">In progress</option>
+                            <option th:value="1">Fixed</option>
+                        </select>
+                    </label>
                 </div>
 
                 <!--hidden param for original Status-->
@@ -214,10 +224,11 @@
 
 
                 <div class="form-group">
-                    <label for="bugResponsibleDev">Assigned to:</label>
-                    <select class="form-control" id="bugResponsibleDev" disabled th:field="${theBug.bugResponsibleDev}">
-                        <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
-                    </select>
+                    <label for="bugResponsibleDev" class="col-m-8 col-form-label">Assigned to:
+                        <select class="form-control" id="bugResponsibleDev" disabled th:field="${theBug.bugResponsibleDev}">
+                            <option th:each="dev : ${devList}" th:value="${dev}" th:text="${dev}"></option>
+                        </select>
+                    </label>
                 </div>
 
                 <!--hidden param for original Assigned To-->
@@ -227,11 +238,12 @@
 
 
                 <div class="form-group">
-                    <label for="bugDueDate">Due date:</label>
+                    <label for="bugDueDate" class="col-m-8 col-form-label">Due date:
                   <!--  <input class="form-control" type="text" id="bugDueDate" readonly th:field="${theBug.bugDueDate}">-->
-                    <input class="form-control" type="date" id="bugDueDate"
-                           value="2021-09-10"
-                           min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDueDate}" readonly required>
+                        <input class="form-control" type="date" id="bugDueDate"
+                               value="2021-09-10"
+                               min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDueDate}" readonly required>
+                    </label>
                 </div>
 
                 <!--hidden param for original Due date-->
@@ -240,16 +252,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="bugDateFixed">Date fixed:</label>
-                    <input class="form-control" type="date" id="bugDateFixed"
-                           value="2021-09-10"
-                           min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDateFixed}" readonly>
+                    <label for="bugDateFixed" class="col-m-8 col-form-label">Date fixed:
+                        <input class="form-control" type="date" id="bugDateFixed"
+                               value="2021-09-10"
+                               min="2018-01-01" max="2030-12-31" th:field="${theBug.bugDateFixed}" readonly>
+                    </label>
                 </div>
 
 
                 <div class="form-group">
-                    <label for="bugCreated">Date created:</label>
-                    <input class="form-control" type="text" id="bugCreated" readonly th:field="${theBug.dateCreated}">
+                    <label for="bugCreated" class="col-m-8 col-form-label">Date created:
+                        <input class="form-control" type="text" id="bugCreated" readonly th:field="${theBug.dateCreated}">
+                    </label>
                 </div>
 
             </div>
@@ -275,6 +289,9 @@
                 <!--hidden param for original steps to reproduce-->
                 <div hidden>
                     <input type="text" th:name="bugOriginalStepsToReproduce" th:value="${theBug.stepsToReproduce}">
+                </div>
+
+
                 </div>
 
 
