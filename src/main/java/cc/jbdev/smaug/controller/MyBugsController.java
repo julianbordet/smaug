@@ -175,6 +175,12 @@ public class MyBugsController {
         bugService.compareBugsAndCreateTransaction(updatedBug, originalBug);
         ///
 
+        //Validation: If we are updating a bug but not marking it as 'fixed' we need to set the bugDateFixed field to NULL to avoid the DB from rejecting it.
+        if(updatedBug.getBugDateFixed() == ""){
+            updatedBug.setBugDateFixed(null);
+        }
+        ////
+        
 
         bugService.save(updatedBug);
 
