@@ -75,21 +75,23 @@
         <div class="row w-100 justify-content-around mt-4">
 
 
+            <form th:action="@{~/myprojects/removedeveloperconfirm}" method="post">
+
             <h3>Select Developer to remove from Project:</h3>
             <hr><br>
 
-            <form th:action="@{~/myprojects/removedeveloperconfirm}" method="post">
+                <div class="row w-100 justify-content-around mt-3">
 
-                <div class="form-group blu-margin">
-                    <select class="form-control" id="dropOperator" th:name="devSelected">
-                        <option value="0">select developer</option>
-                        <option th:each="developer : ${projectDevList}" th:text="${developer.username}" ></option>
-                    </select>
+                    <div class="form-group blu-margin">
+                        <select class="form-control" id="dropOperator" th:name="devSelected">
+                            <option value="0">select developer</option>
+                            <option th:each="developer : ${projectDevList}" th:text="${developer.username}" ></option>
+                        </select>
+                    </div>
+
+                    <input hidden type="text" th:name="projectId" th:value="${projectId}"/>
+
                 </div>
-
-                <input type="text" th:name="projectId" th:value="${projectId}"/>
-
-
 
                 <!-- Submit button-->
                 <div class="row w-100 justify-content-around mt-4">
