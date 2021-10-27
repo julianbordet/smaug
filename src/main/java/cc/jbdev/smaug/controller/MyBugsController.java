@@ -180,7 +180,7 @@ public class MyBugsController {
             updatedBug.setBugDateFixed(null);
         }
         ////
-        
+
 
         bugService.save(updatedBug);
 
