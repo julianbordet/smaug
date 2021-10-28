@@ -18,7 +18,6 @@ public class Developer {
     @Column(name="enabled")
     private int enabled;
 
-
     //Setting up JoinTable for project_developer. This table keeps track
     //of which developers participate in which projects, and vice versa.
     @ManyToMany
@@ -28,7 +27,6 @@ public class Developer {
             inverseJoinColumns = @JoinColumn(name="project_id")
     )
     private List<Project> projects;
-
 
     public Developer() {
     }

@@ -154,7 +154,8 @@ public class MyBugsController {
 
 
     @PostMapping("/updateBug")
-    public String updateBug(@ModelAttribute("theBug") Bug updatedBug,
+    public String updateBug(@Valid @ModelAttribute("theBug") Bug updatedBug,
+                            BindingResult theBindingResult,
                             @RequestParam(value = "bugOriginalTitle") String bugOriginalTitle,
                             @RequestParam(value = "bugOriginalDescription") String bugOriginalDescription,
                             @RequestParam(value = "bugOriginalProjectId") String bugOriginalProjectId,
@@ -165,6 +166,10 @@ public class MyBugsController {
                             @RequestParam(value = "bugOriginalDueDate") String bugOriginalDueDate,
                             @RequestParam(value = "bugOriginalStepsToReproduce") String bugOriginalStepsToReproduce)
     {
+
+        if(theBindingResult.hasErrors()){
+            return "error-page";
+        }
 
         UserUtility userUtility = new UserUtility();
 
