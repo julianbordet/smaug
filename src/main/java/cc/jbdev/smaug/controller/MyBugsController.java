@@ -170,43 +170,33 @@ public class MyBugsController {
     {
 
         ValidationUtil validationUtil = new ValidationUtil();
-
-        if(theBindingResult.hasErrors()){
-            return "error-page";
-        }
-
-        //Validate developer provided by user is an active developer.
-        if(!(validationUtil.validateDeveloper(projectService.getListOfActiveDevelopers(), updatedBug.getBugResponsibleDev()))){
-            return "error-page";
-        }
-
-        //validate project provided by user is an active project
-        if(!(validationUtil.validateProject(projectService.getActiveProjects(), updatedBug.getProjectId()))){
-            return "error-page";
-        }
-
-
-
         UserUtility userUtility = new UserUtility();
 
-        ///TESTO
+        //1. Validate input from user
+        if(theBindingResult.hasErrors() || !(validationUtil.validateUpdatedBug(updatedBug, projectService, bugService)) ){
+            return "error-page";
+        }
+        ////////
+
+        ///2. Copy the original status of the bug into an axiliar Bug for comparison purposes
         Bug originalBug = new Bug(bugOriginalTitle, bugOriginalDescription, bugOriginalProjectId,
                             bugOriginalSeverity, bugOriginalPriority, bugOriginalStatus,
                             bugOriginalResponsibleDev, bugOriginalDueDate, bugOriginalStepsToReproduce);
+        ////////
 
-
-        ///// Compare updated bug with original bug state, create transaction if there's difference
+        //3. Compare updated bug with original bug state from previous step, create transaction (update history) if there's difference
         bugService.compareBugsAndCreateTransaction(updatedBug, originalBug);
-        ///
+        ////////
 
-        //Validation: If we are updating a bug but not marking it as 'fixed' we need to set the bugDateFixed field to NULL to avoid the DB from rejecting it.
+        //4. If we are updating a bug but not marking it as 'fixed' we need to set the bugDateFixed field to NULL to prevent the DB from rejecting it.
         if(updatedBug.getBugDateFixed() == ""){
             updatedBug.setBugDateFixed(null);
         }
-        ////
+        ////////
 
-
+        //5. Update the bug in the DB.
         bugService.save(updatedBug);
+        ////////
 
         return "redirect:/mybugs/main";
     }
@@ -234,29 +224,22 @@ public class MyBugsController {
         UserUtility userUtility = new UserUtility();
         ValidationUtil validationUtil = new ValidationUtil();
 
-        //New Bug standard setup
-        theBug.setBugId(0);
-        theBug.setBugStatus(0);
-        theBug.setBugCreatedBy(userUtility.getMyUserName());
-        
+        //1. Set standard fields for new bug
+        bugService.setNewBugStandardParameters(theBug, userUtility);
+        ////////
+
+        //2. Validate inputs provided by user
+        if(theBindingResult.hasErrors() || !(validationUtil.validateNewBug(theBug, projectService))){
+            return "error-page";
+        }
+        ////////
+
+        //3. Create a new transaction and add it to the bug
+
         Date today = new Date();
         String todayInString;
         todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
-        theBug.setDateCreated(todayInString);
-        ////
 
-        /////VALIDATIONS////
-        if(theBindingResult.hasErrors()){
-            return "error-page";
-        }
-
-        if(!(validationUtil.validateNewBug(theBug, projectService))){
-            return "error-page";
-        }
-        /////
-
-
-        //Create a new transaction and add it to the bug
         BugTransaction newBugTransaction = new BugTransaction();
         newBugTransaction.setDate(todayInString);
         newBugTransaction.setTransaction("Bug created");
@@ -264,11 +247,12 @@ public class MyBugsController {
         newBugTransaction.setTransactionCreatedBy(userUtility.getMyUserName());
         newBugTransaction.setTransactionDetail("Bug created");
         theBug.addBugTransactions(newBugTransaction);
-        //////
+        ////////
 
 
-
+        //4. Save the Bug in the DB.
         bugService.save(theBug);
+        ////////
 
         return "redirect:/mybugs/main";
     }

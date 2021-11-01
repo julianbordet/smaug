@@ -42,6 +42,9 @@ public class BugDAOImpl implements BugDAO {
         //execute query and get result list
         List<Bug> bugList = theQuery.getResultList();
 
+        ///
+        currentSession.clear();
+
         return bugList;
     }
 
@@ -126,6 +129,9 @@ public class BugDAOImpl implements BugDAO {
         Query<Bug> theQuery = currentSession.createQuery("from Bug where bug_id = '" + bugId + "'", Bug.class);
 
         Bug theBug = theQuery.getSingleResult();
+
+        ///
+        currentSession.clear();
 
         return theBug;
     }

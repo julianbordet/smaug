@@ -337,4 +337,20 @@ public class BugServiceImpl implements BugService {
         }
 
     }
+
+    public void setNewBugStandardParameters(Bug theBug, UserUtility userUtility){
+
+        //New Bug standard setup
+        theBug.setBugId(0);
+        theBug.setBugStatus(0);
+        theBug.setBugCreatedBy(userUtility.getMyUserName());
+
+        Date today = new Date();
+        String todayInString;
+        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
+        theBug.setDateCreated(todayInString);
+        ////
+
+    }
+
 }

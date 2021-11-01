@@ -3,6 +3,7 @@ package cc.jbdev.smaug.service;
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
+import cc.jbdev.smaug.utility.UserUtility;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -63,4 +64,7 @@ public interface BugService {
     List<BugTransaction> getBugTransactionsByBugId(int bugId);
 
     void compareBugsAndCreateTransaction(Bug updatedBug, Bug originalBug);
+
+    //Sets the bugId to 0, Status to 0, assigns user creted bug, assigns date created
+    void setNewBugStandardParameters(Bug theBug, UserUtility userUtility);
 }
