@@ -125,13 +125,17 @@ public class MyProjectsController {
     @PostMapping("/createproject")
     public String createProject(@ModelAttribute("theProject") Project theProject){
 
+        ValidationUtil validationUtil = new ValidationUtil();
+
         //1. set standard params for new project
         theProject.setProjectId(0);
         theProject.setIsActive(1);
         ////
 
         //2. Validate new project
-
+        if(!(validationUtil.validateNewProject(theProject, projectService))){
+            return "error-page";
+        }
         ////
 
         //3. Save new project

@@ -285,4 +285,21 @@ public class ValidationUtil {
 
         return result;
     }
+
+    public boolean validateNewProject(Project theProject, ProjectService projectService){
+
+        boolean result = false;
+
+        if(
+                validateProjectName(theProject.getProjectName()) &&
+                validateProjectOwner(theProject.getProjectOwner(), projectService) &&
+                theProject.getIsActive() == 1
+        ){
+            result = true;
+        }
+
+
+        return result;
+    }
+
 }
