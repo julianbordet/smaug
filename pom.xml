@@ -89,7 +89,13 @@
 		</dependency>
 
 		<!--Using Hibernate validator for validations 27-oct-2021-->
+
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.10.Final</version>
+		</dependency>
+	<!--	<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.2.0.Final</version>
@@ -101,17 +107,17 @@
 			<version>6.2.0.Final</version>
 		</dependency>
 
-	<!--	<dependency>
+	&lt;!&ndash;	<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-osgi</artifactId>
 			<version>6.2.0.Final</version>
-		</dependency>-->
+		</dependency>&ndash;&gt;
 
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
 			<version>6.2.0.Final</version>
-		</dependency>
+		</dependency>-->
 
 		<!-- adding jaxb -->
 

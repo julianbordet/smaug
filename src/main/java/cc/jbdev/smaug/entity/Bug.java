@@ -1,7 +1,5 @@
 package cc.jbdev.smaug.entity;
 
-import cc.jbdev.smaug.validation.ValidateAssignedDeveloper;
-import cc.jbdev.smaug.validation.ValidateAssignedProject;
 import cc.jbdev.smaug.validation.ValidatePriority;
 import cc.jbdev.smaug.validation.ValidateSeverity;
 
@@ -21,58 +19,41 @@ public class Bug {
     @Column(name="bug_id")
     private int bugId;
 
-    @NotNull
-    @ValidateAssignedProject("")
     @Column(name="project_id")
     private int projectId;
 
-    @NotNull
-    @NotBlank
-    @Size(min=1)
     @Column(name="title")
     private String bugTitle;
 
-    @NotNull
     @Column(name="description")
     private String bugDescription;
 
-    @NotNull
     @Column(name="steps_to_reproduce")
     private String stepsToReproduce;
 
     @Column(name="severity")
-    @ValidateSeverity("")
-    @NotNull
     private String bugSeverity;
 
-    @NotNull
-    @NotBlank
     @Column(name="date_created")
     private String dateCreated;
 
     //status = 1 = bug is closed/fixed
     //status = 0 = bug is still open
-    @NotNull
     @Column(name="is_fixed")
     private int bugStatus;
 
-    @NotNull
     @Column(name="created_by")
     private String bugCreatedBy;
 
-    @NotNull
-    @ValidateAssignedDeveloper("")
     @Column(name="responsible_dev")
     private String bugResponsibleDev;
 
-    @NotNull
     @Column(name="due_date")
     private String bugDueDate;
 
     @Column(name="date_fixed")
     private String bugDateFixed;
 
-    @ValidatePriority("")
     @Column(name="priority")
     private String bugPriority;
 

@@ -6,6 +6,7 @@ import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import cc.jbdev.smaug.utility.UserUtility;
+import cc.jbdev.smaug.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -167,9 +169,23 @@ public class MyBugsController {
                             @RequestParam(value = "bugOriginalStepsToReproduce") String bugOriginalStepsToReproduce)
     {
 
+        ValidationUtil validationUtil = new ValidationUtil();
+
         if(theBindingResult.hasErrors()){
             return "error-page";
         }
+
+        //Validate developer provided by user is an active developer.
+        if(!(validationUtil.validateDeveloper(projectService.getListOfActiveDevelopers(), updatedBug.getBugResponsibleDev()))){
+            return "error-page";
+        }
+
+        //validate project provided by user is an active project
+        if(!(validationUtil.validateProject(projectService.getActiveProjects(), updatedBug.getProjectId()))){
+            return "error-page";
+        }
+
+
 
         UserUtility userUtility = new UserUtility();
 
@@ -177,6 +193,7 @@ public class MyBugsController {
         Bug originalBug = new Bug(bugOriginalTitle, bugOriginalDescription, bugOriginalProjectId,
                             bugOriginalSeverity, bugOriginalPriority, bugOriginalStatus,
                             bugOriginalResponsibleDev, bugOriginalDueDate, bugOriginalStepsToReproduce);
+
 
         ///// Compare updated bug with original bug state, create transaction if there's difference
         bugService.compareBugsAndCreateTransaction(updatedBug, originalBug);
@@ -212,40 +229,31 @@ public class MyBugsController {
     }
 
     @PostMapping("/createBug")
-    public String createBug(@Valid  @ModelAttribute("theBug") Bug theBug, BindingResult theBindingResult){
+    public String createBug(@Valid @ModelAttribute("theBug") Bug theBug, BindingResult theBindingResult){
 
         UserUtility userUtility = new UserUtility();
+        ValidationUtil validationUtil = new ValidationUtil();
 
-        /////VALIDATION////
-
-        if(theBindingResult.hasErrors()){
-            return "error-page";
-        }
-
-
-        //if (validations){
-        // return string to error page.
-        // }
-        //0. que el bug no sea null
-        //1. que el bug tenga titulo DONE
-        //2. que tenga proejecto ------y el proyecto sea uno que ya exista
-        //3. que tenga severity y este dentro del rango correcto DONE
-        //4. que tenga priority y este dentor del rango correcto DONE
-        //5. que ete asignado a alguien y sea un usuario existente
-        //6. que tenga due date y que este en el formato correcto
-
-        /////
-
-
+        //New Bug standard setup
         theBug.setBugId(0);
         theBug.setBugStatus(0);
         theBug.setBugCreatedBy(userUtility.getMyUserName());
-
-
+        
         Date today = new Date();
         String todayInString;
         todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
         theBug.setDateCreated(todayInString);
+        ////
+
+        /////VALIDATIONS////
+        if(theBindingResult.hasErrors()){
+            return "error-page";
+        }
+
+        if(!(validationUtil.validateNewBug(theBug, projectService))){
+            return "error-page";
+        }
+        /////
 
 
         //Create a new transaction and add it to the bug
