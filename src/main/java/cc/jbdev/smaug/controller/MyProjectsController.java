@@ -59,7 +59,7 @@ public class MyProjectsController {
 
 
     @GetMapping("/showProjectDetail")
-    public String showBugDetail(@RequestParam("projectId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page,
+    public String showProjectDetail(@RequestParam("projectId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size) {
 
         Project elProjectClickeadoEs = projectService.getProjectById(theId);
@@ -91,7 +91,11 @@ public class MyProjectsController {
 
 
     @PostMapping("/updateProject")
-    public String updateBug(@ModelAttribute("theProject") Project theProject){
+    public String updateProject(@ModelAttribute("theProject") Project theProject){
+
+        //1. Validate
+
+        ////
 
         projectService.save(theProject);
 
@@ -115,15 +119,24 @@ public class MyProjectsController {
     @PostMapping("/createproject")
     public String createProject(@ModelAttribute("theProject") Project theProject){
 
+        //1. set standard params for new project
         theProject.setProjectId(0);
         theProject.setIsActive(1);
+        ////
+
+        //2. Validate new project
+
+        ////
+
+        //3. Save new project
         projectService.save(theProject);
+        ////
 
         return "redirect:/myprojects/main";
     }
 
     @GetMapping("/deleteproject")
-    public String deleteBug(@RequestParam("projectId") int projectId){
+    public String deleteProject(@RequestParam("projectId") int projectId){
 
         projectService.delete(projectId);
 
