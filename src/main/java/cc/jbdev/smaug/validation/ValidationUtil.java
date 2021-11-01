@@ -15,14 +15,8 @@ import java.util.regex.Pattern;
 
 
 public class ValidationUtil {
-    /*
-    List<String> devList = new ArrayList<>();
-    String developerSelectedByUser;
 
-    public ValidationUtil(List<String> developerList, String developerSelectedByUser) {
-        this.devList = developerList;
-        this.developerSelectedByUser = developerSelectedByUser;
-    }*/
+    ////Validations for Bug Entity////
 
     public boolean validateDeveloper(List<String> developerList, String developerSelectedByUser){
 
@@ -234,4 +228,61 @@ public class ValidationUtil {
         return result;
     }
 
+    ////Validations for Project Entity////
+
+    private boolean validateProjectName(String projectName){
+
+        boolean result = false;
+
+        if(projectName.length() > 0){
+            result = true;
+        }
+
+        return result;
+    }
+
+    private boolean validateProjectOwner(String projectOwnerProvidedByUser, ProjectService projectService ){
+
+        boolean result = false;
+
+        List<String> listOfValidProjectOwners = new ArrayList<>();
+        listOfValidProjectOwners = projectService.getListOfActiveDevelopers();
+
+        for(String developer : listOfValidProjectOwners){
+
+            if(projectOwnerProvidedByUser.equals(developer)){
+                result = true;
+                break;
+            }
+
+        }
+
+        return result;
+    }
+
+    private boolean validateProjectStatus(int isProjectActive){
+
+        boolean result = false;
+
+        if(isProjectActive == 1 || isProjectActive == 0){
+            result = true;
+        }
+
+        return result;
+    }
+
+    public boolean validateUpdatedProject(Project theProject, ProjectService projectService) {
+
+        boolean result = false;
+
+        if(
+                validateProjectName(theProject.getProjectName()) &&
+                validateProjectOwner(theProject.getProjectOwner(), projectService) &&
+                validateProjectStatus(theProject.getIsActive())
+        ){
+            result = true;
+        }
+
+        return result;
+    }
 }

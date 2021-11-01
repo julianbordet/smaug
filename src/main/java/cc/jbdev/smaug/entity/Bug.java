@@ -1,12 +1,6 @@
 package cc.jbdev.smaug.entity;
 
-import cc.jbdev.smaug.validation.ValidatePriority;
-import cc.jbdev.smaug.validation.ValidateSeverity;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 

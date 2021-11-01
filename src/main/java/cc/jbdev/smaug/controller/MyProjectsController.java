@@ -5,6 +5,7 @@ import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import cc.jbdev.smaug.utility.UserUtility;
+import cc.jbdev.smaug.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Validation;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,8 +95,12 @@ public class MyProjectsController {
     @PostMapping("/updateProject")
     public String updateProject(@ModelAttribute("theProject") Project theProject){
 
-        //1. Validate
+        ValidationUtil validationUtil = new ValidationUtil();
 
+        //1. Validate
+        if(!(validationUtil.validateUpdatedProject(theProject, projectService))){
+            return "error-page";
+        }
         ////
 
         projectService.save(theProject);
