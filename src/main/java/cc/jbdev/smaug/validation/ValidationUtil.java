@@ -1,6 +1,7 @@
 package cc.jbdev.smaug.validation;
 
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
@@ -302,4 +303,22 @@ public class ValidationUtil {
         return result;
     }
 
+    public boolean validateDeveloperAssgignedToProject(List<Developer> projectDevList, String devSelected) {
+
+        boolean result = false;
+        List<String> devsInProject = new ArrayList<>();
+
+        for(Developer developer : projectDevList){
+            devsInProject.add(developer.getUsername());
+        }
+
+        for(String developer : devsInProject){
+            if(developer.equals(devSelected)){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Validation;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -174,9 +175,21 @@ public class MyProjectsController {
     @PostMapping("/adddeveloperconfirm")
     public String addDeveloperConfirm(@RequestParam("projectId") int projectId, @ModelAttribute("newDeveloper") Developer theDeveloper){
 
-        Project theProject = projectService.getProjectById(projectId);
+        ValidationUtil validationUtil = new ValidationUtil();
 
+        //1. Validate developer
+        if(!(validationUtil.validateDeveloper(projectService.getListOfActiveDevelopers(), theDeveloper.getUsername()))){
+            return "error-page";
+        }
+        ////
+
+        //2. Get the project to which the developer will be added
+        Project theProject = projectService.getProjectById(projectId);
+        ////
+
+        //3. Add developer to project
         projectService.addDeveloperToProject(theProject, theDeveloper);
+        ////
 
         return "redirect:/myprojects/main";
     }
@@ -198,10 +211,30 @@ public class MyProjectsController {
     @PostMapping("/removedeveloperconfirm")
     public String removedeveloperconfirm(@RequestParam("devSelected") String devSelected, @RequestParam("projectId") int projectId){
 
-        Project theProject = projectService.getProjectById(projectId);
-        Developer theDeveloper = theProject.getDeveloper(devSelected);
+        ValidationUtil validationUtil = new ValidationUtil();
 
+        //0. Get list of active developers in project
+        List<Developer> projectDevList = new ArrayList<>();
+        projectDevList = projectService.getProjectById(projectId).getDevelopers();
+        ////
+
+        //1. Validate developer to be removed is a valid developer and is assigned to the project
+        if(!(validationUtil.validateDeveloperAssgignedToProject(projectDevList, devSelected))){
+            return "error-page";
+        }
+        ////
+
+        //2. Get the project where the developer will be removed from
+        Project theProject = projectService.getProjectById(projectId);
+        ////
+
+        //3. Get the developer that will be removed from the Project
+        Developer theDeveloper = theProject.getDeveloper(devSelected);
+        ////
+
+        //4. Remove the developer from the Project
         projectService.removeDeveloperFromProject(theProject, theDeveloper);
+        ////
 
         return "redirect:/myprojects/main";
     }
