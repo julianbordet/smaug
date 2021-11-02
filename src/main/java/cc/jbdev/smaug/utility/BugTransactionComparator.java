@@ -17,7 +17,7 @@ public class BugTransactionComparator implements Comparator {
         String transaction1CreationDate = transaction1.getDate();
         String transaction2CreationDate = transaction2.getDate();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date dateForTransaction1 = null;
         Date dateForTransaction2 = null;

@@ -320,7 +320,7 @@ public class BugServiceImpl implements BugService {
         //Create a new date for the bug transaction
         Date today = new Date();
         String todayInString;
-        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
+        todayInString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(today);
 
 
         //check if changesMade variable is empty

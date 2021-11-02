@@ -178,7 +178,7 @@ public class MyBugsController {
         }
         ////////
 
-        ///2. Copy the original status of the bug into an axiliar Bug for comparison purposes
+        ///2. Copy the original status of the bug into an auxiliar Bug for comparison purposes
         Bug originalBug = new Bug(bugOriginalTitle, bugOriginalDescription, bugOriginalProjectId,
                             bugOriginalSeverity, bugOriginalPriority, bugOriginalStatus,
                             bugOriginalResponsibleDev, bugOriginalDueDate, bugOriginalStepsToReproduce);
@@ -238,7 +238,7 @@ public class MyBugsController {
 
         Date today = new Date();
         String todayInString;
-        todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
+        todayInString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(today);
 
         BugTransaction newBugTransaction = new BugTransaction();
         newBugTransaction.setDate(todayInString);
