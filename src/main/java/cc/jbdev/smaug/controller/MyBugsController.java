@@ -90,34 +90,20 @@ public class MyBugsController {
     @GetMapping("/showBugDetail")
     public String showBugDetail(@RequestParam("bugId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
 
-
+        //1. Get bug that was clicked and add it to the Model, so that we can show all its details
         Bug bugClicked = bugService.getBugByBugId(theId);
         theModel.addAttribute("theBug", bugClicked);
 
+        //2. Get list of valid developers and add it to the model(since from the HTML view the user can change it)
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
 
+        //3. Get list of active projects and add it to the model(since from th eHTML view the user can change it)
         List<Project> activeProjects = projectService.getActiveProjects();
         theModel.addAttribute("projectList", activeProjects);
 
-
-        //pagination for bug transaction
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
-
-        //Has own pagination method since the results need to be in reverse order, so that newer transactions
-        //appear first in the list
-        Page<BugTransaction> bugTransactions = bugService.findPaginatedBugTransactions(PageRequest.of(currentPage - 1, pageSize), theId);
-        ///
-
-        theModel.addAttribute("bugTransactions", bugTransactions);
-
-        int totalPages = bugTransactions.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            theModel.addAttribute("pageNumbers", pageNumbers);
-        }
-        ///////
+        //4. Get bug update history, paginate it and add it to the Model.
+        paginationUtility.paginateBugUpdateHistory(theModel, bugService, theId, page, size);
 
         return "showBugDetailPage";
     }

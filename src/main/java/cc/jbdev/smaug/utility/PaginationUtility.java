@@ -2,6 +2,7 @@ package cc.jbdev.smaug.utility;
 
 import cc.jbdev.smaug.auxStructs.BugProjectName;
 import cc.jbdev.smaug.entity.Bug;
+import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.service.BugService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,28 @@ public class PaginationUtility {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
-        ////
+
+    }
+
+    public void paginateBugUpdateHistory(Model theModel, BugService bugService, int theId, Optional<Integer> page, Optional<Integer> size){
+
+        //pagination for bug transaction
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        //Has own pagination method since the results need to be in reverse order, so that newer transactions
+        //appear first in the list
+        Page<BugTransaction> bugTransactions = bugService.findPaginatedBugTransactions(PageRequest.of(currentPage - 1, pageSize), theId);
+        ///
+
+        theModel.addAttribute("bugTransactions", bugTransactions);
+
+        int totalPages = bugTransactions.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
+        ///////
     }
 
 
