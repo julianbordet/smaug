@@ -84,4 +84,12 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getActiveProjects() {
         return projectDAO.getActiveProjects();
     }
+
+    public void setNewProjectStandardParameters(Project theProject){
+
+        theProject.setProjectId(0);
+        theProject.setIsActive(1);
+
+    }
+
 }

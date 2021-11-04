@@ -43,7 +43,7 @@ public class MyProjectsController {
         //0. Util object that returns the data from the user currently logged in.
         UserUtility userUtility = new UserUtility();
 
-        //1. Get list of active projects for the user
+        //1. Get list of active projects for the user.
         List<Project> userProjectList = projectService.getActiveProjectsListForUser(userUtility.getMyUserName());
 
         //2. Pass the project list to the pagination utility method, which will create the page and add it
@@ -78,13 +78,12 @@ public class MyProjectsController {
     @PostMapping("/updateProject")
     public String updateProject(@ModelAttribute("theProject") Project theProject){
 
-
-        //1. Validate
+        //1. Validate input from user.
         if(!(validationUtility.validateUpdatedProject(theProject, projectService))){
             return "error-page";
         }
-        ////
 
+        //2. Update the project.
         projectService.save(theProject);
 
         return "redirect:/myprojects/main";
@@ -93,9 +92,11 @@ public class MyProjectsController {
     @GetMapping("/newproject")
     public String addNewProject(Model theModel){
 
+        //1. Initialize a new Project object and add it to the Model.
         Project theProject = new Project();
         theModel.addAttribute("theProject", theProject);
 
+        //2. Get a list of active developers that can be added to the project and add it to the Model.
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
 
@@ -107,21 +108,17 @@ public class MyProjectsController {
     @PostMapping("/createproject")
     public String createProject(@ModelAttribute("theProject") Project theProject){
 
+        //1. Set fields that are not user selectable to standard values for a new project.
+        projectService.setNewProjectStandardParameters(theProject);
 
-        //1. set standard params for new project
-        theProject.setProjectId(0);
-        theProject.setIsActive(1);
-        ////
-
-        //2. Validate new project
+        //2. Validate new project.
         if(!(validationUtility.validateNewProject(theProject, projectService))){
             return "error-page";
         }
-        ////
 
-        //3. Save new project
+        //3. Save new project.
         projectService.save(theProject);
-        ////
+
 
         return "redirect:/myprojects/main";
     }
@@ -129,6 +126,7 @@ public class MyProjectsController {
     @GetMapping("/deleteproject")
     public String deleteProject(@RequestParam("projectId") int projectId){
 
+        //1. Delete project from DB.
         projectService.delete(projectId);
 
         return "redirect:/myprojects/main";

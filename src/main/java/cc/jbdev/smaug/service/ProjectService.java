@@ -3,6 +3,7 @@ package cc.jbdev.smaug.service;
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
+import cc.jbdev.smaug.utility.UserUtility;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -43,4 +44,7 @@ public interface ProjectService {
 
     //gets a String list containing all active user ids
     List<String> getListOfActiveDevelopers();
+
+    //Sets the ProjectId to 0, isActive to 1.
+    void setNewProjectStandardParameters(Project theProject);
 }
