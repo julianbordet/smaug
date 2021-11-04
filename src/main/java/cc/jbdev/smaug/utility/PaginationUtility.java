@@ -3,6 +3,7 @@ package cc.jbdev.smaug.utility;
 import cc.jbdev.smaug.auxStructs.BugProjectName;
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.BugTransaction;
+import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
@@ -71,6 +72,26 @@ public class PaginationUtility {
         theModel.addAttribute("projectPage", projectPage);
 
         int totalPages = projectPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
+
+    }
+
+    public void paginateDevelopersforMyProject(Model theModel, ProjectService projectService, int theId){
+
+
+        int currentPage = 1;
+        int pageSize = 15;
+
+        ///PAGINATION UPDATE
+        Page<Developer> developerPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getProjectById(theId).getDevelopers());
+        //
+
+        theModel.addAttribute("developerPage", developerPage);
+
+        int totalPages = developerPage.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);

@@ -33,6 +33,9 @@ public class MyProjectsController {
     @Autowired
     PaginationUtility paginationUtility;
 
+    @Autowired
+    ValidationUtility validationUtility;
+
     @GetMapping("/main")
     public String showMyProjects(Model theModel, @RequestParam("page") Optional<Integer> page,
                                  @RequestParam("size") Optional<Integer> size) {
@@ -46,7 +49,7 @@ public class MyProjectsController {
         //2. Pass the project list to the pagination utility method, which will create the page and add it
         //to the Model.
         paginationUtility.paginateProjectsForMyProjects(theModel, projectService, userProjectList, page, size);
-        
+
 
         return "myprojectspage";
     }
@@ -56,29 +59,17 @@ public class MyProjectsController {
     public String showProjectDetail(@RequestParam("projectId") int theId, Model theModel, @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size) {
 
-        Project elProjectClickeadoEs = projectService.getProjectById(theId);
+        //1. Get project that was clicked and add it to the Model, so that we can show all its details.
+        Project selectedProject = projectService.getProjectById(theId);
+        theModel.addAttribute("theProject", selectedProject);
 
-        theModel.addAttribute("theProject", elProjectClickeadoEs);
-
-
+        //2. Get list of valid developers and add it to the model(since from the HTML view the user can change it).
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
 
+        //3. Get a list active developers in the project, paginate it and add it to the Model.
+        paginationUtility.paginateDevelopersforMyProject(theModel, projectService, theId);
 
-        int currentPage = 1;
-        int pageSize = 15;
-
-        ///PAGINATION UPDATE
-        Page<Developer> developerPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getProjectById(theId).getDevelopers());
-        //
-
-        theModel.addAttribute("developerPage", developerPage);
-
-        int totalPages = developerPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            theModel.addAttribute("pageNumbers", pageNumbers);
-        }
 
         return "showProjectDetailPage";
     }
@@ -87,7 +78,6 @@ public class MyProjectsController {
     @PostMapping("/updateProject")
     public String updateProject(@ModelAttribute("theProject") Project theProject){
 
-        ValidationUtility validationUtility = new ValidationUtility();
 
         //1. Validate
         if(!(validationUtility.validateUpdatedProject(theProject, projectService))){
@@ -117,7 +107,6 @@ public class MyProjectsController {
     @PostMapping("/createproject")
     public String createProject(@ModelAttribute("theProject") Project theProject){
 
-        ValidationUtility validationUtility = new ValidationUtility();
 
         //1. set standard params for new project
         theProject.setProjectId(0);
@@ -166,7 +155,6 @@ public class MyProjectsController {
     @PostMapping("/adddeveloperconfirm")
     public String addDeveloperConfirm(@RequestParam("projectId") int projectId, @ModelAttribute("newDeveloper") Developer theDeveloper){
 
-        ValidationUtility validationUtility = new ValidationUtility();
 
         //1. Validate developer
         if(!(validationUtility.validateDeveloper(projectService.getListOfActiveDevelopers(), theDeveloper.getUsername()))){
@@ -202,7 +190,6 @@ public class MyProjectsController {
     @PostMapping("/removedeveloperconfirm")
     public String removedeveloperconfirm(@RequestParam("devSelected") String devSelected, @RequestParam("projectId") int projectId){
 
-        ValidationUtility validationUtility = new ValidationUtility();
 
         //0. Get list of active developers in project
         List<Developer> projectDevList = new ArrayList<>();
