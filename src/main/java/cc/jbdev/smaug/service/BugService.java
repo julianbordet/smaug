@@ -30,9 +30,7 @@ public interface BugService {
     //gets active bug list for a specific user
     List<Bug> getProjectActiveBugsByUser(Project project, String username);
 
-
     Page paginate(Pageable pageable, List theParameterList);
-
 
     //paginates bug-transaction-history for a specific bug
     Page<BugTransaction> findPaginatedBugTransactions(Pageable pageable, int bugId);
@@ -59,7 +57,6 @@ public interface BugService {
     //Returns a hashmap with a key representing the project name, and the value representing the active bug amount
     //for such project.
     HashMap<String, Integer> getMapProjectNameBugCounter(List<Project> projectList, String username);
-
 
     List<BugTransaction> getBugTransactionsByBugId(int bugId);
 

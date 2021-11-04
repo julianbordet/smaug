@@ -17,7 +17,6 @@ public class BugTransaction {
     @Column(name="transaction")
     private String transaction;
 
-
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
     //@ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="bug_id")

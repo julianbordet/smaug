@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public class ProjectDAOImpl implements ProjectDAO {
 
-
     private EntityManager entityManager;
 
     @Autowired
@@ -43,7 +42,6 @@ public class ProjectDAOImpl implements ProjectDAO {
         List<Project> projectList = theQuery.getResultList();
 
         return projectList;
-
     }
 
     @Override
@@ -60,7 +58,6 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
 
-
     @Override
     @Transactional
     public void save(Project theProject) {
@@ -68,7 +65,6 @@ public class ProjectDAOImpl implements ProjectDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 
         currentSession.saveOrUpdate(theProject);
-
     }
 
     @Override
@@ -99,14 +95,11 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Transactional
     public void addDeveloperToProject(Project theProject, Developer theDeveloper) {
 
-
         Session currentSession = entityManager.unwrap(Session.class);
 
         theProject.addDeveloperToProject(theDeveloper);
 
         currentSession.save(theProject);
-
-
     }
 
     @Override
@@ -118,7 +111,6 @@ public class ProjectDAOImpl implements ProjectDAO {
         theProject.removeDeveloperFromProject(theDeveloper);
 
         currentSession.save(theProject);
-
     }
 
     @Override
@@ -150,7 +142,6 @@ public class ProjectDAOImpl implements ProjectDAO {
         Query<Project> theQuery = currentSession.createQuery("from Project where is_active = '1'", Project.class);
 
         List<Project> projectList = theQuery.getResultList();
-
 
         return projectList;
     }

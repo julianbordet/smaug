@@ -14,6 +14,7 @@ public class Bug {
     private int bugId;
 
     @Column(name="project_id")
+/*    @ManyToOne(cascade = {CascadeType.ALL})*/
     private int projectId;
 
     @Column(name="title")
@@ -56,8 +57,6 @@ public class Bug {
                 cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
                 //  cascade = {CascadeType.ALL})
     private List<BugTransaction> bugTransactions;
-
-
 
     public Bug(){
 
@@ -133,7 +132,6 @@ public class Bug {
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
-
 
     public int getBugStatus() {
         return bugStatus;

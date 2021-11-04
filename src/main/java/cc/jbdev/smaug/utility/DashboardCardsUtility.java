@@ -3,10 +3,10 @@ package cc.jbdev.smaug.utility;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
-import org.apache.catalina.User;
+
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 
 import java.util.HashMap;
 import java.util.List;

@@ -40,7 +40,5 @@ public class BugTransactionComparator implements Comparator {
         else {
             return 0;
         }
-
-
     }
 }

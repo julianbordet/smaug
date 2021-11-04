@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public class BugDAOImpl implements BugDAO {
 
-
     private EntityManager entityManager;
 
     @Autowired
@@ -72,6 +71,7 @@ public class BugDAOImpl implements BugDAO {
     @Override
     @Transactional
     public List<Bug> getActiveBugListForUser(String username) {
+
         //get current hibernate session
         Session currentSession = entityManager.unwrap(Session.class);
 
@@ -149,8 +149,6 @@ public class BugDAOImpl implements BugDAO {
     @Transactional
     public void delete(int bugId) {
 
-        
-
         Session currentSession = entityManager.unwrap(Session.class);
 
         Query theQueryForTransaction = currentSession.createQuery("delete from BugTransaction where bug_id = '" + bugId + "'");
@@ -158,7 +156,6 @@ public class BugDAOImpl implements BugDAO {
         theQueryForTransaction.executeUpdate();
 
         Query theQuery = currentSession.createQuery("delete from Bug where bug_id = '" + bugId + "'");
-
 
         theQuery.executeUpdate();
 
@@ -173,7 +170,6 @@ public class BugDAOImpl implements BugDAO {
         Query<BugTransaction> theQuery = currentSession.createQuery("from BugTransaction where bug_id = '" +bugId+"'", BugTransaction.class);
 
         List<BugTransaction> bugTransactionList = theQuery.getResultList();
-
 
         return bugTransactionList;
     }

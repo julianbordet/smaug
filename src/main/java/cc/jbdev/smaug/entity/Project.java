@@ -36,7 +36,6 @@ public class Project {
     )
     private List<Developer> developers;
 
-    
 
     public Project() {
     }

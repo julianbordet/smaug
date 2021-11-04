@@ -45,7 +45,6 @@ public class PaginationUtility {
         //Has own pagination method since the results need to be in reverse order, so that newer transactions
         //appear first in the list
         Page<BugTransaction> bugTransactions = bugService.findPaginatedBugTransactions(PageRequest.of(currentPage - 1, pageSize), theId);
-        ///
 
         theModel.addAttribute("bugTransactions", bugTransactions);
 
@@ -54,7 +53,6 @@ public class PaginationUtility {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
-
     }
 
     public void paginateProjectsForMyProjects(Model theModel, ProjectService projectService, List<Project> projectList, Optional<Integer> page, Optional<Integer> size){
@@ -63,11 +61,7 @@ public class PaginationUtility {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(15);
 
-
-        //PAGINATION UPDATE
         Page<Project> projectPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectList);
-        //
-
 
         theModel.addAttribute("projectPage", projectPage);
 
@@ -81,13 +75,10 @@ public class PaginationUtility {
 
     public void paginateDevelopersforMyProject(Model theModel, ProjectService projectService, int theId){
 
-
         int currentPage = 1;
         int pageSize = 15;
 
-        ///PAGINATION UPDATE
         Page<Developer> developerPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getProjectById(theId).getDevelopers());
-        //
 
         theModel.addAttribute("developerPage", developerPage);
 
@@ -96,7 +87,6 @@ public class PaginationUtility {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             theModel.addAttribute("pageNumbers", pageNumbers);
         }
-
     }
 
 }

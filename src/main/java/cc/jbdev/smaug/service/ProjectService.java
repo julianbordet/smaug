@@ -26,9 +26,7 @@ public interface ProjectService {
     //gets Project by projectId
     Project getProjectById(int theId);
 
-
     Page paginate(Pageable pageable, List theParameterList);
-
 
     //save updates/creates new project
     void save(Project theProject);

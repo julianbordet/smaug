@@ -26,7 +26,6 @@ public class BugServiceImpl implements BugService {
     @Autowired
     private ProjectService projectService;
 
-
     @Override
     public List<Bug> getBugList() {
         return bugDAO.getBugList();
@@ -53,7 +52,6 @@ public class BugServiceImpl implements BugService {
     }
 
 
-
     public Page paginate(Pageable pageable, List theParameterList){
 
         int pageSize = pageable.getPageSize();
@@ -73,8 +71,6 @@ public class BugServiceImpl implements BugService {
 
         return thePage;
     }
-
-
 
     @Override
     public Page<BugTransaction> findPaginatedBugTransactions(Pageable pageable, int bugId) {
@@ -103,7 +99,6 @@ public class BugServiceImpl implements BugService {
 
         return bugTransactionPage;
     }
-
 
     @Override
     public Bug getBugByBugId(int bugId) {
@@ -349,7 +344,6 @@ public class BugServiceImpl implements BugService {
         String todayInString;
         todayInString = new SimpleDateFormat("yyyy-MM-dd").format(today);
         theBug.setDateCreated(todayInString);
-        ////
 
     }
 
