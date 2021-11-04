@@ -5,17 +5,14 @@ import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
 import cc.jbdev.smaug.utility.UserUtility;
-import cc.jbdev.smaug.validation.ValidationUtil;
+import cc.jbdev.smaug.validation.ValidationUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -96,10 +93,10 @@ public class MyProjectsController {
     @PostMapping("/updateProject")
     public String updateProject(@ModelAttribute("theProject") Project theProject){
 
-        ValidationUtil validationUtil = new ValidationUtil();
+        ValidationUtility validationUtility = new ValidationUtility();
 
         //1. Validate
-        if(!(validationUtil.validateUpdatedProject(theProject, projectService))){
+        if(!(validationUtility.validateUpdatedProject(theProject, projectService))){
             return "error-page";
         }
         ////
@@ -126,7 +123,7 @@ public class MyProjectsController {
     @PostMapping("/createproject")
     public String createProject(@ModelAttribute("theProject") Project theProject){
 
-        ValidationUtil validationUtil = new ValidationUtil();
+        ValidationUtility validationUtility = new ValidationUtility();
 
         //1. set standard params for new project
         theProject.setProjectId(0);
@@ -134,7 +131,7 @@ public class MyProjectsController {
         ////
 
         //2. Validate new project
-        if(!(validationUtil.validateNewProject(theProject, projectService))){
+        if(!(validationUtility.validateNewProject(theProject, projectService))){
             return "error-page";
         }
         ////
@@ -175,10 +172,10 @@ public class MyProjectsController {
     @PostMapping("/adddeveloperconfirm")
     public String addDeveloperConfirm(@RequestParam("projectId") int projectId, @ModelAttribute("newDeveloper") Developer theDeveloper){
 
-        ValidationUtil validationUtil = new ValidationUtil();
+        ValidationUtility validationUtility = new ValidationUtility();
 
         //1. Validate developer
-        if(!(validationUtil.validateDeveloper(projectService.getListOfActiveDevelopers(), theDeveloper.getUsername()))){
+        if(!(validationUtility.validateDeveloper(projectService.getListOfActiveDevelopers(), theDeveloper.getUsername()))){
             return "error-page";
         }
         ////
@@ -211,7 +208,7 @@ public class MyProjectsController {
     @PostMapping("/removedeveloperconfirm")
     public String removedeveloperconfirm(@RequestParam("devSelected") String devSelected, @RequestParam("projectId") int projectId){
 
-        ValidationUtil validationUtil = new ValidationUtil();
+        ValidationUtility validationUtility = new ValidationUtility();
 
         //0. Get list of active developers in project
         List<Developer> projectDevList = new ArrayList<>();
@@ -219,7 +216,7 @@ public class MyProjectsController {
         ////
 
         //1. Validate developer to be removed is a valid developer and is assigned to the project
-        if(!(validationUtil.validateDeveloperAssgignedToProject(projectDevList, devSelected))){
+        if(!(validationUtility.validateDeveloperAssgignedToProject(projectDevList, devSelected))){
             return "error-page";
         }
         ////

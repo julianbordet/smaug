@@ -26,7 +26,5 @@ public class BugTransactionUtility {
         newBugTransaction.setTransactionCreatedBy(userUtility.getMyUserName());
         newBugTransaction.setTransactionDetail("Bug created");
         theBug.addBugTransactions(newBugTransaction);
-
-
     }
 }

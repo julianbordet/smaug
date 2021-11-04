@@ -9,7 +9,7 @@ import cc.jbdev.smaug.utility.BugTransactionUtility;
 import cc.jbdev.smaug.utility.ListManipulationUtility;
 import cc.jbdev.smaug.utility.PaginationUtility;
 import cc.jbdev.smaug.utility.UserUtility;
-import cc.jbdev.smaug.validation.ValidationUtil;
+import cc.jbdev.smaug.validation.ValidationUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ public class MyBugsController {
     ProjectService projectService;
 
     @Autowired
-    ValidationUtil validationUtil;
+    ValidationUtility validationUtility;
 
     @Autowired
     PaginationUtility paginationUtility;
@@ -121,7 +121,7 @@ public class MyBugsController {
 
 
         //1. Validate input from user
-        if(theBindingResult.hasErrors() || !(validationUtil.validateUpdatedBug(updatedBug, projectService, bugService)) ){
+        if(theBindingResult.hasErrors() || !(validationUtility.validateUpdatedBug(updatedBug, projectService, bugService)) ){
             return "error-page";
         }
 
@@ -173,7 +173,7 @@ public class MyBugsController {
         bugService.setNewBugStandardParameters(theBug, userUtility);
 
         //2. Validate value inputs provided by user for the bug fields.
-        if(theBindingResult.hasErrors() || !(validationUtil.validateNewBug(theBug, projectService))){
+        if(theBindingResult.hasErrors() || !(validationUtility.validateNewBug(theBug, projectService))){
             return "error-page";
         }
 
