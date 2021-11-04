@@ -4,6 +4,7 @@ import cc.jbdev.smaug.entity.Developer;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
+import cc.jbdev.smaug.utility.PaginationUtility;
 import cc.jbdev.smaug.utility.UserUtility;
 import cc.jbdev.smaug.validation.ValidationUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,32 +30,25 @@ public class MyProjectsController {
     @Autowired
     ProjectService projectService;
 
+    @Autowired
+    PaginationUtility paginationUtility;
+
     @GetMapping("/main")
     public String showMyProjects(Model theModel, @RequestParam("page") Optional<Integer> page,
                                  @RequestParam("size") Optional<Integer> size) {
 
+        //0. Util object that returns the data from the user currently logged in.
         UserUtility userUtility = new UserUtility();
 
+        //1. Get list of active projects for the user
+        List<Project> userProjectList = projectService.getActiveProjectsListForUser(userUtility.getMyUserName());
 
+        //2. Pass the project list to the pagination utility method, which will create the page and add it
+        //to the Model.
+        paginationUtility.paginateProjectsForMyProjects(theModel, projectService, userProjectList, page, size);
+        
 
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(15);
-
-
-        //PAGINATION UPDATE
-        Page<Project> projectPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectService.getActiveProjectsListForUser(userUtility.getMyUserName()));
-        //
-
-
-        theModel.addAttribute("projectPage", projectPage);
-
-        int totalPages = projectPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            theModel.addAttribute("pageNumbers", pageNumbers);
-        }
-
-            return "myprojectspage";
+        return "myprojectspage";
     }
 
 

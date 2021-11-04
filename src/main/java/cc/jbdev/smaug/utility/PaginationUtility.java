@@ -3,7 +3,9 @@ package cc.jbdev.smaug.utility;
 import cc.jbdev.smaug.auxStructs.BugProjectName;
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.BugTransaction;
+import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
+import cc.jbdev.smaug.service.ProjectService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -54,6 +56,26 @@ public class PaginationUtility {
 
     }
 
+    public void paginateProjectsForMyProjects(Model theModel, ProjectService projectService, List<Project> projectList, Optional<Integer> page, Optional<Integer> size){
 
+
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(15);
+
+
+        //PAGINATION UPDATE
+        Page<Project> projectPage = projectService.paginate(PageRequest.of(currentPage - 1, pageSize), projectList);
+        //
+
+
+        theModel.addAttribute("projectPage", projectPage);
+
+        int totalPages = projectPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            theModel.addAttribute("pageNumbers", pageNumbers);
+        }
+
+    }
 
 }
