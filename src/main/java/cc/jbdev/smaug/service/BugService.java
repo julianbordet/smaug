@@ -65,6 +65,6 @@ public interface BugService {
 
     void compareBugsAndCreateTransaction(Bug updatedBug, Bug originalBug);
 
-    //Sets the bugId to 0, Status to 0, assigns user creted bug, assigns date created
+    //Sets the bugId to 0, Status to 0, assigns user created bug, assigns date created
     void setNewBugStandardParameters(Bug theBug, UserUtility userUtility);
 }
