@@ -9,11 +9,9 @@ li {
     padding-right: 30px;
 }
 
-
 ul {
     padding: 0px;
 }
-
 
 @media screen and (max-width: 3440px) {
     .mycards {
@@ -44,7 +42,6 @@ ul {
 }
 
 
-
 #vertnav{
     height: 92vh;
     background-color: #212F3D;
@@ -57,10 +54,6 @@ ul {
     background-size: 100% auto;
 
 }
-
-/*#background-for-working-zone {
-    background-color: #F2F4F4;
-}*/
 
 .mybugtable {
     margin-left: 0;

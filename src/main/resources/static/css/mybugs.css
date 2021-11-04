@@ -7,12 +7,12 @@ li {
     padding-bottom: 60px;
     padding-left: 30px;
     padding-right: 30px;
-
 }
 
 tbody {
     cursor: pointer;
 }
+
 #bugtitle{
     width:300px;
 }
@@ -26,17 +26,6 @@ ul {
     background-color: #212F3D;
 }
 
-/*#background-for-working-zone {
-    background-color: #F2F4F4;
-}*/
-
-/*#background-for-working-zone {
-    background-image: url("../img/backgroundCompressed.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% auto;
-
-}*/
 
 #background-for-working-zone {
     background-image: url("../img/backgroundCompressed.jpg");
@@ -45,12 +34,6 @@ ul {
     background-size: 100% auto;
 
 }
-
-/*input[readonly]{
-    background-color:transparent;
-    border: 0;
-    font-size: 1em;
-}*/
 
 input[readonly] {
     background-color: lightgray !important;
@@ -72,14 +55,6 @@ textarea[readonly] {
 
     box-shadow: none !important;
 }
-
-/*#backTest {
-    background-image: url("static/img/mainlogo.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 400px;
-    height: 400px;
-}*/
 
 
 .pagetitle {
@@ -110,11 +85,6 @@ textarea[readonly] {
     font-size: 20px;
 
 }
-
-/*#projectDescription{
-    width: auto;
-}*/
-
 
 
 a:link    {color:white;}
