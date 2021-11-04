@@ -46,6 +46,6 @@ public class DashboardController {
         ///Show a card that breaks down the bugs assigned to the user by Project.
         dashboardCardsUtility.generateCardBugsByProject(bugService, userUtility, projectService, theModel);
 
-        return "dashboardpage";
+        return "dashboardPage";
     }
 }

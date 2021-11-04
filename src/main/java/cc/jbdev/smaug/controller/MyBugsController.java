@@ -60,7 +60,7 @@ public class MyBugsController {
         //to the Model.
         paginationUtility.paginateBugsForMyBugs(theModel, bugService, bugProjectNames, page, size);
 
-        return "mybugspage";
+        return "myBugsPage";
     }
 
     @GetMapping("/inactivebugs")

@@ -51,7 +51,7 @@ public class MyProjectsController {
         paginationUtility.paginateProjectsForMyProjects(theModel, projectService, userProjectList, page, size);
 
 
-        return "myprojectspage";
+        return "myProjectsPage";
     }
 
 
