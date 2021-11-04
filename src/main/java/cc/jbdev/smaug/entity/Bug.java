@@ -14,7 +14,6 @@ public class Bug {
     private int bugId;
 
     @Column(name="project_id")
-/*    @ManyToOne(cascade = {CascadeType.ALL})*/
     private int projectId;
 
     @Column(name="title")
