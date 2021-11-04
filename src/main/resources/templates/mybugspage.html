@@ -123,11 +123,11 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="bug, iStat : ${bugPage.content}"
+                    <tr th:each="bugProjectName, iStat : ${bugPage.content}"
                         th:style="${iStat.odd}? 'font-weight: bold;'"
                         th:alt-title="${iStat.even}? '' : ''"
 
-                        th:bugId="${bug.bugId}"
+                        th:bugId="${bugProjectName.bug.bugId}"
                         th:onclick="rowClicked(this.getAttribute('bugId'));">
                         <!-- the th:onclick calls the javascript function rowClicked defined later below
                         it is done to get the specific bugId per iteration, and pass it to the controller
@@ -137,13 +137,13 @@
 
 
 
-                        <td th:text="${ bug.bugId }"/>
-                        <td th:text="${ bug.bugTitle }"/>
-                        <td th:text="${projectNames[iStat.index]}"/>
-                        <td th:text="${ bug.bugSeverity}"/>
-                        <td th:text="${ bug.bugPriority}"/>
+                        <td th:text="${bugProjectName.bug.bugId}"/>
+                        <td th:text="${bugProjectName.bug.bugTitle}"/>
+                        <td th:text="${bugProjectName.projectName}"/>
+                        <td th:text="${bugProjectName.bug.bugSeverity}"/>
+                        <td th:text="${bugProjectName.bug.bugPriority}"/>
                         <td th:text="'In Progress'"/>
-                        <td th:text="${ bug.bugDueDate}"/>
+                        <td th:text="${bugProjectName.bug.bugDueDate}"/>
                     </tr>
                     </tbody>
                 </table>

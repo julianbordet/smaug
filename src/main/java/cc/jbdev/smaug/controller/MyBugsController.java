@@ -1,21 +1,21 @@
 package cc.jbdev.smaug.controller;
 
+import cc.jbdev.smaug.auxStructs.BugProjectName;
 import cc.jbdev.smaug.entity.Bug;
 import cc.jbdev.smaug.entity.BugTransaction;
 import cc.jbdev.smaug.entity.Project;
 import cc.jbdev.smaug.service.BugService;
 import cc.jbdev.smaug.service.ProjectService;
+import cc.jbdev.smaug.utility.ListManipulationUtility;
+import cc.jbdev.smaug.utility.PaginationUtility;
 import cc.jbdev.smaug.utility.UserUtility;
 import cc.jbdev.smaug.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,44 +34,36 @@ public class MyBugsController {
     @Autowired
     ProjectService projectService;
 
+    @Autowired
+    ValidationUtil validationUtil;
+
+    @Autowired
+    PaginationUtility paginationUtility;
+
+    @Autowired
+    ListManipulationUtility listManipulationUtility;
 
 
     @GetMapping("/main")
     public String showMyBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
                              @RequestParam("size") Optional<Integer> size){
 
+        //0. Util object that returns the data from the user currently logged in
         UserUtility userUtility = new UserUtility();
 
-
-        //Adds a paginated list of active bugs for currently logged in user to the Model
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(8);
-
-        Page<Bug> bugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getActiveBugListForUser(userUtility.getMyUserName()));
-        theModel.addAttribute("bugPage", bugPage);
-
-        int totalPages = bugPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            theModel.addAttribute("pageNumbers", pageNumbers);
-        }
+        //1. Get list of active bugs for the user
+        List<Bug> activeBugsForUser = bugService.getActiveBugListForUser(userUtility.getMyUserName());
         ////
 
-        ////////// Add a list of applicable project names to the model
-        List<Bug> myBugList = bugService.getActiveBugListForUser(userUtility.getMyUserName());
-        List<String> listOfApplicableProjectNames = new ArrayList<>();
+        //2. Create an arrayList of <BugProjectName>, which is an aux struct with 2 fields, a bug and its corresponding
+        //project name in String format.
+        List<BugProjectName> bugProjectNames = listManipulationUtility.makeBugProjectNameList(activeBugsForUser, projectService);
+        ////
 
-        for (Bug bug : myBugList){
-            Project project = projectService.getProjectById(bug.getProjectId());
-            String projectName = project.getProjectName();
-            listOfApplicableProjectNames.add(projectName);
-        }
-
-        theModel.addAttribute("projectNames", listOfApplicableProjectNames);
-
-        ///////
-
-
+        //3. Pass the BugProjectName list to the pagination utility method, which will create the page and add it
+        //to the Model.
+        paginationUtility.paginateBugsForMyBugsSlashMain(theModel, bugService, bugProjectNames, page, size);
+        ////
 
         return "mybugspage";
     }
@@ -169,7 +161,7 @@ public class MyBugsController {
                             @RequestParam(value = "bugOriginalStepsToReproduce") String bugOriginalStepsToReproduce)
     {
 
-        ValidationUtil validationUtil = new ValidationUtil();
+
         UserUtility userUtility = new UserUtility();
 
         //1. Validate input from user
@@ -222,7 +214,7 @@ public class MyBugsController {
     public String createBug(@Valid @ModelAttribute("theBug") Bug theBug, BindingResult theBindingResult){
 
         UserUtility userUtility = new UserUtility();
-        ValidationUtil validationUtil = new ValidationUtil();
+
 
         //1. Set standard fields for new bug
         bugService.setNewBugStandardParameters(theBug, userUtility);
