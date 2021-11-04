@@ -53,17 +53,14 @@ public class MyBugsController {
 
         //1. Get list of active bugs for the user
         List<Bug> activeBugsForUser = bugService.getActiveBugListForUser(userUtility.getMyUserName());
-        ////
 
         //2. Create an arrayList of <BugProjectName>, which is an aux struct with 2 fields, a bug and its corresponding
         //project name in String format.
         List<BugProjectName> bugProjectNames = listManipulationUtility.makeBugProjectNameList(activeBugsForUser, projectService);
-        ////
 
         //3. Pass the BugProjectName list to the pagination utility method, which will create the page and add it
         //to the Model.
-        paginationUtility.paginateBugsForMyBugsSlashMain(theModel, bugService, bugProjectNames, page, size);
-        ////
+        paginationUtility.paginateBugsForMyBugs(theModel, bugService, bugProjectNames, page, size);
 
         return "mybugspage";
     }
@@ -72,39 +69,19 @@ public class MyBugsController {
     public String showInactiveBugs(Model theModel, @RequestParam("page") Optional<Integer> page,
                                    @RequestParam("size") Optional<Integer> size){
 
+        //0. Util object that returns the data from the user currently logged in
         UserUtility userUtility = new UserUtility();
 
+        //1. Get list of inactive bugs for user
+        List<Bug> inactiveBugsForUser = bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName());
 
-        //paginate inactive bugs
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(8);
+        //2. Create an arrayList of <BugProjectName>, which is an aux struct with 2 fields, a bug and its corresponding
+        //project name in String format.
+        List<BugProjectName> inactiveBugProjectNames = listManipulationUtility.makeBugProjectNameList(inactiveBugsForUser, projectService);
 
-        Page<Bug> inactiveBugPage = bugService.paginate(PageRequest.of(currentPage - 1, pageSize), bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName()));
-        theModel.addAttribute("inactiveBugPage", inactiveBugPage);
-
-        int totalPages = inactiveBugPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            theModel.addAttribute("pageNumbers", pageNumbers);
-        }
-        ////////
-
-        ////////// Add a list of applicable project names to the model
-        List<Bug> myBugList = bugService.getListOfInactiveBugsForUser(userUtility.getMyUserName());
-        List<String> listOfApplicableProjectNames = new ArrayList<>();
-
-        for (Bug bug : myBugList){
-            Project project = projectService.getProjectById(bug.getProjectId());
-            String projectName = project.getProjectName();
-            listOfApplicableProjectNames.add(projectName);
-        }
-
-        theModel.addAttribute("projectNames", listOfApplicableProjectNames);
-        ///////
-
-
-
-
+        //3. Pass the BugProjectName list to the pagination utility method, which will create the page and add it
+        //to the Model.
+        paginationUtility.paginateBugsForMyBugs(theModel, bugService, inactiveBugProjectNames, page, size);
 
         return "inactiveBugsPage";
     }

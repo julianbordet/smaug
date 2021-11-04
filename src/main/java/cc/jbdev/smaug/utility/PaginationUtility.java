@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 @Component
 public class PaginationUtility {
 
-    public void paginateBugsForMyBugsSlashMain(Model theModel, BugService bugService, List<BugProjectName> activeBugListForUser, Optional<Integer> page, Optional<Integer> size){
+    public void paginateBugsForMyBugs(Model theModel, BugService bugService, List<BugProjectName> activeBugListForUser, Optional<Integer> page, Optional<Integer> size){
         //Adds a paginated list of active bugs for currently logged in user to the Model
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(8);
