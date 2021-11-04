@@ -135,14 +135,16 @@ public class MyProjectsController {
     @GetMapping("/adddeveloper")
     public String addDeveloper(@RequestParam("projectId") int projectId, Model theModel){
 
+        //1. Initialize a new developer object and add it to the Model, along with the applicable ProjectId.
         Developer newDeveloper = new Developer();
-
         theModel.addAttribute("newDeveloper", newDeveloper);
         theModel.addAttribute("projectId", projectId);
 
+        //2. Get the project name and add it to the Model.
         String projectName = projectService.getProjectById(projectId).getProjectName();
         theModel.addAttribute("projectName", projectName);
 
+        //3. Get a list of active developers for the user to choose from, and add it to the Model.
         List<String> activeDevelopers = projectService.getListOfActiveDevelopers();
         theModel.addAttribute("devList", activeDevelopers);
 
@@ -158,15 +160,13 @@ public class MyProjectsController {
         if(!(validationUtility.validateDeveloper(projectService.getListOfActiveDevelopers(), theDeveloper.getUsername()))){
             return "error-page";
         }
-        ////
 
         //2. Get the project to which the developer will be added
         Project theProject = projectService.getProjectById(projectId);
-        ////
 
         //3. Add developer to project
         projectService.addDeveloperToProject(theProject, theDeveloper);
-        ////
+
 
         return "redirect:/myprojects/main";
     }
@@ -175,9 +175,12 @@ public class MyProjectsController {
     @GetMapping("/removedeveloper")
     public String removeDeveloper(@RequestParam("projectId") int projectId, Model theModel){
 
+        //1. Get the applicable project from whee the developer will be removed, along with the list of active devs
+        //for that project.
         Project theProject = projectService.getProjectById(projectId);
         List<Developer> projectDevList = theProject.getDevelopers();
 
+        //2. Add them to the Model.
         theModel.addAttribute("projectDevList", projectDevList);
         theModel.addAttribute("projectId", projectId);
 
@@ -192,25 +195,20 @@ public class MyProjectsController {
         //0. Get list of active developers in project
         List<Developer> projectDevList = new ArrayList<>();
         projectDevList = projectService.getProjectById(projectId).getDevelopers();
-        ////
 
         //1. Validate developer to be removed is a valid developer and is assigned to the project
         if(!(validationUtility.validateDeveloperAssgignedToProject(projectDevList, devSelected))){
             return "error-page";
         }
-        ////
 
         //2. Get the project where the developer will be removed from
         Project theProject = projectService.getProjectById(projectId);
-        ////
 
         //3. Get the developer that will be removed from the Project
         Developer theDeveloper = theProject.getDeveloper(devSelected);
-        ////
 
         //4. Remove the developer from the Project
         projectService.removeDeveloperFromProject(theProject, theDeveloper);
-        ////
 
         return "redirect:/myprojects/main";
     }
