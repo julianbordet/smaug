@@ -7,8 +7,8 @@ www.smaug.cc
 (test credentials= user: DemoDev, password: "password".
 
 Current features:
-- Dashboard page with user-specific statistics about numbers of bugs pending, due, etc.
 - Login authentication using Spring Security.
+- Dashboard page with user-specific statistics about numbers of bugs pending, due, etc.
 - Creation, update and deletion of "Projects".
 - Adding/Removing developers to Projects.
 - Creation/Editing/Removing of Bugs.
