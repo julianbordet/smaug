@@ -1,3 +1,15 @@
+<HTML>
+<body>
+<p>wasabi</p>
+</body>
+
+</HTML>
+
+
+
+
+
+<!--
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
@@ -15,7 +27,7 @@
 </head>
 <body>
 
-<!--navbar-->
+&lt;!&ndash;navbar&ndash;&gt;
 <div class="row" id="mynav">
     <div class="col-12 py-2">
         <div class="ml-3" style="font-size: 1.3rem">Smaug</div>
@@ -24,7 +36,7 @@
 
 <div class="row">
 
-    <!--left-vertical navbar-->
+    &lt;!&ndash;left-vertical navbar&ndash;&gt;
     <div class="col-1 pl-0" id="vertnav">
         <ul style="list-style: none;">
 
@@ -69,12 +81,12 @@
         </ul>
     </div>
 
-    <!--Main area-->
+    &lt;!&ndash;Main area&ndash;&gt;
     <div class="col-11" id="background-for-working-zone">
 
         <div class="row w-100 justify-content-around mt-4">
 
-            <!--Card 1-->
+            &lt;!&ndash;Card 1&ndash;&gt;
             <div class="col-sm-4">
                 <div class="card mycards">
                     <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
@@ -86,7 +98,7 @@
                 </div>
             </div>
 
-            <!--Card 2-->
+            &lt;!&ndash;Card 2&ndash;&gt;
             <div class="col-sm-4">
                 <div class="card mycards">
                     <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
@@ -101,7 +113,7 @@
 
         <div class="row w-100 justify-content-around mt-4">
 
-            <!--Card 3-->
+            &lt;!&ndash;Card 3&ndash;&gt;
             <div class="col-sm-4">
                 <div class="card mycards">
                     <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
@@ -113,7 +125,7 @@
                 </div>
             </div>
 
-            <!--Card 4-->
+            &lt;!&ndash;Card 4&ndash;&gt;
             <div class="col-sm-4">
                 <div class="card mycards">
                     <div class="card-header" style="text-align: center; background-color: #AEB6BF;">
@@ -139,13 +151,13 @@
 
 
 
-<!-- WARNING TO FUTURE SELF: the chart labels defined in the chart data variables below is a bit brittle,
+&lt;!&ndash; WARNING TO FUTURE SELF: the chart labels defined in the chart data variables below is a bit brittle,
 if I want to access a string that was saved in the Model then the way to do it would be
 to go directly to the label listing and add: '[[${labelExampleName}]]'. For some reason
 if I define a variable x = [[${labelExampleName}]] and then pass either x or 'x' it won't work and
-the chart will not be displayed -->
+the chart will not be displayed &ndash;&gt;
 
-<!--Card 1 Chart-->
+&lt;!&ndash;Card 1 Chart&ndash;&gt;
 <script>
     var userBugsDue = [[${userBugsDue}]];
     var userBugsNotDue = [[${userBugsNotDue}]];
@@ -182,7 +194,7 @@ the chart will not be displayed -->
 </script>
 
 
-<!--Card2 Chart-->
+&lt;!&ndash;Card2 Chart&ndash;&gt;
 <script>
 
     var critical = [[${userCriticalBugCount}]];
@@ -223,7 +235,7 @@ the chart will not be displayed -->
 
 
 
-<!--Card3 Chart-->
+&lt;!&ndash;Card3 Chart&ndash;&gt;
 <script>
     var highPriority = [[${userHighPriority}]];
     var mediumPriority = [[${userMediumPriority}]];
@@ -261,7 +273,7 @@ the chart will not be displayed -->
 </script>
 
 
-<!--Card4 Chart-->
+&lt;!&ndash;Card4 Chart&ndash;&gt;
 <script>
 
 
@@ -298,4 +310,4 @@ the chart will not be displayed -->
 
 
 
-</html>
+</html>-->
