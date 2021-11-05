@@ -43,7 +43,7 @@ public class DashboardController {
         dashboardCardsUtility.generateCardPriorityBreakdown(bugService, userUtility, theModel);
 
         //CARD 4
-        ///Show a card that breaks down the bugs assigned to the user by Project.
+        ///Show a card that breaks down the bugs assigned to the user by Project..
         dashboardCardsUtility.generateCardBugsByProject(bugService, userUtility, projectService, theModel);
 
         return "dashboardPage";
