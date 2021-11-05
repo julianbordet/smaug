@@ -4,4 +4,6 @@ Smaug is a (fullstack) in-development bug tracker MVC web app that I'm currently
 
 To be migrated/refactored soon to an SPA using React for the frontend. 
 
-Alpha version deployed: https://smaugapplication.herokuapp.com/ (test me using the following credentials: username: jbdev, password: password).
+Deployed on Heroku:
+www.smaug.cc
+(test credentials= user: DemoDev, password: "password".
